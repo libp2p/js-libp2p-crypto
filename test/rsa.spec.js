@@ -8,8 +8,12 @@ const rsa = crypto.keys.rsa
 
 describe('RSA', () => {
   let key
-  before(() => {
-    key = crypto.generateKeyPair('RSA', 2048)
+  before((done) => {
+    crypto.generateKeyPair('RSA', 2048, (err, _key) => {
+      if (err) return done(err)
+      key = _key
+      done()
+    })
   })
 
   it('generates a valid key', () => {
@@ -76,32 +80,35 @@ describe('RSA', () => {
       )
     })
 
-    it('not equals other key', () => {
-      const key2 = crypto.generateKeyPair('RSA', 2048)
+    it('not equals other key', (done) => {
+      crypto.generateKeyPair('RSA', 2048, (err, key2) => {
+        if (err) return done(err)
 
-      expect(
-        key.equals(key2)
-      ).to.be.eql(
-        false
-      )
+        expect(
+          key.equals(key2)
+        ).to.be.eql(
+          false
+        )
 
-      expect(
-        key2.equals(key)
-      ).to.be.eql(
-        false
-      )
+        expect(
+          key2.equals(key)
+        ).to.be.eql(
+          false
+        )
 
-      expect(
-        key.public.equals(key2.public)
-      ).to.be.eql(
-        false
-      )
+        expect(
+          key.public.equals(key2.public)
+        ).to.be.eql(
+          false
+        )
 
-      expect(
-        key2.public.equals(key.public)
-      ).to.be.eql(
-        false
-      )
+        expect(
+          key2.public.equals(key.public)
+        ).to.be.eql(
+          false
+        )
+        done()
+      })
     })
   })
 

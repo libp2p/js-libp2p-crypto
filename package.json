@@ -2,7 +2,7 @@
   "name": "libp2p-crypto",
   "version": "0.6.1",
   "description": "Crypto primitives for libp2p",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "lint": "aegir-lint",
@@ -55,5 +55,8 @@
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
     "Richard Littauer <richard.littauer@gmail.com>",
     "greenkeeperio-bot <support@greenkeeper.io>"
-  ]
+  ],
+  "optionalDependencies": {
+    "ursa": "^0.9.4"
+  }
 }

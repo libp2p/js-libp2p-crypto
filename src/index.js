@@ -12,13 +12,13 @@ exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 
 // Generates a keypair of the given type and bitsize
-exports.generateKeyPair = (type, bits) => {
+exports.generateKeyPair = (type, bits, cb) => {
   let key = keys[type.toLowerCase()]
   if (!key) {
     throw new Error('invalid or unsupported key type')
   }
 
-  return key.generateKeyPair(bits)
+  return key.generateKeyPair(bits, cb)
 }
 
 // Converts a protobuf serialized public key into its

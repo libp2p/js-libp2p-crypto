@@ -85,8 +85,14 @@ class RsaPrivateKey {
   }
 }
 
-function unmarshalRsaPrivateKey (bytes) {
-  return new RsaPrivateKey(bytes)
+function unmarshalRsaPrivateKey (bytes, callback) {
+  crypto.unmarshalPrivateKey(bytes, (err, key, publicKey) => {
+    if (err) {
+      return callback(err)
+    }
+
+    callback(null, new RsaPrivateKey(key, publicKey))
+  })
 }
 
 function unmarshalRsaPublicKey (bytes) {

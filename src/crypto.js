@@ -36,10 +36,39 @@ exports.generateKey = function (bits, callback) {
     },
     true,
     ['sign', 'verify']
-  ).then((pair) => Promise.all([
-    crypto.subtle.exportKey('pkcs8', pair.privateKey),
-    crypto.subtle.exportKey('spki', pair.publicKey)
-  ])).then((keys) => {
+  )
+  .then(exportKey)
+  .then((keys) => {
+    callback(
+      null,
+      Buffer.from(keys[0]),
+      Buffer.from(keys[1])
+    )
+  }).catch((err) => {
+    callback(err)
+  })
+}
+
+exports.unmarshalPrivateKey = function (bytes, callback) {
+  const privateKey = crypto.subtle.importKey(
+    'pkcs8',
+    bytes,
+    {
+      name: 'RSASSA-PKCS1-v1_5',
+      hash: {name: 'SHA-256'}
+    },
+    true,
+    ['sign']
+  )
+  Promise.all([
+    privateKey,
+    derivePublicFromPrivate(privateKey)
+  ]).then((keys) => {
+    return exportKey({
+      privateKey: keys[0],
+      publicKey: keys[1]
+    })
+  }).then((keys) => {
     callback(
       null,
       Buffer.from(keys[0]),
@@ -62,7 +91,7 @@ exports.hashAndSign = function (key, msg, callback) {
 
     crypto.subtle.importKey(
       'pkcs8',
-      key,
+      Uint8Array.from(key),
       {
         name: 'RSASSA-PKCS1-v1_5',
         hash: {name: 'SHA-256'}
@@ -103,7 +132,7 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
         {name: 'RSASSA-PKCS1-v1_5'},
         publicKey,
         Uint8Array.from(sig),
-        Uint8Array.from(msg)
+        Uint8Array.from(digest)
       )
     }).then((valid) => {
       callback(null, valid)
@@ -111,4 +140,32 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
       callback(err)
     })
   })
+}
+
+function exportKey (pair) {
+  return Promise.all([
+    crypto.subtle.exportKey('pkcs8', pair.privateKey),
+    crypto.subtle.exportKey('spki', pair.publicKey)
+  ])
+}
+
+function derivePublicFromPrivate (privatePromise) {
+  return privatePromise.then((privateKey) => {
+    return crypto.subtle.exportKey('jwk', privateKey)
+  }).then((jwKey) => crypto.subtle.importKey(
+    'jwk',
+    {
+      kty: jwKey.kty,
+      n: jwKey.n,
+      e: jwKey.e,
+      alg: jwKey.alg,
+      kid: jwKey.kid
+    },
+    {
+      name: 'RSASSA-PKCS1-v1_5',
+      hash: {name: 'SHA-256'}
+    },
+    true,
+    ['verify']
+  ))
 }

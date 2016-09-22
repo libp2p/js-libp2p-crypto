@@ -4,7 +4,7 @@ const protobuf = require('protocol-buffers')
 const pbm = protobuf(require('./crypto.proto'))
 
 const keys = exports.keys = require('./keys')
-
+exports.pbm = pbm
 exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 
@@ -15,7 +15,7 @@ exports.generateKeyPair = (type, bits, cb) => {
     throw new Error('invalid or unsupported key type')
   }
 
-  return key.generateKeyPair(bits, cb)
+  key.generateKeyPair(bits, cb)
 }
 
 // Converts a protobuf serialized public key into its
@@ -48,14 +48,14 @@ exports.marshalPublicKey = (key, type) => {
 
 // Converts a protobuf serialized private key into its
 // representative object
-exports.unmarshalPrivateKey = (buf) => {
+exports.unmarshalPrivateKey = (buf, callback) => {
   const decoded = pbm.PrivateKey.decode(buf)
 
   switch (decoded.Type) {
     case pbm.KeyType.RSA:
-      return keys.rsa.unmarshalRsaPrivateKey(decoded.Data)
+      return keys.rsa.unmarshalRsaPrivateKey(decoded.Data, callback)
     default:
-      throw new Error('invalid or unsupported key type')
+      callback(new Error('invalid or unsupported key type'))
   }
 }
 

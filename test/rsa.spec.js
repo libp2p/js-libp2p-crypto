@@ -34,7 +34,6 @@ describe('RSA', () => {
   })
 
   it('signs', (done) => {
-    const pk = key.public
     const text = key.genSecret()
 
     key.sign(text, (err, sig) => {
@@ -42,7 +41,7 @@ describe('RSA', () => {
         return done(err)
       }
 
-      pk.verify(text, sig, (err, res) => {
+      key.public.verify(text, sig, (err, res) => {
         if (err) {
           return done(err)
         }
@@ -53,27 +52,32 @@ describe('RSA', () => {
     })
   })
 
-  it('encoding', () => {
+  it('encoding', (done) => {
     const keyMarshal = key.marshal()
-    const key2 = rsa.unmarshalRsaPrivateKey(keyMarshal)
-    const keyMarshal2 = key2.marshal()
+    rsa.unmarshalRsaPrivateKey(keyMarshal, (err, key2) => {
+      if (err) {
+        return done(err)
+      }
+      const keyMarshal2 = key2.marshal()
 
-    expect(
-      keyMarshal
-    ).to.be.eql(
-      keyMarshal2
-    )
+      expect(
+        keyMarshal
+      ).to.be.eql(
+        keyMarshal2
+      )
 
-    const pk = key.public
-    const pkMarshal = pk.marshal()
-    const pk2 = rsa.unmarshalRsaPublicKey(pkMarshal)
-    const pkMarshal2 = pk2.marshal()
+      const pk = key.public
+      const pkMarshal = pk.marshal()
+      const pk2 = rsa.unmarshalRsaPublicKey(pkMarshal)
+      const pkMarshal2 = pk2.marshal()
 
-    expect(
-      pkMarshal
-    ).to.be.eql(
-      pkMarshal2
-    )
+      expect(
+        pkMarshal
+      ).to.be.eql(
+        pkMarshal2
+      )
+      done()
+    })
   })
 
   describe('key equals', () => {
@@ -140,7 +144,7 @@ describe('RSA', () => {
     })
   })
 
-  it('does fails to verify for different data', (done) => {
+  it('fails to verify for different data', (done) => {
     const data = new Buffer('hello world')
     key.sign(data, (err, sig) => {
       if (err) {

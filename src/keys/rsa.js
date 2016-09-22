@@ -1,35 +1,22 @@
 'use strict'
 
-const forge = require('node-forge')
+const multihashing = require('multihashing')
 const protobuf = require('protocol-buffers')
-const fs = require('fs')
-const path = require('path')
 
-const utils = require('../utils')
-
-const pki = forge.pki
-const rsa = pki.rsa
-
-const pbm = protobuf(fs.readFileSync(path.join(__dirname, '../crypto.proto')))
+const crypto = require('../crypto')
+const pbm = protobuf(require('../crypto.proto'))
 
 class RsaPublicKey {
-  constructor (k) {
-    this._key = k
+  constructor (key) {
+    this._key = key
   }
 
-  verify (data, sig) {
-    const md = forge.md.sha256.create()
-    if (Buffer.isBuffer(data)) {
-      md.update(data.toString('binary'), 'binary')
-    } else {
-      md.update(data)
-    }
-
-    return this._key.verify(md.digest().bytes(), sig)
+  verify (data, sig, callback) {
+    crypto.hashAndVerify(this._key, sig, data, callback)
   }
 
   marshal () {
-    return new Buffer(forge.asn1.toDer(pki.publicKeyToAsn1(this._key)).bytes(), 'binary')
+    return this._key
   }
 
   get bytes () {
@@ -47,34 +34,23 @@ class RsaPublicKey {
     return this.bytes.equals(key.bytes)
   }
 
-  hash () {
-    return utils.keyHash(this.bytes)
+  hash (callback) {
+    multihashing(this.bytes, 'sha2-256', callback)
   }
 }
 
 class RsaPrivateKey {
-  constructor (privKey, pubKey) {
-    this._privateKey = privKey
-    if (pubKey) {
-      this._publicKey = pubKey
-    } else {
-      this._publicKey = forge.pki.setRsaPublicKey(privKey.n, privKey.e)
-    }
+  constructor (key, publicKey) {
+    this._key = key
+    this._publicKey = publicKey
   }
 
   genSecret () {
-    return forge.random.getBytesSync(16)
+    return crypto.getRandomValues(new Uint8Array(16))
   }
 
-  sign (message) {
-    const md = forge.md.sha256.create()
-    if (Buffer.isBuffer(message)) {
-      md.update(message.toString('binary'), 'binary')
-    } else {
-      md.update(message)
-    }
-    const raw = this._privateKey.sign(md, 'RSASSA-PKCS1-V1_5')
-    return new Buffer(raw, 'binary')
+  sign (message, callback) {
+    crypto.hashAndSign(this._key, message, callback)
   }
 
   get public () {
@@ -85,12 +61,12 @@ class RsaPrivateKey {
     return new RsaPublicKey(this._publicKey)
   }
 
-  decrypt (bytes) {
-    return this._privateKey.decrypt(bytes, 'RSAES-PKCS1-V1_5')
+  decrypt (msg, callback) {
+    crypto.decrypt(this._key, msg, callback)
   }
 
   marshal () {
-    return new Buffer(forge.asn1.toDer(pki.privateKeyToAsn1(this._privateKey)).bytes(), 'binary')
+    return this._key
   }
 
   get bytes () {
@@ -104,61 +80,26 @@ class RsaPrivateKey {
     return this.bytes.equals(key.bytes)
   }
 
-  hash () {
-    return utils.keyHash(this.bytes)
+  hash (callback) {
+    multihashing(this.bytes, 'sha2-256', callback)
   }
 }
 
 function unmarshalRsaPrivateKey (bytes) {
-  if (Buffer.isBuffer(bytes)) {
-    bytes = forge.util.createBuffer(bytes.toString('binary'))
-  }
-  const key = pki.privateKeyFromAsn1(forge.asn1.fromDer(bytes))
-
-  return new RsaPrivateKey(key)
+  return new RsaPrivateKey(bytes)
 }
 
 function unmarshalRsaPublicKey (bytes) {
-  if (Buffer.isBuffer(bytes)) {
-    bytes = forge.util.createBuffer(bytes.toString('binary'))
-  }
-  const key = pki.publicKeyFromAsn1(forge.asn1.fromDer(bytes))
-
-  return new RsaPublicKey(key)
-}
-
-function fastKeys (bits, cb) {
-  if (typeof window === 'undefined') {
-    let ursa
-    try {
-      ursa = require('ursa')
-    } catch (err) {
-    }
-
-    if (ursa && ursa.generatePrivateKey) {
-      const key = ursa.generatePrivateKey(bits, 65537)
-      cb(null, {
-        privateKey: pki.privateKeyFromPem(key.toPrivatePem().toString()),
-        publicKey: pki.publicKeyFromPem(key.toPublicPem().toString())
-      })
-      return
-    }
-  }
-
-  rsa.generateKeyPair({
-    bits,
-    workers: -1,
-    workerScript: utils.workerScript
-  }, cb)
+  return new RsaPublicKey(bytes)
 }
 
 function generateKeyPair (bits, cb) {
-  fastKeys(bits, (err, p) => {
+  crypto.generateKey(bits, (err, key, publicKey) => {
     if (err) {
       return cb(err)
     }
 
-    cb(null, new RsaPrivateKey(p.privateKey, p.publicKey))
+    cb(null, new RsaPrivateKey(key, publicKey))
   })
 }
 

@@ -1,3 +1,6 @@
+'use strict'
+
+module.exports = new Buffer(`
 enum KeyType {
 	RSA = 0;
 }
@@ -11,3 +14,4 @@ message PrivateKey {
 	required KeyType Type = 1;
 	required bytes Data = 2;
 }
+`)

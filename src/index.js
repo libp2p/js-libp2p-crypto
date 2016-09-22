@@ -1,11 +1,8 @@
 'use strict'
 
 const protobuf = require('protocol-buffers')
-const fs = require('fs')
-const path = require('path')
-const pbm = protobuf(fs.readFileSync(path.join(__dirname, './crypto.proto')))
+const pbm = protobuf(require('./crypto.proto'))
 
-exports.utils = require('./utils')
 const keys = exports.keys = require('./keys')
 
 exports.keyStretcher = require('./key-stretcher')

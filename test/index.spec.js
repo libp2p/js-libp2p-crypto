@@ -29,26 +29,32 @@ describe('libp2p-crypto', () => {
   })
 
   describe('go interop', () => {
-    it('unmarshals private key', () => {
+    it('unmarshals private key', (done) => {
       const key = crypto.unmarshalPrivateKey(fixtures.private.key)
       const hash = fixtures.private.hash
 
-      expect(
-        key.hash()
-      ).to.be.eql(
-        hash
-      )
+      key.hash((err, digest) => {
+        if (err) {
+          return done(err)
+        }
+
+        expect(digest).to.be.eql(hash)
+        done()
+      })
     })
 
-    it('unmarshals public key', () => {
+    it('unmarshals public key', (done) => {
       const key = crypto.unmarshalPublicKey(fixtures.public.key)
       const hash = fixtures.public.hash
 
-      expect(
-        key.hash()
-      ).to.be.eql(
-        hash
-      )
+      key.hash((err, digest) => {
+        if (err) {
+          return done(err)
+        }
+
+        expect(digest).to.be.eql(hash)
+        done()
+      })
     })
 
     it('unmarshal -> marshal, private key', () => {

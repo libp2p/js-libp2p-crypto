@@ -16,30 +16,41 @@ describe('RSA', () => {
     })
   })
 
-  it('generates a valid key', () => {
+  it('generates a valid key', (done) => {
     expect(
       key
     ).to.be.an.instanceof(
       rsa.RsaPrivateKey
     )
 
-    expect(
-      key.hash()
-    ).to.have.length(
-      34
-    )
+    key.hash((err, digest) => {
+      if (err) {
+        return done(err)
+      }
+
+      expect(digest).to.have.length(34)
+      done()
+    })
   })
 
-  it('signs', () => {
+  it('signs', (done) => {
     const pk = key.public
     const text = key.genSecret()
-    const sig = key.sign(text)
 
-    expect(
-      pk.verify(text, sig)
-    ).to.be.eql(
-      true
-    )
+    key.sign(text, (err, sig) => {
+      if (err) {
+        return done(err)
+      }
+
+      pk.verify(text, sig, (err, res) => {
+        if (err) {
+          return done(err)
+        }
+
+        expect(res).to.be.eql(true)
+        done()
+      })
+    })
   })
 
   it('encoding', () => {
@@ -112,25 +123,37 @@ describe('RSA', () => {
     })
   })
 
-  it('sign and verify', () => {
+  it('sign and verify', (done) => {
     const data = new Buffer('hello world')
-    const sig = key.sign(data)
+    key.sign(data, (err, sig) => {
+      if (err) {
+        return done(err)
+      }
 
-    expect(
-      key.public.verify(data, sig)
-    ).to.be.eql(
-      true
-    )
+      key.public.verify(data, sig, (err, valid) => {
+        if (err) {
+          return done(err)
+        }
+        expect(valid).to.be.eql(true)
+        done()
+      })
+    })
   })
 
-  it('does fails to verify for different data', () => {
+  it('does fails to verify for different data', (done) => {
     const data = new Buffer('hello world')
-    const sig = key.sign(data)
+    key.sign(data, (err, sig) => {
+      if (err) {
+        return done(err)
+      }
 
-    expect(
-      key.public.verify(new Buffer('hello'), sig)
-    ).to.be.eql(
-      false
-    )
+      key.public.verify(new Buffer('hello'), sig, (err, valid) => {
+        if (err) {
+          return done(err)
+        }
+        expect(valid).to.be.eql(false)
+        done()
+      })
+    })
   })
 })

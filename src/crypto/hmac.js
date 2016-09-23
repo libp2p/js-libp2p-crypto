@@ -2,6 +2,8 @@
 
 const crypto = require('crypto')
 
+const lengths = require('./hmac-lengths')
+
 exports.create = function (hash, secret, callback) {
   const res = {
     digest (data, cb) {
@@ -9,7 +11,8 @@ exports.create = function (hash, secret, callback) {
       hmac.update(data)
 
       cb(null, hmac.digest())
-    }
+    },
+    length: lengths[hash]
   }
 
   function genFresh () {

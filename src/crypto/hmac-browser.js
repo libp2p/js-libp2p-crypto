@@ -1,6 +1,7 @@
 'use strict'
 
 const crypto = require('./webcrypto')()
+const lengths = require('./hmac-lengths')
 
 const hashTypes = {
   SHA1: 'SHA-1',
@@ -32,7 +33,8 @@ exports.create = function (hashType, secret, callback) {
         }).catch((err) => {
           cb(err)
         })
-      }
+      },
+      length: lengths[hashType]
     }
 
     callback(null, res)

@@ -9,7 +9,9 @@
     "./src/crypto/webcrypto.js": "./src/crypto/webcrypto-browser.js",
     "./lib/crypto/webcrypto.js": "./lib/crypto/webcrypto-browser.js",
     "./src/crypto/hmac.js": "./src/crypto/hmac-browser.js",
-    "./lib/crypto/hmac.js": "./lib/crypto/hmac-browser.js"
+    "./lib/crypto/hmac.js": "./lib/crypto/hmac-browser.js",
+    "./src/crypto/aes.js": "./src/crypto/aes-browser.js",
+    "./lib/crypto/aes.js": "./lib/crypto/aes-browser.js"
   },
   "scripts": {
     "lint": "aegir-lint",

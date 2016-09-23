@@ -2,8 +2,11 @@
 
 const protobuf = require('protocol-buffers')
 const pbm = protobuf(require('./crypto.proto'))
+const c = require('./crypto')
 
-exports.webcrypto = require('./crypto/webcrypto')()
+exports.hmac = c.hmac
+exports.aes = c.aes
+exports.webcrypto = c.webcrypto
 
 const keys = exports.keys = require('./keys')
 exports.keyStretcher = require('./key-stretcher')

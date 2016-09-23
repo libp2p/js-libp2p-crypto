@@ -3,7 +3,7 @@
 const multihashing = require('multihashing')
 const protobuf = require('protocol-buffers')
 
-const crypto = require('../crypto')
+const crypto = require('../crypto').rsa
 const pbm = protobuf(require('../crypto.proto'))
 
 class RsaPublicKey {
@@ -12,6 +12,7 @@ class RsaPublicKey {
   }
 
   verify (data, sig, callback) {
+    ensure(callback)
     crypto.hashAndVerify(this._key, sig, data, callback)
   }
 
@@ -35,6 +36,7 @@ class RsaPublicKey {
   }
 
   hash (callback) {
+    ensure(callback)
     multihashing(this.bytes, 'sha2-256', callback)
   }
 }
@@ -50,6 +52,7 @@ class RsaPrivateKey {
   }
 
   sign (message, callback) {
+    ensure(callback)
     crypto.hashAndSign(this._key, message, callback)
   }
 
@@ -81,6 +84,7 @@ class RsaPrivateKey {
   }
 
   hash (callback) {
+    ensure(callback)
     multihashing(this.bytes, 'sha2-256', callback)
   }
 }
@@ -107,6 +111,12 @@ function generateKeyPair (bits, cb) {
 
     cb(null, new RsaPrivateKey(key, publicKey))
   })
+}
+
+function ensure (cb) {
+  if (typeof cb !== 'function') {
+    throw new Error('callback is required')
+  }
 }
 
 module.exports = {

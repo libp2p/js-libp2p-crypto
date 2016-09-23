@@ -1,4 +1,13 @@
-# Performance
+# Stats
+
+## Size
+
+|       | non-minified | minified |
+|-------|--------------|----------|
+|before | `1.55M`      | `789K`   |
+|after  | `461K`       | `291K`   |
+
+## Performance
 
 ### RSA
 

@@ -5,7 +5,11 @@
   "main": "src/index.js",
   "jsnext:main": "src/index.js",
   "browser": {
-    "node-webcrypto-ossl": false
+    "node-webcrypto-ossl": false,
+    "./src/crypto/webcrypto.js": "./src/crypto/webcrypto-browser.js",
+    "./lib/crypto/webcrypto.js": "./lib/crypto/webcrypto-browser.js",
+    "./src/crypto/hmac.js": "./src/crypto/hmac-browser.js",
+    "./lib/crypto/hmac.js": "./lib/crypto/hmac-browser.js"
   },
   "scripts": {
     "lint": "aegir-lint",
@@ -28,7 +32,7 @@
   "author": "Friedel Ziegelmayer <dignifiedqurie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "elliptic": "^6.3.2",
+    "async": "^2.0.1",
     "multihashing": "^0.2.1",
     "node-webcrypto-ossl": "^1.0.7",
     "protocol-buffers": "^3.1.6",
@@ -36,6 +40,7 @@
   },
   "devDependencies": {
     "aegir": "^8.0.0",
+    "benchmark": "^2.1.1",
     "chai": "^3.5.0",
     "pre-commit": "^1.1.3"
   },

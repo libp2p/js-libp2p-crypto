@@ -3,8 +3,9 @@
 const protobuf = require('protocol-buffers')
 const pbm = protobuf(require('./crypto.proto'))
 
+exports.webcrypto = require('./crypto/webcrypto')()
+
 const keys = exports.keys = require('./keys')
-exports.pbm = pbm
 exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 
@@ -12,7 +13,7 @@ exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 exports.generateKeyPair = (type, bits, cb) => {
   let key = keys[type.toLowerCase()]
   if (!key) {
-    throw new Error('invalid or unsupported key type')
+    return cb(new Error('invalid or unsupported key type'))
   }
 
   key.generateKeyPair(bits, cb)

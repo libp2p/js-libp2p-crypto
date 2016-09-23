@@ -1,30 +1,12 @@
 'use strict'
 
-const crypto = getWebCrypto()
+const crypto = require('./crypto/webcrypto')()
 const multihashing = require('multihashing')
 
 const sha2256 = multihashing.createHash('sha2-256')
 
-function getWebCrypto () {
-  let WebCrypto
-  try {
-    WebCrypto = require('node-webcrypto-ossl')
-  } catch (err) {
-  }
-
-  if (typeof WebCrypto === 'function') {
-    const webCrypto = new WebCrypto()
-    return webCrypto
-  }
-
-  if (typeof window !== 'undefined') {
-    require('webcrypto-shim')
-
-    return window.crypto
-  }
-
-  throw new Error('Please use an environment with crypto support')
-}
+exports.hmac = require('./crypto/hmac')
+exports.ecdh = require('./crypto/ecdh')
 
 exports.generateKey = function (bits, callback) {
   crypto.subtle.generateKey(

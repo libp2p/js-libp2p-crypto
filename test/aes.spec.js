@@ -5,16 +5,17 @@
 const expect = require('chai').expect
 const crypto = require('../src')
 
-const bits = {
+const bytes = {
   16: 'AES-128',
   32: 'AES-256'
 }
 
 describe('AES-CTR', () => {
-  Object.keys(bits).forEach((bit) => {
-    it(`${bits[bit]} - encrypt and decrypt`, (done) => {
-      const key = new Buffer(parseInt(bit, 10))
+  Object.keys(bytes).forEach((byte) => {
+    it(`${bytes[byte]} - encrypt and decrypt`, (done) => {
+      const key = new Buffer(parseInt(byte, 10))
       key.fill(5)
+      console.log(key)
       const iv = new Buffer(16)
       iv.fill(1)
 

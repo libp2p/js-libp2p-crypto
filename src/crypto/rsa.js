@@ -56,7 +56,7 @@ exports.unmarshalPrivateKey = function (bytes, callback) {
 }
 
 exports.getRandomValues = function (arr) {
-  return Buffer.from(crypto.getRandomValues(arr).buffer)
+  return Buffer.from(crypto.getRandomValues(arr))
 }
 
 exports.hashAndSign = function (key, msg, callback) {

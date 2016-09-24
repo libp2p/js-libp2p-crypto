@@ -7,14 +7,14 @@ const crypto = require('./webcrypto')()
 exports.create = function (key, iv, callback) {
   nodeify(crypto.subtle.importKey(
     'raw',
-    key.buffer,
+    key,
     {
       name: 'AES-CTR'
     },
     false,
     ['encrypt', 'decrypt']
   ).then((key) => {
-    const counter = copy(iv).buffer
+    const counter = copy(iv)
 
     return {
       encrypt (data, cb) {
@@ -25,7 +25,7 @@ exports.create = function (key, iv, callback) {
             length: 128
           },
           key,
-          data.buffer
+          data
         ).then((raw) => Buffer.from(raw)), cb)
       },
 
@@ -37,7 +37,7 @@ exports.create = function (key, iv, callback) {
             length: 128
           },
           key,
-          data.buffer
+          data
         ).then((raw) => Buffer.from(raw)), cb)
       }
     }

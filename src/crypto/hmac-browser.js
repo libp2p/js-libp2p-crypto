@@ -16,7 +16,7 @@ exports.create = function (hashType, secret, callback) {
 
   nodeify(crypto.subtle.importKey(
     'raw',
-    secret.buffer,
+    secret,
     {
       name: 'HMAC',
       hash: {name: hash}
@@ -29,7 +29,7 @@ exports.create = function (hashType, secret, callback) {
         nodeify(crypto.subtle.sign(
           {name: 'HMAC'},
           key,
-          data.buffer
+          data
         ).then((raw) => Buffer.from(raw)), cb)
       },
       length: lengths[hashType]

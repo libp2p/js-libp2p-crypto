@@ -1,9 +1,10 @@
 'use strict'
 
 const crypto = require('./webcrypto')()
+const nodeify = require('nodeify')
 
 exports.generateEphmeralKeyPair = function (curve, callback) {
-  crypto.subtle.generateKey(
+  nodeify(crypto.subtle.generateKey(
     {
       name: 'ECDH',
       namedCurve: curve
@@ -19,7 +20,7 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
       }
 
       const privateKey = forcePrivate || pair.privateKey
-      crypto.subtle.importKey(
+      nodeify(crypto.subtle.importKey(
         'spki',
         theirPub,
         {
@@ -40,10 +41,8 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
         )
       }).then((bits) => {
         // return p.derive(pub.getPublic()).toBuffer('be')
-        cb(null, Buffer.from(bits))
-      }).catch((err) => {
-        cb(err)
-      })
+        return Buffer.from(bits)
+      }), cb)
     }
 
     return crypto.subtle.exportKey(
@@ -55,9 +54,5 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
         genSharedKey
       }
     })
-  }).then((res) => {
-    callback(null, res)
-  }).catch((err) => {
-    callback(err)
-  })
+  }), callback)
 }

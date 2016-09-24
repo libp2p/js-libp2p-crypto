@@ -1,12 +1,14 @@
 'use strict'
 
-const crypto = require('./webcrypto')()
 const multihashing = require('multihashing')
+const nodeify = require('nodeify')
+
+const crypto = require('./webcrypto')()
 
 const sha2256 = multihashing.createHash('sha2-256')
 
 exports.generateKey = function (bits, callback) {
-  crypto.subtle.generateKey(
+  nodeify(crypto.subtle.generateKey(
     {
       name: 'RSASSA-PKCS1-v1_5',
       modulusLength: bits,
@@ -18,14 +20,11 @@ exports.generateKey = function (bits, callback) {
   )
   .then(exportKey)
   .then((keys) => {
-    callback(
-      null,
-      Buffer.from(keys[0]),
-      Buffer.from(keys[1])
-    )
-  }).catch((err) => {
-    callback(err)
-  })
+    return {
+      privateKey: Buffer.from(keys[0]),
+      publicKey: Buffer.from(keys[1])
+    }
+  }), callback)
 }
 
 exports.unmarshalPrivateKey = function (bytes, callback) {
@@ -39,7 +38,8 @@ exports.unmarshalPrivateKey = function (bytes, callback) {
     true,
     ['sign']
   )
-  Promise.all([
+
+  nodeify(Promise.all([
     privateKey,
     derivePublicFromPrivate(privateKey)
   ]).then((keys) => {
@@ -48,14 +48,11 @@ exports.unmarshalPrivateKey = function (bytes, callback) {
       publicKey: keys[1]
     })
   }).then((keys) => {
-    callback(
-      null,
-      Buffer.from(keys[0]),
-      Buffer.from(keys[1])
-    )
-  }).catch((err) => {
-    callback(err)
-  })
+    return {
+      privateKey: Buffer.from(keys[0]),
+      publicKey: Buffer.from(keys[1])
+    }
+  }), callback)
 }
 
 exports.getRandomValues = function (arr) {
@@ -68,7 +65,7 @@ exports.hashAndSign = function (key, msg, callback) {
       return callback(err)
     }
 
-    crypto.subtle.importKey(
+    nodeify(crypto.subtle.importKey(
       'pkcs8',
       Uint8Array.from(key),
       {
@@ -83,11 +80,7 @@ exports.hashAndSign = function (key, msg, callback) {
         privateKey,
         Uint8Array.from(digest)
       )
-    }).then((sig) => {
-      callback(null, Buffer.from(sig))
-    }).catch((err) => {
-      callback(err)
-    })
+    }).then((sig) => Buffer.from(sig)), callback)
   })
 }
 
@@ -97,7 +90,7 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
       return callback(err)
     }
 
-    crypto.subtle.importKey(
+    nodeify(crypto.subtle.importKey(
       'spki',
       Uint8Array.from(key),
       {
@@ -113,11 +106,7 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
         Uint8Array.from(sig),
         Uint8Array.from(digest)
       )
-    }).then((valid) => {
-      callback(null, valid)
-    }).catch((err) => {
-      callback(err)
-    })
+    }), callback)
   })
 }
 

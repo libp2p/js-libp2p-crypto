@@ -1,5 +1,7 @@
 'use strict'
 
+const nodeify = require('nodeify')
+
 const crypto = require('./webcrypto')()
 const lengths = require('./hmac-lengths')
 
@@ -12,7 +14,7 @@ const hashTypes = {
 exports.create = function (hashType, secret, callback) {
   const hash = hashTypes[hashType]
 
-  crypto.subtle.importKey(
+  nodeify(crypto.subtle.importKey(
     'raw',
     secret.buffer,
     {
@@ -22,23 +24,15 @@ exports.create = function (hashType, secret, callback) {
     false,
     ['sign']
   ).then((key) => {
-    const res = {
+    return {
       digest (data, cb) {
-        crypto.subtle.sign(
+        nodeify(crypto.subtle.sign(
           {name: 'HMAC'},
           key,
           data.buffer
-        ).then((raw) => {
-          cb(null, Buffer.from(raw))
-        }).catch((err) => {
-          cb(err)
-        })
+        ).then((raw) => Buffer.from(raw)), cb)
       },
       length: lengths[hashType]
     }
-
-    callback(null, res)
-  }).catch((err) => {
-    callback(err)
-  })
+  }), callback)
 }

@@ -36,10 +36,10 @@ sign and verify x 109 ops/sec ±2.00% (53 runs sampled)
 ##### Node `6.6.0`
 
 ```
-generateKeyPair 1024bits x 36.80 ops/sec ±9.70% (41 runs sampled)n
-generateKeyPair 2048bits x 7.36 ops/sec ±18.90% (28 runs sampled)
-generateKeyPair 4096bits x 0.82 ops/sec ±54.57% (10 runs sampled)
-sign and verify x 611 ops/sec ±4.91% (62 runs sampled)
+generateKeyPair 1024bits x 44.42 ops/sec ±10.21% (43 runs sampled)
+generateKeyPair 2048bits x 7.46 ops/sec ±22.60% (27 runs sampled)
+generateKeyPair 4096bits x 1.64 ops/sec ±30.16% (13 runs sampled)
+sign and verify x 900 ops/sec ±4.03% (68 runs sampled)
 ```
 
 ##### Browser (Chrome `53.0.2785.116`)
@@ -89,15 +89,15 @@ keyStretcher Blowfish SHA512 x 7,726 ops/sec ±1.81% (50 runs sampled)
 ##### Node `6.6.0`
 
 ```
-keyStretcher AES-128 SHA1 x 5,538 ops/sec ±5.60% (63 runs sampled)
-keyStretcher AES-128 SHA256 x 8,035 ops/sec ±5.40% (59 runs sampled)
-keyStretcher AES-128 SHA512 x 12,320 ops/sec ±5.10% (61 runs sampled)
-keyStretcher AES-256 SHA1 x 5,231 ops/sec ±5.49% (66 runs sampled)
-keyStretcher AES-256 SHA256 x 6,895 ops/sec ±5.65% (68 runs sampled)
-keyStretcher AES-256 SHA512 x 7,836 ops/sec ±3.95% (52 runs sampled)
-keyStretcher Blowfish SHA1 x 27,774 ops/sec ±6.83% (61 runs sampled)
-keyStretcher Blowfish SHA256 x 27,960 ops/sec ±3.06% (42 runs sampled)
-keyStretcher Blowfish SHA512 x 27,891 ops/sec ±2.81% (53 runs sampled)
+keyStretcher AES-128 SHA1 x 6,680 ops/sec ±3.62% (65 runs sampled)
+keyStretcher AES-128 SHA256 x 8,124 ops/sec ±4.37% (66 runs sampled)
+keyStretcher AES-128 SHA512 x 11,683 ops/sec ±4.56% (66 runs sampled)
+keyStretcher AES-256 SHA1 x 5,531 ops/sec ±4.69% (68 runs sampled)
+keyStretcher AES-256 SHA256 x 6,725 ops/sec ±4.87% (66 runs sampled)
+keyStretcher AES-256 SHA512 x 9,042 ops/sec ±3.87% (64 runs sampled)
+keyStretcher Blowfish SHA1 x 40,757 ops/sec ±5.38% (60 runs sampled)
+keyStretcher Blowfish SHA256 x 41,845 ops/sec ±4.89% (64 runs sampled)
+keyStretcher Blowfish SHA512 x 42,345 ops/sec ±4.86% (63 runs sampled)
 ```
 
 ##### Browser (Chrome `53.0.2785.116`)

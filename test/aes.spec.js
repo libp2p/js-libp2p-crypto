@@ -15,7 +15,7 @@ describe('AES-CTR', () => {
     it(`${bytes[byte]} - encrypt and decrypt`, (done) => {
       const key = new Buffer(parseInt(byte, 10))
       key.fill(5)
-      console.log(key)
+
       const iv = new Buffer(16)
       iv.fill(1)
 

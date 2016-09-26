@@ -34,7 +34,9 @@
   "author": "Friedel Ziegelmayer <dignifiedqurie@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "asn1.js": "^4.8.1",
     "async": "^2.0.1",
+    "bn.js": "^4.11.6",
     "multihashing": "^0.2.1",
     "node-webcrypto-ossl": "^1.0.7",
     "nodeify": "^1.0.0",

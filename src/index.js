@@ -6,6 +6,7 @@ const c = require('./crypto')
 
 exports.hmac = c.hmac
 exports.aes = c.aes
+exports.rsa = c.rsa
 exports.webcrypto = c.webcrypto
 
 const keys = exports.keys = require('./keys')
@@ -44,10 +45,7 @@ exports.marshalPublicKey = (key, type) => {
     throw new Error('invalid or unsupported key type')
   }
 
-  return pbm.PublicKey.encode({
-    Type: pbm.KeyType.RSA,
-    Data: key.marshal()
-  })
+  return key.bytes
 }
 
 // Converts a protobuf serialized private key into its
@@ -72,8 +70,5 @@ exports.marshalPrivateKey = (key, type) => {
     throw new Error('invalid or unsupported key type')
   }
 
-  return pbm.PrivateKey.encode({
-    Type: pbm.KeyType.RSA,
-    Data: key.marshal()
-  })
+  return key.bytes
 }

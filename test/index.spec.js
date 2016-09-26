@@ -38,13 +38,14 @@ describe('libp2p-crypto', () => {
   // marshalled keys seem to be slightly different
   // unsure as to if this is just a difference in encoding
   // or a bug
-  describe.skip('go interop', () => {
+  describe('go interop', () => {
     it('unmarshals private key', (done) => {
       crypto.unmarshalPrivateKey(fixtures.private.key, (err, key) => {
         if (err) {
           return done(err)
         }
         const hash = fixtures.private.hash
+        expect(fixtures.private.key).to.be.eql(key.bytes)
 
         key.hash((err, digest) => {
           if (err) {

@@ -41,7 +41,7 @@ describe('generateEphemeralKeyPair', () => {
     })
   })
 
-  describe('go interop', () => {
+  describe.skip('go interop', () => {
     it('generates a shared secret', (done) => {
       const curve = fixtures.curve
       console.log('start', curve)

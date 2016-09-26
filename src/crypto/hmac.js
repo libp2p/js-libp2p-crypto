@@ -10,7 +10,9 @@ exports.create = function (hash, secret, callback) {
       const hmac = genFresh()
       hmac.update(data)
 
-      cb(null, hmac.digest())
+      setImmediate(() => {
+        cb(null, hmac.digest())
+      })
     },
     length: lengths[hash]
   }

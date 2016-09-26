@@ -2,6 +2,8 @@
 
 const multihashing = require('multihashing')
 const nodeify = require('nodeify')
+const BN = require('bn.js')
+const asn1 = require('asn1.js')
 
 const crypto = require('./webcrypto')()
 
@@ -21,16 +23,17 @@ exports.generateKey = function (bits, callback) {
   .then(exportKey)
   .then((keys) => {
     return {
-      privateKey: Buffer.from(keys[0]),
+      privateKey: keys[0],
       publicKey: Buffer.from(keys[1])
     }
   }), callback)
 }
 
-exports.unmarshalPrivateKey = function (bytes, callback) {
+// Takes a jwk key
+exports.unmarshalPrivateKey = function (key, callback) {
   const privateKey = crypto.subtle.importKey(
-    'pkcs8',
-    bytes,
+    'jwk',
+    key,
     {
       name: 'RSASSA-PKCS1-v1_5',
       hash: {name: 'SHA-256'}
@@ -49,7 +52,7 @@ exports.unmarshalPrivateKey = function (bytes, callback) {
     })
   }).then((keys) => {
     return {
-      privateKey: Buffer.from(keys[0]),
+      privateKey: keys[0],
       publicKey: Buffer.from(keys[1])
     }
   }), callback)
@@ -66,8 +69,8 @@ exports.hashAndSign = function (key, msg, callback) {
     }
 
     nodeify(crypto.subtle.importKey(
-      'pkcs8',
-      Uint8Array.from(key),
+      'jwk',
+      key,
       {
         name: 'RSASSA-PKCS1-v1_5',
         hash: {name: 'SHA-256'}
@@ -112,7 +115,7 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
 
 function exportKey (pair) {
   return Promise.all([
-    crypto.subtle.exportKey('pkcs8', pair.privateKey),
+    crypto.subtle.exportKey('jwk', pair.privateKey),
     crypto.subtle.exportKey('spki', pair.publicKey)
   ])
 }
@@ -136,4 +139,67 @@ function derivePublicFromPrivate (privatePromise) {
     true,
     ['verify']
   ))
+}
+
+const RSAPrivateKey = asn1.define('RSAPrivateKey', function () {
+  this.seq().obj(
+    this.key('version').int(),
+    this.key('modulus').int(),
+    this.key('publicExponent').int(),
+    this.key('privateExponent').int(),
+    this.key('prime1').int(),
+    this.key('prime2').int(),
+    this.key('exponent1').int(),
+    this.key('exponent2').int(),
+    this.key('coefficient').int()
+  )
+})
+
+// Convert a PKCS#1 in ASN1 DER format to a JWK key
+exports.pkcs1ToJwk = function (bytes) {
+  const asn1 = RSAPrivateKey.decode(bytes, 'der')
+
+  return {
+    kty: 'RSA',
+    n: toBase64(asn1.modulus),
+    e: toBase64(asn1.publicExponent),
+    d: toBase64(asn1.privateExponent),
+    p: toBase64(asn1.prime1),
+    q: toBase64(asn1.prime2),
+    dp: toBase64(asn1.exponent1),
+    dq: toBase64(asn1.exponent2),
+    qi: toBase64(asn1.coefficient),
+    alg: 'RS256',
+    kid: '2011-04-29'
+  }
+}
+
+exports.jwkToPkcs1 = function (jwk) {
+  return RSAPrivateKey.encode({
+    version: 0,
+    modulus: toBn(jwk.n),
+    publicExponent: toBn(jwk.e),
+    privateExponent: toBn(jwk.d),
+    prime1: toBn(jwk.p),
+    prime2: toBn(jwk.q),
+    exponent1: toBn(jwk.dp),
+    exponent2: toBn(jwk.dq),
+    coefficient: toBn(jwk.qi)
+  }, 'der')
+}
+
+// Convert a BN.js instance to a base64 encoded string without padding
+// Adapted from https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#appendix-C
+function toBase64 (bn) {
+  let s = bn.toBuffer('be').toString('base64')
+
+  return s
+    .replace(/(=*)$/, '') // Remove any trailing '='s
+    .replace(/\+/g, '-')  // 62nd char of encoding
+    .replace(/\//g, '_')  // 63rd char of encoding
+}
+
+// Convert a base64 encoded string to a BN.js instance
+function toBn (str) {
+  return new BN(Buffer.from(str, 'base64'))
 }

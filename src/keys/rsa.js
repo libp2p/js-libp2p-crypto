@@ -42,6 +42,8 @@ class RsaPublicKey {
 }
 
 class RsaPrivateKey {
+  // key       - Object of the jwk format
+  // publicKey - Buffer of the spki format
   constructor (key, publicKey) {
     this._key = key
     this._publicKey = publicKey
@@ -69,7 +71,7 @@ class RsaPrivateKey {
   }
 
   marshal () {
-    return this._key
+    return crypto.jwkToPkcs1(this._key)
   }
 
   get bytes () {
@@ -90,7 +92,8 @@ class RsaPrivateKey {
 }
 
 function unmarshalRsaPrivateKey (bytes, callback) {
-  crypto.unmarshalPrivateKey(bytes, (err, keys) => {
+  const jwk = crypto.pkcs1ToJwk(bytes)
+  crypto.unmarshalPrivateKey(jwk, (err, keys) => {
     if (err) {
       return callback(err)
     }

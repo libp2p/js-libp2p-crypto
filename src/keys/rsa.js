@@ -127,9 +127,39 @@ function unmarshalRsaPublicKey (bytes) {
   return new RsaPublicKey(key)
 }
 
-function generateKeyPair (bits) {
-  const p = rsa.generateKeyPair({bits})
-  return new RsaPrivateKey(p.privateKey, p.publicKey)
+function fastKeys (bits, cb) {
+  if (typeof window === 'undefined') {
+    let ursa
+    try {
+      ursa = require('ursa')
+    } catch (err) {
+    }
+
+    if (ursa && ursa.generatePrivateKey) {
+      const key = ursa.generatePrivateKey(bits, 65537)
+      cb(null, {
+        privateKey: pki.privateKeyFromPem(key.toPrivatePem().toString()),
+        publicKey: pki.publicKeyFromPem(key.toPublicPem().toString())
+      })
+      return
+    }
+  }
+
+  rsa.generateKeyPair({
+    bits,
+    workers: -1,
+    workerScript: utils.workerScript
+  }, cb)
+}
+
+function generateKeyPair (bits, cb) {
+  fastKeys(bits, (err, p) => {
+    if (err) {
+      return cb(err)
+    }
+
+    cb(null, new RsaPrivateKey(p.privateKey, p.publicKey))
+  })
 }
 
 module.exports = {

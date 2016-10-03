@@ -1,6 +1,6 @@
 'use strict'
 
-const multihashing = require('multihashing')
+const multihashing = require('multihashing-async')
 const nodeify = require('nodeify')
 const BN = require('bn.js')
 const asn1 = require('asn1.js')

@@ -1,6 +1,6 @@
 'use strict'
 
-const multihashing = require('multihashing')
+const multihashing = require('multihashing-async')
 const protobuf = require('protocol-buffers')
 
 const crypto = require('../crypto').rsa

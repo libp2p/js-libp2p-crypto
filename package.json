@@ -28,7 +28,8 @@
     "elliptic": "^6.3.2",
     "multihashing": "^0.2.1",
     "node-forge": "^0.6.39",
-    "protocol-buffers": "^3.1.6"
+    "protocol-buffers": "^3.1.6",
+    "brfs": "^1.4.3"
   },
   "devDependencies": {
     "aegir": "^8.0.0",
@@ -41,6 +42,11 @@
   ],
   "engines": {
     "node": "^4.0.0"
+  },
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
   },
   "repository": {
     "type": "git",

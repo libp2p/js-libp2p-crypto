@@ -31,7 +31,7 @@
     "protocol-buffers": "^3.1.6"
   },
   "devDependencies": {
-    "aegir": "^8.0.0",
+    "aegir": "^9.0.1",
     "chai": "^3.5.0",
     "pre-commit": "^1.1.3"
   },

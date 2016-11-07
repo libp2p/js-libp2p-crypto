@@ -30,7 +30,7 @@
   "author": "Friedel Ziegelmayer <dignifiedqurie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "asn1.js": "^4.8.1",
+    "asn1.js": "^4.9.0",
     "async": "^2.1.2",
     "multihashing-async": "^0.2.0",
     "node-webcrypto-ossl": "^1.0.7",

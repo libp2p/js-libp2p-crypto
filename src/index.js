@@ -74,9 +74,9 @@ exports.marshalPrivateKey = (key, type) => {
 
 exports.randomBytes = (number) => {
   if (!number || typeof number !== 'number') {
-    throw new Error('first argument must be a Number')
+    throw new Error('first argument must be a Number bigger than 0')
   }
   const buf = new Buffer(number)
-  c.webcrypto.getRandomValues(buf)
+  c.rsa.getRandomValues(buf)
   return buf
 }

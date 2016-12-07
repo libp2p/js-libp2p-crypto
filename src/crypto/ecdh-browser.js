@@ -14,7 +14,7 @@ const bits = {
   'P-521': 521
 }
 
-exports.generateEphmeralKeyPair = function (curve, callback) {
+exports.generateEphemeralKeyPair = function (curve, callback) {
   nodeify(crypto.subtle.generateKey(
     {
       name: 'ECDH',

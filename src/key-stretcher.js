@@ -18,8 +18,16 @@ const cipherMap = {
   }
 }
 
-// Generates a set of keys for each party by stretching the shared key.
-// (myIV, theirIV, myCipherKey, theirCipherKey, myMACKey, theirMACKey)
+/** Generates a set of keys for each party by stretching the shared key.
+ *
+ * @alias keyStretcher
+ * @memberof libp2p-crypto
+ * @param {string} cipherType - One of `'AES-128'`, `'AES-256'`, `'Blowfish'`.
+ * @param {string} hash - One of `'SHA1'`, `'SHA256'`, `'SHA512'`.
+ * @param {Buffer} secret
+ * @param {function(Error, {k1: Buffer, k2: Buffer})} callback
+ * @returns {undefined}
+ */
 module.exports = (cipherType, hash, secret, callback) => {
   const cipher = cipherMap[cipherType]
 

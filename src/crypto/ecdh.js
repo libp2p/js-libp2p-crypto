@@ -9,7 +9,7 @@ const curves = {
   'P-521': 'secp521r1'
 }
 
-exports.generateEphmeralKeyPair = function (curve, callback) {
+exports.generateEphemeralKeyPair = function (curve, callback) {
   if (!curves[curve]) {
     return callback(new Error(`Unkown curve: ${curve}`))
   }

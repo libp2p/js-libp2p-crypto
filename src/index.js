@@ -1,3 +1,6 @@
+/**
+ * @module libp2p-crypto
+ */
 'use strict'
 
 const protobuf = require('protocol-buffers')
@@ -12,18 +15,30 @@ const keys = exports.keys = require('./keys')
 exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 
-// Generates a keypair of the given type and bitsize
-exports.generateKeyPair = (type, bits, cb) => {
+/**
+ * Generates a keypair of the given type and bitsize
+ *
+ * @param {string} type - Can only be `rsa`.
+ * @param {number} bits - Minimum of `1024`.
+ * @param {function(Error, KeyPair)} callback
+ * @returns {undefined}
+ */
+exports.generateKeyPair = (type, bits, callback) => {
   let key = keys[type.toLowerCase()]
   if (!key) {
-    return cb(new Error('invalid or unsupported key type'))
+    return callback(new Error('invalid or unsupported key type'))
   }
 
-  key.generateKeyPair(bits, cb)
+  key.generateKeyPair(bits, callback)
 }
 
-// Converts a protobuf serialized public key into its
-// representative object
+/**
+ * Converts a protobuf serialized public key into its
+ * representative object.
+ *
+ * @param {Buffer} buf
+ * @returns {PublicKey}
+ */
 exports.unmarshalPublicKey = (buf) => {
   const decoded = pbm.PublicKey.decode(buf)
 
@@ -35,7 +50,14 @@ exports.unmarshalPublicKey = (buf) => {
   }
 }
 
-// Converts a public key object into a protobuf serialized public key
+/**
+ * Converts a public key object into a protobuf serialized
+ * public key.
+ *
+ * @param {PublicKey} key
+ * @param {string} [type='rsa']
+ * @returns {Buffer}
+ */
 exports.marshalPublicKey = (key, type) => {
   type = (type || 'rsa').toLowerCase()
 
@@ -47,8 +69,14 @@ exports.marshalPublicKey = (key, type) => {
   return key.bytes
 }
 
-// Converts a protobuf serialized private key into its
-// representative object
+/**
+ * Converts a protobuf serialized private key into its
+ * representative object.
+ *
+ * @param {Buffer} buf
+ * @param {function(Error, PrivateKey)} callback
+ * @returns {undefined}
+ */
 exports.unmarshalPrivateKey = (buf, callback) => {
   const decoded = pbm.PrivateKey.decode(buf)
 
@@ -60,7 +88,14 @@ exports.unmarshalPrivateKey = (buf, callback) => {
   }
 }
 
-// Converts a private key object into a protobuf serialized private key
+/**
+ * Converts a private key object into a protobuf serialized
+ * private key.
+ *
+ * @param {PrivateKey} key
+ * @param {string} [type='rsa']
+ * @returns {Buffer}
+ */
 exports.marshalPrivateKey = (key, type) => {
   type = (type || 'rsa').toLowerCase()
 
@@ -72,11 +107,17 @@ exports.marshalPrivateKey = (key, type) => {
   return key.bytes
 }
 
-exports.randomBytes = (number) => {
-  if (!number || typeof number !== 'number') {
+/**
+ * Generate random bytes.
+ *
+ * @param {number} length
+ * @returns {Buffer}
+ */
+exports.randomBytes = (length) => {
+  if (!length || typeof length !== 'number') {
     throw new Error('first argument must be a Number bigger than 0')
   }
-  const buf = new Buffer(number)
+  const buf = new Buffer(length)
   c.rsa.getRandomValues(buf)
   return buf
 }

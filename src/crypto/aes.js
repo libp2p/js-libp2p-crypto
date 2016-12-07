@@ -7,6 +7,38 @@ const CIPHER_MODES = {
   32: 'aes-256-ctr'
 }
 
+/**
+ * Encrypt the given `data`.
+ *
+ * @callback AESEncrypt
+ * @param {Buffer} data
+ * @param {function(Error, Buffer)} cb
+ * @returns {undefined}
+ */
+
+/**
+ * Decrypt the given `data`.
+ *
+ * @callback AESDecrypt
+ * @param {Buffer} data
+ * @param {function(Error, Buffer)} cb
+ * @returns {undefined}
+ */
+
+/**
+ * @typedef {Object} AESCipher
+ * @param {AESEncrypt} encrypt
+ * @param {AESDecrypt} decrypt
+ */
+
+/**
+ * @memberof libp2p-crypto
+ * @alias aes.create
+ * @param {Buffer} key
+ * @param {Buffer} iv
+ * @param {function(Error, AESCipher)} callback
+ * @returns {undefined}
+ */
 exports.create = function (key, iv, callback) {
   const mode = CIPHER_MODES[key.length]
   if (!mode) {

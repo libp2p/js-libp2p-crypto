@@ -9,6 +9,8 @@ exports.aes = c.aes
 exports.webcrypto = c.webcrypto
 
 const keys = exports.keys = require('./keys')
+const KEY_TYPES = ['rsa', 'ed25519']
+
 exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 
@@ -40,8 +42,7 @@ exports.unmarshalPublicKey = (buf) => {
 // Converts a public key object into a protobuf serialized public key
 exports.marshalPublicKey = (key, type) => {
   type = (type || 'rsa').toLowerCase()
-
-  if (type !== 'rsa' && type !== 'ed25519') {
+  if (KEY_TYPES.indexOf(type) < 0) {
     throw new Error('invalid or unsupported key type')
   }
 
@@ -66,8 +67,7 @@ exports.unmarshalPrivateKey = (buf, callback) => {
 // Converts a private key object into a protobuf serialized private key
 exports.marshalPrivateKey = (key, type) => {
   type = (type || 'rsa').toLowerCase()
-
-  if (type !== 'rsa' && type !== 'ed25519') {
+  if (KEY_TYPES.indexOf(type) < 0) {
     throw new Error('invalid or unsupported key type')
   }
 

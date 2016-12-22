@@ -1,6 +1,24 @@
 'use strict'
 
 module.exports = {
+  // These were generated in a gore (https://github.com/motemen/gore) repl session:
+  //
+  // :import github.com/libp2p/go-libp2p-crypto
+  // :import crypto/rand
+  // priv, pub, err := crypto.GenerateEd25519Key(rand.Reader)
+  // pubkeyBytes, err := pub.Bytes()
+  // privkeyBytes, err := priv.Bytes()
+  // data := []byte("hello! and welcome to some awesome crypto primitives")
+  // sig, err := priv.Sign(data)
+  //
+  // :import io/ioutil
+  // ioutil.WriteFile("/tmp/pubkey_go.bin", pubkeyBytes, 0644)
+  // // etc..
+  //
+  // Then loaded into a node repl and dumped to arrays with:
+  //
+  // var pubkey = Array.from(fs.readFileSync('/tmp/pubkey_go.bin'))
+  // console.log(JSON.stringify(pubkey))
   verify: {
     privateKey: Buffer.from([8, 1, 18, 96, 201, 208, 1, 110, 176, 16, 230, 37, 66, 184, 149, 252, 78, 56, 206, 136, 2, 38, 118, 152, 226, 197, 117, 200, 54, 189, 156, 218, 184, 7, 118, 57, 233, 49, 221, 97, 164, 158, 241, 129, 73, 166, 225, 255, 193, 118, 22, 84, 55, 15, 249, 168, 225, 180, 198, 191, 14, 75, 187, 243, 150, 91, 232, 37, 233, 49, 221, 97, 164, 158, 241, 129, 73, 166, 225, 255, 193, 118, 22, 84, 55, 15, 249, 168, 225, 180, 198, 191, 14, 75, 187, 243, 150, 91, 232, 37]),
     publicKey: Buffer.from([8, 1, 18, 32, 233, 49, 221, 97, 164, 158, 241, 129, 73, 166, 225, 255, 193, 118, 22, 84, 55, 15, 249, 168, 225, 180, 198, 191, 14, 75, 187, 243, 150, 91, 232, 37]),

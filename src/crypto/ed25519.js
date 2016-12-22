@@ -1,6 +1,7 @@
 'use strict'
 
 const nacl = require('tweetnacl')
+const setImmediate = require('async/setImmediate')
 
 exports.publicKeyLength = nacl.sign.publicKeyLength
 exports.privateKeyLength = nacl.sign.secretKeyLength

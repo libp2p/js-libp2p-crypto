@@ -30,6 +30,8 @@ exports.unmarshalPublicKey = (buf) => {
   switch (decoded.Type) {
     case pbm.KeyType.RSA:
       return keys.rsa.unmarshalRsaPublicKey(decoded.Data)
+    case pbm.KeyType.Ed25519:
+      return keys.ed25519.unmarshalEd25519PublicKey(decoded.Data)
     default:
       throw new Error('invalid or unsupported key type')
   }
@@ -39,8 +41,7 @@ exports.unmarshalPublicKey = (buf) => {
 exports.marshalPublicKey = (key, type) => {
   type = (type || 'rsa').toLowerCase()
 
-  // for now only rsa is supported
-  if (type !== 'rsa') {
+  if (type !== 'rsa' && type !== 'ed25519') {
     throw new Error('invalid or unsupported key type')
   }
 
@@ -55,6 +56,8 @@ exports.unmarshalPrivateKey = (buf, callback) => {
   switch (decoded.Type) {
     case pbm.KeyType.RSA:
       return keys.rsa.unmarshalRsaPrivateKey(decoded.Data, callback)
+    case pbm.KeyType.Ed25519:
+      return keys.ed25519.unmarshalEd25519PrivateKey(decoded.Data, callback)
     default:
       callback(new Error('invalid or unsupported key type'))
   }
@@ -64,8 +67,7 @@ exports.unmarshalPrivateKey = (buf, callback) => {
 exports.marshalPrivateKey = (key, type) => {
   type = (type || 'rsa').toLowerCase()
 
-  // for now only rsa is supported
-  if (type !== 'rsa') {
+  if (type !== 'rsa' && type !== 'ed25519') {
     throw new Error('invalid or unsupported key type')
   }
 

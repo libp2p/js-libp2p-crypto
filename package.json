@@ -33,7 +33,7 @@
   "author": "Friedel Ziegelmayer <dignifiedqurie@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "asn1.js": "^4.8.1",
+    "asn1.js": "^4.9.0",
     "async": "^2.1.2",
     "browserify-aes": "^1.0.6",
     "keypair": "^1.0.0",

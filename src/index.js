@@ -1,7 +1,6 @@
 'use strict'
 
 const protobuf = require('protocol-buffers')
-const Buffer = require('safe-buffer').Buffer
 
 const pbm = protobuf(require('./crypto.proto'))
 const c = require('./crypto')
@@ -80,6 +79,6 @@ exports.randomBytes = (number) => {
   if (!number || typeof number !== 'number') {
     throw new Error('first argument must be a Number bigger than 0')
   }
-  const buf = Buffer.alloc(number)
-  return c.rsa.getRandomValues(buf)
+
+  return c.rsa.getRandomValues(new Uint8Array(number))
 }

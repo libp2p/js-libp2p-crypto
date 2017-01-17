@@ -10,7 +10,7 @@ exports.aes = c.aes
 exports.webcrypto = c.webcrypto
 
 const keys = exports.keys = require('./keys')
-const KEY_TYPES = ['rsa', 'ed25519']
+const KEY_TYPES = ['rsa', 'ed25519', 'secp256k1']
 
 exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')

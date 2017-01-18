@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "browser": {
     "node-webcrypto-ossl": false,
+    "secp256k1": "secp256k1/js",
     "./src/crypto/webcrypto.js": "./src/crypto/webcrypto-browser.js",
     "./src/crypto/hmac.js": "./src/crypto/hmac-browser.js",
     "./src/crypto/ecdh.js": "./src/crypto/ecdh-browser.js",

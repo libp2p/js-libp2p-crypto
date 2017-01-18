@@ -2,7 +2,8 @@
 
 const secp256k1 = require('secp256k1')
 const multihashing = require('multihashing-async')
-const { getRandomValues } = require('./rsa')
+const RSA = require('./rsa')
+const getRandomValues = RSA.getRandomValues
 const setImmediate = require('async/setImmediate')
 const Buffer = require('safe-buffer').Buffer
 

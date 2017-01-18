@@ -35,6 +35,8 @@ exports.unmarshalPublicKey = (buf) => {
       return keys.rsa.unmarshalRsaPublicKey(decoded.Data)
     case pbm.KeyType.Ed25519:
       return keys.ed25519.unmarshalEd25519PublicKey(decoded.Data)
+    case pbm.KeyType.Secp256k1:
+      return keys.secp256k1.unmarshalSecp256k1PublicKey(decoded.Data)
     default:
       throw new Error('invalid or unsupported key type')
   }
@@ -60,6 +62,8 @@ exports.unmarshalPrivateKey = (buf, callback) => {
       return keys.rsa.unmarshalRsaPrivateKey(decoded.Data, callback)
     case pbm.KeyType.Ed25519:
       return keys.ed25519.unmarshalEd25519PrivateKey(decoded.Data, callback)
+    case pbm.KeyType.Secp256K1:
+      return keys.secp256k1.unmarshalSecp256k1PrivateKey(decoded.Data, callback)
     default:
       callback(new Error('invalid or unsupported key type'))
   }

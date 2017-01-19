@@ -10,7 +10,7 @@ exports.aes = c.aes
 exports.webcrypto = c.webcrypto
 
 const keys = exports.keys = require('./keys')
-const KEY_TYPES = ['rsa', 'ed25519', 'secp256k1']
+const KEY_TYPES = Object.keys(keys)
 
 exports.keyStretcher = require('./key-stretcher')
 exports.generateEphemeralKeyPair = require('./ephemeral-keys')
@@ -36,7 +36,11 @@ exports.unmarshalPublicKey = (buf) => {
     case pbm.KeyType.Ed25519:
       return keys.ed25519.unmarshalEd25519PublicKey(decoded.Data)
     case pbm.KeyType.Secp256k1:
-      return keys.secp256k1.unmarshalSecp256k1PublicKey(decoded.Data)
+      if (keys.secp256k1) {
+        return keys.secp256k1.unmarshalSecp256k1PublicKey(decoded.Data)
+      } else {
+        throw new Error('secp256k1 support requires libp2p-crypto-secp256k1 package')
+      }
     default:
       throw new Error('invalid or unsupported key type')
   }
@@ -63,7 +67,11 @@ exports.unmarshalPrivateKey = (buf, callback) => {
     case pbm.KeyType.Ed25519:
       return keys.ed25519.unmarshalEd25519PrivateKey(decoded.Data, callback)
     case pbm.KeyType.Secp256K1:
-      return keys.secp256k1.unmarshalSecp256k1PrivateKey(decoded.Data, callback)
+      if (keys.secp256k1) {
+        return keys.secp256k1.unmarshalSecp256k1PrivateKey(decoded.Data, callback)
+      } else {
+        throw new Error('secp256k1 support requires libp2p-crypto-secp256k1 package')
+      }
     default:
       callback(new Error('invalid or unsupported key type'))
   }

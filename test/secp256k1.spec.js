@@ -14,25 +14,25 @@ const mockPrivateKey = {
   public: mockPublicKey
 }
 
-const mockSecp256k1Module = {
+const mockSecp256k1Module = (crypto) => ({
   generateKeyPair (bits, callback) {
     callback(null, mockPrivateKey)
   },
 
-  unmarshalSecp256k1PrivateKey (buf, callback) {
+  unmarshalPrivateKey (buf, callback) {
     callback(null, mockPrivateKey)
   },
 
-  unmarshalSecp256k1PublicKey (buf) {
+  unmarshalPublicKey (buf) {
     return mockPublicKey
   }
-}
+})
 
 describe('with libp2p-crypto-secp256k1 module present', () => {
   let key
 
   before((done) => {
-    crypto.keys['secp256k1'] = mockSecp256k1Module
+    crypto.addKeyType('secp256k1', mockSecp256k1Module)
     crypto.generateKeyPair('secp256k1', 256, (err, _key) => {
       if (err) return done(err)
       key = _key
@@ -41,7 +41,7 @@ describe('with libp2p-crypto-secp256k1 module present', () => {
   })
 
   after((done) => {
-    delete crypto.keys['secp256k1']
+    delete crypto.keys.secp256k1
     done()
   })
 

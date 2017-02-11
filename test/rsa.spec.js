@@ -22,7 +22,7 @@ describe('RSA', () => {
     expect(
       key
     ).to.be.an.instanceof(
-      rsa.RsaPrivateKey
+      rsa.PrivateKey
     )
 
     key.hash((err, digest) => {
@@ -56,7 +56,7 @@ describe('RSA', () => {
 
   it('encoding', (done) => {
     const keyMarshal = key.marshal()
-    rsa.unmarshalRsaPrivateKey(keyMarshal, (err, key2) => {
+    rsa.unmarshalPrivateKey(keyMarshal, (err, key2) => {
       if (err) {
         return done(err)
       }
@@ -70,7 +70,7 @@ describe('RSA', () => {
 
       const pk = key.public
       const pkMarshal = pk.marshal()
-      const pk2 = rsa.unmarshalRsaPublicKey(pkMarshal)
+      const pk2 = rsa.unmarshalPublicKey(pkMarshal)
       const pkMarshal2 = pk2.marshal()
 
       expect(

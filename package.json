@@ -34,7 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "asn1.js": "^4.9.1",
-    "async": "^2.1.4",
+    "async": "^2.1.5",
     "browserify-aes": "^1.0.6",
     "keypair": "^1.0.1",
     "libp2p-crypto-secp256k1": "^0.1.3",

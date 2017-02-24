@@ -64,6 +64,26 @@ crypto.generateKeyPair('RSA', 2048, (err, key) => {
 
 ## API
 
+### `addKeyType(name, module)`
+
+- `name: string`
+- `module: (libp2pCrypto) => CryptoKey`
+
+where `CryptoKey`  is an object of the form
+
+```js
+CryptoKey = {
+  PublicKey,
+  PrivateKey,
+  unmarshalPublicKey,
+  unmarshalPrivateKey,
+  generateKeyPair`
+}
+```
+
+Add support for a new key type.
+
+
 ### `hmac`
 
 Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as defined in U.S. Federal Information Processing Standards Publication 198. An HMAC is a cryptographic hash that uses a key to sign a message. The receiver verifies the hash by recomputing it using the same key.

@@ -22,7 +22,7 @@ describe('ed25519', () => {
     expect(
       key
     ).to.be.an.instanceof(
-      ed25519.Ed25519PrivateKey
+      ed25519.PrivateKey
     )
 
     key.hash((err, digest) => {
@@ -56,7 +56,7 @@ describe('ed25519', () => {
 
   it('encoding', (done) => {
     const keyMarshal = key.marshal()
-    ed25519.unmarshalEd25519PrivateKey(keyMarshal, (err, key2) => {
+    ed25519.unmarshalPrivateKey(keyMarshal, (err, key2) => {
       if (err) {
         return done(err)
       }
@@ -70,7 +70,7 @@ describe('ed25519', () => {
 
       const pk = key.public
       const pkMarshal = pk.marshal()
-      const pk2 = ed25519.unmarshalEd25519PublicKey(pkMarshal)
+      const pk2 = ed25519.unmarshalPublicKey(pkMarshal)
       const pkMarshal2 = pk2.marshal()
 
       expect(

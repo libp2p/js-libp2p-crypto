@@ -54,7 +54,7 @@
     "pre-commit": "^1.2.2"
   },
   "optionalDependencies": {
-    "node-webcrypto-ossl": "^1.0.17"
+    "node-webcrypto-ossl": "^1.0.18"
   },
   "pre-commit": [
     "lint",

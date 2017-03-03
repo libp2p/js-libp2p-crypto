@@ -35,6 +35,27 @@ describe('ed25519', () => {
     })
   })
 
+  it('generates a valid key from seed', (done) => {
+    var seed = crypto.randomBytes(32)
+    crypto.generateKeyPairFromSeed('Ed25519', seed, 512, (err, seededkey) => {
+      if (err) return done(err)
+      expect(
+        seededkey
+      ).to.be.an.instanceof(
+        ed25519.Ed25519PrivateKey
+      )
+
+      seededkey.hash((err, digest) => {
+        if (err) {
+            return done(err)
+        }
+
+        expect(digest).to.have.length(34)
+        done()
+      })
+    })
+  })
+
   it('signs', (done) => {
     const text = crypto.randomBytes(512)
 

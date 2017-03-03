@@ -23,7 +23,7 @@ exports.generateKey = function (callback) {
 }
 
 // seed should be a 32 byte uint8array
-exports.generateKeyFromSeed = function(seed, callback) {
+exports.generateKeyFromSeed = function (seed, callback) {
   const done = (err, res) => setImmediate(() => {
     callback(err, res)
   })
@@ -31,7 +31,7 @@ exports.generateKeyFromSeed = function(seed, callback) {
   let keys
   try {
     keys = nacl.sign.keyPair.fromSeed(seed)
-  } catch ( err ) {
+  } catch (err) {
     done(err)
     return
   }

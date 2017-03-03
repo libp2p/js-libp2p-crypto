@@ -35,10 +35,10 @@ exports.generateKeyPair = (type, bits, cb) => {
 exports.generateKeyPairFromSeed = (type, seed, bits, cb) => {
   let key = keys[type.toLowerCase()]
   if (!key) {
-      return cb(new Error('invalid or unsupported key type'))
+    return cb(new Error('invalid or unsupported key type'))
   }
-  if (type.toLowerCase() !== "ed25519") {
-      return cb(new Error('Seed key derivation is unimplemented for RSA or secp256k1'))
+  if (type.toLowerCase() !== 'ed25519') {
+    return cb(new Error('Seed key derivation is unimplemented for RSA or secp256k1'))
   }
   key.generateKeyPairFromSeed(seed, bits, cb)
 }

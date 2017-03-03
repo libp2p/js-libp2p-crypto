@@ -117,7 +117,7 @@ function generateKeyPair (_bits, cb) {
   })
 }
 
-function generateKeyPairFromSeed(seed, _bits, cb) {
+function generateKeyPairFromSeed (seed, _bits, cb) {
   if (cb === undefined && typeof _bits === 'function') {
     cb = _bits
   }
@@ -129,7 +129,7 @@ function generateKeyPairFromSeed(seed, _bits, cb) {
     let privkey
     try {
       privkey = new Ed25519PrivateKey(keys.secretKey, keys.publicKey)
-    } catch ( err ) {
+    } catch (err) {
       cb(err)
       return
     }

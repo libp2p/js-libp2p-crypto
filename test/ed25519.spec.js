@@ -47,7 +47,7 @@ describe('ed25519', () => {
 
       seededkey.hash((err, digest) => {
         if (err) {
-            return done(err)
+          return done(err)
         }
 
         expect(digest).to.have.length(34)

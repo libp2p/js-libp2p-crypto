@@ -48,7 +48,7 @@
     "webcrypto-shim": "github:dignifiedquire/webcrypto-shim#master"
   },
   "devDependencies": {
-    "aegir": "^11.0.0",
+    "aegir": "^11.0.1",
     "benchmark": "^2.1.3",
     "chai": "^3.5.0",
     "dirty-chai": "^1.2.2",

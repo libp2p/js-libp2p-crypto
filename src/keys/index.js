@@ -7,6 +7,8 @@ const keys = exports.keys = require('./keys')
 
 exports = module.exports
 
+exports.pbm = pbm
+
 function isValidKeyType (keyType) {
   const key = keys[keyType.toLowerCase()]
   return key !== undefined

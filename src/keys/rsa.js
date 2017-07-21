@@ -1,133 +1,80 @@
 'use strict'
 
-const multihashing = require('multihashing-async')
-const protobuf = require('protocol-buffers')
+// Node.js land
+// First we look if node-webrypto-ossl is available
+// otherwise we fall back to using keypair + node core
 
-const crypto = require('../crypto').rsa
-const pbm = protobuf(require('../crypto.proto'))
+let webcrypto
+try {
+  webcrypto = require('node-webcrypto-ossl')
+} catch (err) {
+  // not available, use the code below
+}
 
-class RsaPublicKey {
-  constructor (key) {
-    this._key = key
-  }
+if (webcrypto && !process.env.NO_WEBCRYPTO) {
+  module.exports = require('./rsa-browser')
+} else {
+  const crypto = require('crypto')
+  const keypair = require('keypair')
+  const setImmediate = require('async/setImmediate')
+  const pemToJwk = require('pem-jwk').pem2jwk
+  const jwkToPem = require('pem-jwk').jwk2pem
 
-  verify (data, sig, callback) {
-    ensure(callback)
-    crypto.hashAndVerify(this._key, sig, data, callback)
-  }
+  exports.utils = require('./rsa-utils')
 
-  marshal () {
-    return crypto.utils.jwkToPkix(this._key)
-  }
+  exports.generateKey = function (bits, callback) {
+    const done = (err, res) => setImmediate(() => {
+      callback(err, res)
+    })
 
-  get bytes () {
-    return pbm.PublicKey.encode({
-      Type: pbm.KeyType.RSA,
-      Data: this.marshal()
+    let key
+    try {
+      key = keypair({
+        bits: bits
+      })
+    } catch (err) {
+      done(err)
+      return
+    }
+
+    done(null, {
+      privateKey: pemToJwk(key.private),
+      publicKey: pemToJwk(key.public)
     })
   }
 
-  encrypt (bytes) {
-    return this._key.encrypt(bytes, 'RSAES-PKCS1-V1_5')
-  }
-
-  equals (key) {
-    return this.bytes.equals(key.bytes)
-  }
-
-  hash (callback) {
-    ensure(callback)
-    multihashing(this.bytes, 'sha2-256', callback)
-  }
-}
-
-class RsaPrivateKey {
-  // key       - Object of the jwk format
-  // publicKey - Buffer of the spki format
-  constructor (key, publicKey) {
-    this._key = key
-    this._publicKey = publicKey
-  }
-
-  genSecret () {
-    return crypto.getRandomValues(new Uint8Array(16))
-  }
-
-  sign (message, callback) {
-    ensure(callback)
-    crypto.hashAndSign(this._key, message, callback)
-  }
-
-  get public () {
-    if (!this._publicKey) {
-      throw new Error('public key not provided')
-    }
-
-    return new RsaPublicKey(this._publicKey)
-  }
-
-  decrypt (msg, callback) {
-    crypto.decrypt(this._key, msg, callback)
-  }
-
-  marshal () {
-    return crypto.utils.jwkToPkcs1(this._key)
-  }
-
-  get bytes () {
-    return pbm.PrivateKey.encode({
-      Type: pbm.KeyType.RSA,
-      Data: this.marshal()
+  // Takes a jwk key
+  exports.unmarshalPrivateKey = function (key, callback) {
+    callback(null, {
+      privateKey: key,
+      publicKey: {
+        kty: key.kty,
+        n: key.n,
+        e: key.e
+      }
     })
   }
 
-  equals (key) {
-    return this.bytes.equals(key.bytes)
+  exports.getRandomValues = function (arr) {
+    return crypto.randomBytes(arr.length)
   }
 
-  hash (callback) {
-    ensure(callback)
-    multihashing(this.bytes, 'sha2-256', callback)
+  exports.hashAndSign = function (key, msg, callback) {
+    const sign = crypto.createSign('RSA-SHA256')
+
+    sign.update(msg)
+    setImmediate(() => {
+      callback(null, sign.sign(jwkToPem(key)))
+    })
   }
-}
 
-function unmarshalRsaPrivateKey (bytes, callback) {
-  const jwk = crypto.utils.pkcs1ToJwk(bytes)
-  crypto.unmarshalPrivateKey(jwk, (err, keys) => {
-    if (err) {
-      return callback(err)
-    }
+  exports.hashAndVerify = function (key, sig, msg, callback) {
+    const verify = crypto.createVerify('RSA-SHA256')
 
-    callback(null, new RsaPrivateKey(keys.privateKey, keys.publicKey))
-  })
-}
+    verify.update(msg)
 
-function unmarshalRsaPublicKey (bytes) {
-  const jwk = crypto.utils.pkixToJwk(bytes)
-
-  return new RsaPublicKey(jwk)
-}
-
-function generateKeyPair (bits, cb) {
-  crypto.generateKey(bits, (err, keys) => {
-    if (err) {
-      return cb(err)
-    }
-
-    cb(null, new RsaPrivateKey(keys.privateKey, keys.publicKey))
-  })
-}
-
-function ensure (cb) {
-  if (typeof cb !== 'function') {
-    throw new Error('callback is required')
+    setImmediate(() => {
+      callback(null, verify.verify(jwkToPem(key), sig))
+    })
   }
-}
-
-module.exports = {
-  RsaPublicKey,
-  RsaPrivateKey,
-  unmarshalRsaPublicKey,
-  unmarshalRsaPrivateKey,
-  generateKeyPair
 }

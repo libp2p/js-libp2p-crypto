@@ -1,11 +1,11 @@
 'use strict'
 
-const crypto = require('./webcrypto')()
+const crypto = require('../webcrypto/index.js')()
 const nodeify = require('nodeify')
 const BN = require('asn1.js').bignum
 const Buffer = require('safe-buffer').Buffer
 
-const util = require('./util')
+const util = require('../util')
 const toBase64 = util.toBase64
 const toBn = util.toBn
 

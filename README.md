@@ -12,13 +12,9 @@
 ![](https://img.shields.io/badge/npm-%3E%3D3.0.0-orange.svg?style=flat-square)
 ![](https://img.shields.io/badge/Node.js-%3E%3D4.0.0-orange.svg?style=flat-square)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/ipfs-js-libp2p-crypto.svg)](https://saucelabs.com/u/ipfs-js-
-libp2p-crypto)
-
 > Crypto primitives for libp2p in JavaScript
 
-This repo contains the JavaScript implementation of the crypto primitives
-needed for libp2p. This is based on this [go implementation](https://github.com/libp2p/go-libp2p-crypto).
+This repo contains the JavaScript implementation of the crypto primitives needed for libp2p. This is based on this [go implementation](https://github.com/libp2p/go-libp2p-crypto).
 
 ## Table of Contents
 
@@ -26,22 +22,22 @@ needed for libp2p. This is based on this [go implementation](https://github.com/
 - [Usage](#usage)
   - [Example](#example)
 - [API](#api)
-  - [`hmac`](#hmac)
+  - [`crypto.hmac`](#hmac)
     - [`create(hash, secret, callback)`](#createhash-secret-callback)
       - [`digest(data, callback)`](#digestdata-callback)
-  - [`aes`](#aes)
+  - [`crypto.aes`](#aes)
     - [`create(key, iv, callback)`](#createkey-iv-callback)
       - [`encrypt(data, callback)`](#encryptdata-callback)
-      - [`encrypt(data, callback)`](#encryptdata-callback)
-  - [`webcrypto`](#webcrypto)
+      - [`decrypt(data, callback)`](#decryptdata-callback)
   - [`keys`](#keys)
-  - [`generateKeyPair(type, bits, callback)`](#generatekeypairtype-bits-callback)
-  - [`generateEphemeralKeyPair(curve, callback)`](#generateephemeralkeypaircurve-callback)
-  - [`keyStretcher(cipherType, hashType, secret, callback)`](#keystretcherciphertype-hashtype-secret-callback)
-  - [`marshalPublicKey(key[, type], callback)`](#marshalpublickeykey-type-callback)
-  - [`unmarshalPublicKey(buf)`](#unmarshalpublickeybuf)
-  - [`marshalPrivateKey(key[, type])`](#marshalprivatekeykey-type)
-  - [`unmarshalPrivateKey(buf, callback)`](#unmarshalprivatekeybuf-callback)
+    - [`generateKeyPair(type, bits, callback)`](#generatekeypairtype-bits-callback)
+    - [`generateEphemeralKeyPair(curve, callback)`](#generateephemeralkeypaircurve-callback)
+    - [`keyStretcher(cipherType, hashType, secret, callback)`](#keystretcherciphertype-hashtype-secret-callback)
+    - [`marshalPublicKey(key[, type], callback)`](#marshalpublickeykey-type-callback)
+    - [`unmarshalPublicKey(buf)`](#unmarshalpublickeybuf)
+    - [`marshalPrivateKey(key[, type])`](#marshalprivatekeykey-type)
+    - [`unmarshalPrivateKey(buf, callback)`](#unmarshalprivatekeybuf-callback)
+  - [`webcrypto`](#webcrypto)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -58,17 +54,16 @@ npm install --save libp2p-crypto
 ```js
 const crypto = require('libp2p-crypto')
 
-crypto.generateKeyPair('RSA', 2048, (err, key) => {
-})
+crypto.generateKeyPair('RSA', 2048, (err, key) => {})
 ```
 
 ## API
 
-### `hmac`
+### `crypto.hmac`
 
 Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as defined in U.S. Federal Information Processing Standards Publication 198. An HMAC is a cryptographic hash that uses a key to sign a message. The receiver verifies the hash by recomputing it using the same key.
 
-#### `create(hash, secret, callback)`
+#### `crypto.hmac.create(hash, secret, callback)`
 
 - `hash: String`
 - `secret: Buffer`
@@ -79,15 +74,27 @@ Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as def
 - `data: Buffer`
 - `callback: Function`
 
-### `aes`
+Example:
+
+```
+TODO: Example of using hmac
+```
+
+### `crypto.aes`
+
 Expoes an interface to AES encryption (formerly Rijndael), as defined in U.S. Federal Information Processing Standards Publication 197.
 
 This uses `CTR` mode.
 
-#### `create(key, iv, callback)`
+#### `crypto.aes.create(key, iv, callback)`
 
 - `key: Buffer` The key, if length `16` then `AES 128` is used. For length `32`, `AES 256` is used.
 - `iv: Buffer` Must have length `16`.
+- `callback: Function` 
+
+##### `decrypt(data, callback)`
+
+- `data: Buffer`
 - `callback: Function`
 
 ##### `encrypt(data, callback)`
@@ -95,31 +102,21 @@ This uses `CTR` mode.
 - `data: Buffer`
 - `callback: Function`
 
-##### `encrypt(data, callback)`
+```
+TODO: Example of using aes
+```
 
-- `data: Buffer`
-- `callback: Function`
+### `crypto.keys`
 
+**Supported Key Types**
 
-### `webcrypto`
+The [`generateKeyPair`](#generatekeypairtype-bits-callback), [`marshalPublicKey`](#marshalpublickeykey-type-callback), and [`marshalPrivateKey`](#marshalprivatekeykey-type) functions accept a string `type` argument.
 
-Depending on the environment this is either an instance of [node-webcrypto-ossl](https://github.com/PeculiarVentures/node-webcrypto-ossl) or the result of `window.crypto`.
+Currently the `'RSA'` and `'ed25519'` types are supported, although ed25519 keys support only signing and verification of messages.  For encryption / decryption support, RSA keys should be used.
 
-### `keys`
+Installing the [libp2p-crypto-secp256k1](https://github.com/libp2p/js-libp2p-crypto-secp256k1) module adds support for the `'secp256k1'` type, which supports ECDSA signatures using the secp256k1 elliptic curve popularized by Bitcoin.  This module is not installed by default, and should be explicitly depended on if your project requires secp256k1 support.
 
-#### Supported Key Types
-
-The [`generateKeyPair`](#generatekeypairtype-bits-callback), [`marshalPublicKey`](#marshalpublickeykey-type-callback), and
-[`marshalPrivateKey`](#marshalprivatekeykey-type) functions accept a string `type` argument.
-
-Currently the `'RSA'` and `'ed25519'` types are supported, although ed25519 keys support only signing and
-verification of messages.  For encryption / decryption support, RSA keys should be used.
-
-Installing the [libp2p-crypto-secp256k1](https://github.com/libp2p/js-libp2p-crypto-secp256k1) module adds support for the
-`'secp256k1'` type, which supports ECDSA signatures using the secp256k1 elliptic curve popularized by Bitcoin.  This module
-is not installed by default, and should be explicitly depended on if your project requires secp256k1 support.
-
-### `generateKeyPair(type, bits, callback)`
+### `crypto.keys.generateKeyPair(type, bits, callback)`
 
 - `type: String`, see [Supported Key Types](#supported-key-types) above.
 - `bits: Number` Minimum of 1024
@@ -127,7 +124,7 @@ is not installed by default, and should be explicitly depended on if your projec
 
 Generates a keypair of the given type and bitsize.
 
-### `generateEphemeralKeyPair(curve, callback)`
+### `crypto.keys.generateEphemeralKeyPair(curve, callback)`
 
 - `curve: String`, one of `'P-256'`, `'P-384'`, `'P-521'` is currently supported
 - `callback: Function`
@@ -145,7 +142,7 @@ Calls back with an object of the form
 }
 ```
 
-### `keyStretcher(cipherType, hashType, secret, callback)`
+### `crypto.keys.keyStretcher(cipherType, hashType, secret, callback)`
 
 - `cipherType: String`, one of `'AES-128'`, `'AES-256'`, `'Blowfish'`
 - `hashType: String`, one of `'SHA1'`, `SHA256`, `SHA512`
@@ -154,7 +151,8 @@ Calls back with an object of the form
 
 Generates a set of keys for each party by stretching the shared key.
 
-Calls back with an object of the form
+Calls back with an object of the form:
+
 ```js
 {
   k1: {
@@ -170,38 +168,42 @@ Calls back with an object of the form
 }
 ```
 
-### `marshalPublicKey(key[, type], callback)`
+### `crypto.keys.marshalPublicKey(key[, type], callback)`
 
 - `key: keys.rsa.RsaPublicKey | keys.ed25519.Ed25519PublicKey | require('libp2p-crypto-secp256k1').Secp256k1PublicKey`
 - `type: String`, see [Supported Key Types](#supported-key-types) above.
 
 Converts a public key object into a protobuf serialized public key.
 
-### `unmarshalPublicKey(buf)`
+### `crypto.keys.unmarshalPublicKey(buf)`
 
 - `buf: Buffer`
 
 Converts a protobuf serialized public key into its  representative object.
 
-### `marshalPrivateKey(key[, type])`
+### `crypto.keys.marshalPrivateKey(key[, type])`
 
 - `key: keys.rsa.RsaPrivateKey | keys.ed25519.Ed25519PrivateKey | require('libp2p-crypto-secp256k1').Secp256k1PrivateKey`
 - `type: String`, see [Supported Key Types](#supported-key-types) above.
 
 Converts a private key object into a protobuf serialized private key.
 
-### `unmarshalPrivateKey(buf, callback)`
+### `crypto.keys.unmarshalPrivateKey(buf, callback)`
 
 - `buf: Buffer`
 - `callback: Function`
 
 Converts a protobuf serialized private key into its representative object.
 
-### `randomBytes(number)`
+### `crypto.randomBytes(number)`
 
 - `number: Number`
 
 Generates a Buffer with length `number` populated by random bytes.
+
+### `crypto.webcrypto`
+
+Depending on the environment this is either an instance of [node-webcrypto-ossl](https://github.com/PeculiarVentures/node-webcrypto-ossl) or the result of `window.crypto`.
 
 ## Contribute
 

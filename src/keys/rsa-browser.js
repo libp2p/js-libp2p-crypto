@@ -3,7 +3,7 @@
 const nodeify = require('nodeify')
 const Buffer = require('safe-buffer').Buffer
 
-const crypto = require('./webcrypto')()
+const crypto = require('../webcrypto/index.js')()
 
 exports.utils = require('./rsa-utils')
 

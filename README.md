@@ -19,8 +19,6 @@ This repo contains the JavaScript implementation of the crypto primitives needed
 ## Table of Contents
 
 - [Install](#install)
-- [Usage](#usage)
-  - [Example](#example)
 - [API](#api)
   - [`crypto.hmac`](#hmac)
     - [`create(hash, secret, callback)`](#createhash-secret-callback)
@@ -47,38 +45,7 @@ This repo contains the JavaScript implementation of the crypto primitives needed
 npm install --save libp2p-crypto
 ```
 
-## Usage
-
-### Example
-
-```js
-const crypto = require('libp2p-crypto')
-
-crypto.generateKeyPair('RSA', 2048, (err, key) => {})
-```
-
 ## API
-
-### `crypto.hmac`
-
-Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as defined in U.S. Federal Information Processing Standards Publication 198. An HMAC is a cryptographic hash that uses a key to sign a message. The receiver verifies the hash by recomputing it using the same key.
-
-#### `crypto.hmac.create(hash, secret, callback)`
-
-- `hash: String`
-- `secret: Buffer`
-- `callback: Function`
-
-##### `digest(data, callback)`
-
-- `data: Buffer`
-- `callback: Function`
-
-Example:
-
-```
-TODO: Example of using hmac
-```
 
 ### `crypto.aes`
 
@@ -104,6 +71,27 @@ This uses `CTR` mode.
 
 ```
 TODO: Example of using aes
+```
+
+### `crypto.hmac`
+
+Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as defined in U.S. Federal Information Processing Standards Publication 198. An HMAC is a cryptographic hash that uses a key to sign a message. The receiver verifies the hash by recomputing it using the same key.
+
+#### `crypto.hmac.create(hash, secret, callback)`
+
+- `hash: String`
+- `secret: Buffer`
+- `callback: Function`
+
+##### `digest(data, callback)`
+
+- `data: Buffer`
+- `callback: Function`
+
+Example:
+
+```
+TODO: Example of using hmac
 ```
 
 ### `crypto.keys`

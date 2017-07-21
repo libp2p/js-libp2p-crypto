@@ -1,6 +1,6 @@
 'use strict'
 
-const crypto = require('../webcrypto/index.js')()
+const crypto = require('../crypto-libs/webcrypto-browser.js')()
 const nodeify = require('nodeify')
 const BN = require('asn1.js').bignum
 const Buffer = require('safe-buffer').Buffer

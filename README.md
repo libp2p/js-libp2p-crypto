@@ -201,10 +201,6 @@ Converts a protobuf serialized private key into its representative object.
 
 Generates a Buffer with length `number` populated by random bytes.
 
-### `crypto.webcrypto`
-
-Depending on the environment this is either an instance of [node-webcrypto-ossl](https://github.com/PeculiarVentures/node-webcrypto-ossl) or the result of `window.crypto`.
-
 ## Contribute
 
 Feel free to join in. All welcome. Open an [issue](https://github.com/libp2p/js-libp2p-crypto/issues)!

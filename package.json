@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "browser": {
     "node-webcrypto-ossl": false,
-    "./src/webcrypto/index.js": "./src/webcrypto/index-browser.js",
+    "./src/crypto-libs/webcrypto.js": "./src/crypto-libs/webcrypto-browser.js",
     "./src/hmac/index.js": "./src/hmac/index-browser.js",
     "./src/keys/ecdh.js": "./src/keys/ecdh-browser.js",
     "./src/aes/ciphers.js": "./src/aes/ciphers-browser.js",

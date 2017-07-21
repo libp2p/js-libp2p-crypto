@@ -1,80 +1,65 @@
 'use strict'
 
-// Node.js land
-// First we look if node-webrypto-ossl is available
-// otherwise we fall back to using keypair + node core
+const crypto = require('crypto')
+const keypair = require('keypair')
+const setImmediate = require('async/setImmediate')
+const pemToJwk = require('pem-jwk').pem2jwk
+const jwkToPem = require('pem-jwk').jwk2pem
 
-let webcrypto
-try {
-  webcrypto = require('node-webcrypto-ossl')
-} catch (err) {
-  // not available, use the code below
+exports.utils = require('./rsa-utils')
+
+exports.generateKey = function (bits, callback) {
+  const done = (err, res) => setImmediate(() => {
+    callback(err, res)
+  })
+
+  let key
+  try {
+    key = keypair({
+      bits: bits
+    })
+  } catch (err) {
+    done(err)
+    return
+  }
+
+  done(null, {
+    privateKey: pemToJwk(key.private),
+    publicKey: pemToJwk(key.public)
+  })
 }
 
-if (webcrypto && !process.env.NO_WEBCRYPTO) {
-  module.exports = require('./rsa-browser')
-} else {
-  const crypto = require('crypto')
-  const keypair = require('keypair')
-  const setImmediate = require('async/setImmediate')
-  const pemToJwk = require('pem-jwk').pem2jwk
-  const jwkToPem = require('pem-jwk').jwk2pem
-
-  exports.utils = require('./rsa-utils')
-
-  exports.generateKey = function (bits, callback) {
-    const done = (err, res) => setImmediate(() => {
-      callback(err, res)
-    })
-
-    let key
-    try {
-      key = keypair({
-        bits: bits
-      })
-    } catch (err) {
-      done(err)
-      return
+// Takes a jwk key
+exports.unmarshalPrivateKey = function (key, callback) {
+  callback(null, {
+    privateKey: key,
+    publicKey: {
+      kty: key.kty,
+      n: key.n,
+      e: key.e
     }
+  })
+}
 
-    done(null, {
-      privateKey: pemToJwk(key.private),
-      publicKey: pemToJwk(key.public)
-    })
-  }
+exports.getRandomValues = function (arr) {
+  return crypto.randomBytes(arr.length)
+}
 
-  // Takes a jwk key
-  exports.unmarshalPrivateKey = function (key, callback) {
-    callback(null, {
-      privateKey: key,
-      publicKey: {
-        kty: key.kty,
-        n: key.n,
-        e: key.e
-      }
-    })
-  }
+exports.hashAndSign = function (key, msg, callback) {
+  const sign = crypto.createSign('RSA-SHA256')
 
-  exports.getRandomValues = function (arr) {
-    return crypto.randomBytes(arr.length)
-  }
+  sign.update(msg)
+  setImmediate(() => {
+    callback(null, sign.sign(jwkToPem(key)))
+  })
+}
 
-  exports.hashAndSign = function (key, msg, callback) {
-    const sign = crypto.createSign('RSA-SHA256')
+exports.hashAndVerify = function (key, sig, msg, callback) {
+  const verify = crypto.createVerify('RSA-SHA256')
 
-    sign.update(msg)
-    setImmediate(() => {
-      callback(null, sign.sign(jwkToPem(key)))
-    })
-  }
+  verify.update(msg)
 
-  exports.hashAndVerify = function (key, sig, msg, callback) {
-    const verify = crypto.createVerify('RSA-SHA256')
-
-    verify.update(msg)
-
-    setImmediate(() => {
-      callback(null, verify.verify(jwkToPem(key), sig))
-    })
-  }
+  setImmediate(() => {
+    callback(null, verify.verify(jwkToPem(key), sig))
+  })
 }

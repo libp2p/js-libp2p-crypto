@@ -18,5 +18,3 @@ exports.randomBytes = (number) => {
 
   return rsa.getRandomValues(new Uint8Array(number))
 }
-
-exports.webcrypto = require('./webcrypto/index.js')()

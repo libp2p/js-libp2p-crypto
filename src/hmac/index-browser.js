@@ -3,7 +3,7 @@
 const nodeify = require('nodeify')
 const Buffer = require('safe-buffer').Buffer
 
-const crypto = require('../crypto-libs/webcrypto-browser.js')()
+const crypto = require('../webcrypto.js')()
 const lengths = require('./lengths')
 
 const hashTypes = {

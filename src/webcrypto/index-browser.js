@@ -2,16 +2,8 @@
 
 'use strict'
 
-module.exports = function getWebCrypto () {
-  if (typeof self !== 'undefined') {
-    // This is only a shim for interfaces, not for functionality
-    require('webcrypto-shim')(self)
-
-    if (self.crypto) {
-      return self.crypto
-    }
-  }
-
+module.exports = () => {
+  // This is only a shim for interfaces, not for functionality
   if (typeof self !== 'undefined') {
     require('webcrypto-shim')(self)
 

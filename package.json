@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "aegir-lint",
     "build": "aegir-build",
-    "test": "npm run test:node && npm run test:no-webcrypto && npm run test:browser",
+    "test": "aegir-test",
     "test:node": "aegir-test --env node",
     "test:browser": "aegir-test --env browser",
     "release": "aegir-release",

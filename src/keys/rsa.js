@@ -9,18 +9,13 @@ const jwkToPem = require('pem-jwk').jwk2pem
 exports.utils = require('./rsa-utils')
 
 exports.generateKey = function (bits, callback) {
-  const done = (err, res) => setImmediate(() => {
-    callback(err, res)
-  })
+  const done = (err, res) => setImmediate(() => callback(err, res))
 
   let key
   try {
-    key = keypair({
-      bits: bits
-    })
+    key = keypair({ bits: bits })
   } catch (err) {
-    done(err)
-    return
+    return done(err)
   }
 
   done(null, {
@@ -49,9 +44,7 @@ exports.hashAndSign = function (key, msg, callback) {
   const sign = crypto.createSign('RSA-SHA256')
 
   sign.update(msg)
-  setImmediate(() => {
-    callback(null, sign.sign(jwkToPem(key)))
-  })
+  setImmediate(() => callback(null, sign.sign(jwkToPem(key))))
 }
 
 exports.hashAndVerify = function (key, sig, msg, callback) {
@@ -59,7 +52,5 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
 
   verify.update(msg)
 
-  setImmediate(() => {
-    callback(null, verify.verify(jwkToPem(key), sig))
-  })
+  setImmediate(() => callback(null, verify.verify(jwkToPem(key), sig)))
 }

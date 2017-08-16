@@ -1,6 +1,6 @@
 'use strict'
 
-const nodeify = require('nodeify')
+// const nodeify = require('nodeify')
 const Buffer = require('safe-buffer').Buffer
 
 const crypto = require('../webcrypto.js')()
@@ -10,6 +10,14 @@ const hashTypes = {
   SHA1: 'SHA-1',
   SHA256: 'SHA-256',
   SHA512: 'SHA-512'
+}
+
+function nodeify (promise, cb) {
+  promise.then((res) => {
+    cb(null, res)
+  }, (err) => {
+    cb(err)
+  })
 }
 
 exports.create = function (hashType, secret, callback) {

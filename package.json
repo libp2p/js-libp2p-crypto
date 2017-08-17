@@ -6,7 +6,7 @@
   "browser": {
     "./src/hmac/index.js": "./src/hmac/index-browser.js",
     "./src/keys/ecdh.js": "./src/keys/ecdh-browser.js",
-    "./src/aes/ciphers.js": "./src/aes/ciphers-browser.js",
+    "./src/aes/index.js": "./src/aes/index-browser.js",
     "./src/keys/rsa.js": "./src/keys/rsa-browser.js"
   },
   "scripts": {
@@ -30,6 +30,7 @@
   "author": "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "aes-js": "^3.1.0",
     "asn1.js": "^4.9.1",
     "async": "^2.5.0",
     "browserify-aes": "^1.0.6",

@@ -1,6 +1,6 @@
 'use strict'
 
-const ciphers = require('./ciphers')
+const crypto = require('crypto')
 
 const CIPHER_MODES = {
   16: 'aes-128-ctr',
@@ -13,8 +13,8 @@ exports.create = function (key, iv, callback) {
     return callback(new Error('Invalid key length'))
   }
 
-  const cipher = ciphers.createCipheriv(mode, key, iv)
-  const decipher = ciphers.createDecipheriv(mode, key, iv)
+  const cipher = crypto.createCipheriv(mode, key, iv)
+  const decipher = crypto.createDecipheriv(mode, key, iv)
 
   const res = {
     encrypt (data, cb) {

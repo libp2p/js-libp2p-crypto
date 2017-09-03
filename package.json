@@ -46,7 +46,7 @@
   "devDependencies": {
     "aegir": "^11.0.2",
     "benchmark": "^2.1.4",
-    "chai": "^4.1.1",
+    "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
     "pre-commit": "^1.2.2"
   },
@@ -55,7 +55,7 @@
     "test"
   ],
   "engines": {
-    "node": ">=4.0.0",
+    "node": ">=6.0.0",
     "npm": ">=3.0.0"
   },
   "repository": {

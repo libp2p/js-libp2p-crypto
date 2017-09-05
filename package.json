@@ -11,14 +11,14 @@
   },
   "scripts": {
     "lint": "aegir-lint",
-    "build": "npm run build-proto && aegir-build",
+    "build": "aegir-build",
     "build-proto": "pbjs --wrap commonjs --target static-module src/keys/keys.proto > src/keys/keys.proto.js",
     "test": "aegir-test",
     "test:node": "aegir-test --env node",
     "test:browser": "aegir-test --env browser",
-    "release": "npm run build-proto && aegir-release",
-    "release-minor": "npm run build-proto && aegir-release --type minor",
-    "release-major": "npm run build-proto && aegir-release --type major",
+    "release": "aegir-release",
+    "release-minor": "aegir-release --type minor",
+    "release-major": "aegir-release --type major",
     "coverage": "aegir-coverage",
     "coverage-publish": "aegir-coverage publish"
   },

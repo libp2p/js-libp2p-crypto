@@ -18,22 +18,34 @@ exports.generateKey = function (bits, callback) {
     return done(err)
   }
 
-  done(null, {
-    privateKey: pemToJwk(key.private),
-    publicKey: pemToJwk(key.public)
-  })
+  let res
+  try {
+    res = {
+      privateKey: pemToJwk(key.private),
+      publicKey: pemToJwk(key.public)
+    }
+  } catch (err) {
+    return done(err)
+  }
+
+  done(null, res)
 }
 
 // Takes a jwk key
 exports.unmarshalPrivateKey = function (key, callback) {
-  callback(null, {
-    privateKey: key,
-    publicKey: {
-      kty: key.kty,
-      n: key.n,
-      e: key.e
+  try {
+    key = {
+      privateKey: key,
+      publicKey: {
+        kty: key.kty,
+        n: key.n,
+        e: key.e
+      }
     }
-  })
+  } catch (err) {
+    callback(new Error('Key is invalid!'))
+  }
+  callback(null, key)
 }
 
 exports.getRandomValues = function (arr) {
@@ -43,14 +55,29 @@ exports.getRandomValues = function (arr) {
 exports.hashAndSign = function (key, msg, callback) {
   const sign = crypto.createSign('RSA-SHA256')
 
-  sign.update(msg)
-  setImmediate(() => callback(null, sign.sign(jwkToPem(key))))
+  let pem
+
+  try {
+    sign.update(msg)
+    pem = jwkToPem(key)
+  } catch (err) {
+    return callback(new Error('Key or message is invalid!'))
+  }
+
+  setImmediate(() => callback(null, sign.sign(pem)))
 }
 
 exports.hashAndVerify = function (key, sig, msg, callback) {
   const verify = crypto.createVerify('RSA-SHA256')
 
-  verify.update(msg)
+  let pem
 
-  setImmediate(() => callback(null, verify.verify(jwkToPem(key), sig)))
+  try {
+    verify.update(msg)
+    pem = jwkToPem(key)
+  } catch (err) {
+    return callback(new Error('Key or message is invalid!'))
+  }
+
+  setImmediate(() => callback(null, verify.verify(pem, sig)))
 }

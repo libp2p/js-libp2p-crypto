@@ -135,8 +135,8 @@ describe('RSA', () => {
 
   describe('returns error via cb instead of crashing', () => {
     const key = crypto.keys.unmarshalPublicKey(fixtures.verify.publicKey)
-    testCb.doTests('key.verify', key.verify, 2)
-    testCb.doTests('crypto.keys.unmarshalPrivateKey', crypto.keys.unmarshalPrivateKey)
+    testCb.doTests('key.verify', key.verify.bind(key), 2)
+    testCb.doTests('crypto.keys.unmarshalPrivateKey', crypto.keys.unmarshalPrivateKey.bind(crypto.keys))
   })
 
   describe('go interop', () => {

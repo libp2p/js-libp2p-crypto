@@ -10,6 +10,8 @@ const crypto = require('../../src')
 const ed25519 = crypto.keys.supportedKeys.ed25519
 const fixtures = require('../fixtures/go-key-ed25519')
 
+const testCb = require('../testCb')
+
 describe('ed25519', () => {
   let key
   before((done) => {
@@ -174,6 +176,12 @@ describe('ed25519', () => {
         done()
       })
     })
+  })
+
+  describe('returns error via cb instead of crashing', () => {
+    const key = crypto.keys.unmarshalPublicKey(fixtures.verify.publicKey)
+    testCb.doTests('key.verify', key.verify, 2)
+    testCb.doTests('crypto.keys.unmarshalPrivateKey', crypto.keys.unmarshalPrivateKey)
   })
 
   describe('go interop', () => {

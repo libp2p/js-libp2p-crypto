@@ -10,6 +10,8 @@ const crypto = require('../../src')
 const rsa = crypto.keys.supportedKeys.rsa
 const fixtures = require('../fixtures/go-key-rsa')
 
+const testCb = require('../testCb')
+
 describe('RSA', () => {
   let key
 
@@ -129,6 +131,12 @@ describe('RSA', () => {
         done()
       })
     })
+  })
+
+  describe('returns error via cb instead of crashing', () => {
+    const key = crypto.keys.unmarshalPublicKey(fixtures.verify.publicKey)
+    testCb.doTests('key.verify', key.verify, 2)
+    testCb.doTests('crypto.keys.unmarshalPrivateKey', crypto.keys.unmarshalPrivateKey)
   })
 
   describe('go interop', () => {

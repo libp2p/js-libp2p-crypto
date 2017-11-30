@@ -12,7 +12,8 @@ const fixtures = require('../fixtures/go-key-ed25519')
 
 const testGarbage = require('../helpers/test-garbage-error-handling')
 
-describe('ed25519', () => {
+describe('ed25519', function () {
+  this.timeout(20 * 1000)
   let key
   before((done) => {
     crypto.keys.generateKeyPair('Ed25519', 512, (err, _key) => {

@@ -28,6 +28,9 @@ exports.generateKey = function (bits, callback) {
 // Takes a jwk key
 exports.unmarshalPrivateKey = function (key, callback) {
   setImmediate(() => {
+    if (!key) {
+      return callback(new Error('Key is invalid'))
+    }
     callback(null, {
       privateKey: key,
       publicKey: {

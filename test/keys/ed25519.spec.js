@@ -10,7 +10,7 @@ const crypto = require('../../src')
 const ed25519 = crypto.keys.supportedKeys.ed25519
 const fixtures = require('../fixtures/go-key-ed25519')
 
-const testCb = require('../testCb')
+const testGarbage = require('../helpers/test-garbage-error-handling')
 
 describe('ed25519', () => {
   let key
@@ -180,8 +180,8 @@ describe('ed25519', () => {
 
   describe('returns error via cb instead of crashing', () => {
     const key = crypto.keys.unmarshalPublicKey(fixtures.verify.publicKey)
-    testCb.doTests('key.verify', key.verify.bind(key), 2)
-    testCb.doTests('crypto.keys.unmarshalPrivateKey', crypto.keys.unmarshalPrivateKey.bind(crypto.keys))
+    testGarbage.doTests('key.verify', key.verify.bind(key), 2)
+    testGarbage.doTests('crypto.keys.unmarshalPrivateKey', crypto.keys.unmarshalPrivateKey.bind(crypto.keys))
   })
 
   describe('go interop', () => {

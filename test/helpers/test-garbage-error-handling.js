@@ -9,12 +9,16 @@ chai.use(dirtyChai)
 const util = require('util')
 const garbage = [Buffer.from('00010203040506070809', 'hex'), {}, null, false, undefined, true, 1, 0, Buffer.from(''), 'aGVsbG93b3JsZA==', 'helloworld', '']
 
-function doTests (fncName, fnc, num) {
+function doTests (fncName, fnc, num, skipBuffersAndStrings) {
   if (!num) {
     num = 1
   }
 
-  garbage.forEach(garbage => {
+  garbage.forEach((garbage) => {
+    if (skipBuffersAndStrings && (Buffer.isBuffer(garbage) || (typeof garbage) === 'string')) {
+      // skip this garbage because it's a buffer or a string and we were told do do that
+      return
+    }
     let args = []
     for (let i = 0; i < num; i++) {
       args.push(garbage)
@@ -26,7 +30,7 @@ function doTests (fncName, fnc, num) {
         cb()
       })
 
-      fnc(...args)
+      fnc.apply(null, args)
     })
   })
 }

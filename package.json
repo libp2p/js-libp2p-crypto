@@ -33,6 +33,7 @@
     "asn1.js": "^5.0.0",
     "async": "^2.6.0",
     "browserify-aes": "^1.1.1",
+    "jsrsasign": "^8.0.4",
     "keypair": "^1.0.1",
     "libp2p-crypto-secp256k1": "~0.2.2",
     "multihashing-async": "~0.4.7",
@@ -46,6 +47,7 @@
     "aegir": "^12.2.0",
     "benchmark": "^2.1.4",
     "chai": "^4.1.2",
+    "chai-string": "^1.4.0",
     "dirty-chai": "^2.0.1",
     "pre-commit": "^1.2.2"
   },

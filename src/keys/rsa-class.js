@@ -5,6 +5,8 @@ const protobuf = require('protons')
 
 const crypto = require('./rsa')
 const pbm = protobuf(require('./keys.proto'))
+const KEYUTIL = require('jsrsasign').KEYUTIL
+const setImmediate = require('async/setImmediate')
 
 class RsaPublicKey {
   constructor (key) {
@@ -89,6 +91,41 @@ class RsaPrivateKey {
     ensure(callback)
     multihashing(this.bytes, 'sha2-256', callback)
   }
+
+  /**
+   * Exports the key into a password protected PEM format
+   *
+   * @param {string} [format] - Defaults to 'pkcs-8'.
+   * @param {string} password - The password to read the encrypted PEM
+   * @param {function(Error, KeyInfo)} callback
+   * @returns {undefined}
+   */
+  export (format, password, callback) {
+    if (typeof password === 'function') {
+      callback = password
+      password = format
+      format = 'pkcs-8'
+    }
+
+    setImmediate(() => {
+      ensure(callback)
+
+      let err = null
+      let pem = null
+      try {
+        const key = KEYUTIL.getKey(this._key) // _key is a JWK (JSON Web Key)
+        if (format === 'pkcs-8') {
+          pem = KEYUTIL.getPEM(key, 'PKCS8PRV', password)
+        } else {
+          err = new Error(`Unknown export format '${format}'`)
+        }
+      } catch (e) {
+        err = e
+      }
+
+      callback(err, pem)
+    })
+  }
 }
 
 function unmarshalRsaPrivateKey (bytes, callback) {
@@ -106,6 +143,16 @@ function unmarshalRsaPublicKey (bytes) {
   const jwk = crypto.utils.pkixToJwk(bytes)
 
   return new RsaPublicKey(jwk)
+}
+
+function fromJwk (jwk, callback) {
+  crypto.unmarshalPrivateKey(jwk, (err, keys) => {
+    if (err) {
+      return callback(err)
+    }
+
+    callback(null, new RsaPrivateKey(keys.privateKey, keys.publicKey))
+  })
 }
 
 function generateKeyPair (bits, cb) {
@@ -129,5 +176,6 @@ module.exports = {
   RsaPrivateKey,
   unmarshalRsaPublicKey,
   unmarshalRsaPrivateKey,
-  generateKeyPair
+  generateKeyPair,
+  fromJwk
 }

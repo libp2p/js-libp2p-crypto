@@ -5,6 +5,7 @@ const chai = require('chai')
 const dirtyChai = require('dirty-chai')
 const expect = chai.expect
 chai.use(dirtyChai)
+chai.use(require('chai-string'))
 
 const crypto = require('../../src')
 const rsa = crypto.keys.supportedKeys.rsa
@@ -129,6 +130,32 @@ describe('RSA', function () {
           return done(err)
         }
         expect(valid).to.be.eql(false)
+        done()
+      })
+    })
+  })
+
+  it('exports and imports encrypted PKCS #8', (done) => {
+    key.export('pkcs-8', 'my secret', (err, pem) => {
+      expect(err).to.not.exist()
+      expect(pem).to.startsWith('-----BEGIN ENCRYPTED PRIVATE KEY-----')
+      crypto.keys.import(pem, 'my secret', (err, clone) => {
+        expect(err).to.not.exist()
+        expect(clone).to.exist()
+        expect(key.equals(clone)).to.eql(true)
+        done()
+      })
+    })
+  })
+
+  it('exports defaults to encrypted PKCS #8', (done) => {
+    key.export('another secret', (err, pem) => {
+      expect(err).to.not.exist()
+      expect(pem).to.startsWith('-----BEGIN ENCRYPTED PRIVATE KEY-----')
+      crypto.keys.import(pem, 'another secret', (err, clone) => {
+        expect(err).to.not.exist()
+        expect(clone).to.exist()
+        expect(key.equals(clone)).to.eql(true)
         done()
       })
     })

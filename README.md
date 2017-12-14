@@ -35,6 +35,7 @@ This repo contains the JavaScript implementation of the crypto primitives needed
     - [`unmarshalPublicKey(buf)`](#unmarshalpublickeybuf)
     - [`marshalPrivateKey(key[, type])`](#marshalprivatekeykey-type)
     - [`unmarshalPrivateKey(buf, callback)`](#unmarshalprivatekeybuf-callback)
+    - [`import(pem, password, callback)`](#importpem-password-callback)
   - [`webcrypto`](#webcrypto)
 - [Contribute](#contribute)
 - [License](#license)
@@ -182,6 +183,14 @@ Converts a private key object into a protobuf serialized private key.
 - `callback: Function`
 
 Converts a protobuf serialized private key into its representative object.
+
+### `crypto.keys.import(pem, password, callback)`
+
+- `pem: string`
+- `password: string`
+- `callback: Function`
+
+Converts a PEM password protected private key into its representative object.
 
 ### `crypto.randomBytes(number)`
 

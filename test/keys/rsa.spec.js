@@ -135,28 +135,40 @@ describe('RSA', function () {
     })
   })
 
-  it('exports and imports encrypted PKCS #8', (done) => {
-    key.export('pkcs-8', 'my secret', (err, pem) => {
-      expect(err).to.not.exist()
-      expect(pem).to.startsWith('-----BEGIN ENCRYPTED PRIVATE KEY-----')
-      crypto.keys.import(pem, 'my secret', (err, clone) => {
+  describe('export and import', () => {
+    it('password protected PKCS #8', (done) => {
+      key.export('pkcs-8', 'my secret', (err, pem) => {
         expect(err).to.not.exist()
-        expect(clone).to.exist()
-        expect(key.equals(clone)).to.eql(true)
-        done()
+        expect(pem).to.startsWith('-----BEGIN ENCRYPTED PRIVATE KEY-----')
+        crypto.keys.import(pem, 'my secret', (err, clone) => {
+          expect(err).to.not.exist()
+          expect(clone).to.exist()
+          expect(key.equals(clone)).to.eql(true)
+          done()
+        })
       })
     })
-  })
 
-  it('exports defaults to encrypted PKCS #8', (done) => {
-    key.export('another secret', (err, pem) => {
-      expect(err).to.not.exist()
-      expect(pem).to.startsWith('-----BEGIN ENCRYPTED PRIVATE KEY-----')
-      crypto.keys.import(pem, 'another secret', (err, clone) => {
+    it('defaults to PKCS #8', (done) => {
+      key.export('another secret', (err, pem) => {
         expect(err).to.not.exist()
-        expect(clone).to.exist()
-        expect(key.equals(clone)).to.eql(true)
-        done()
+        expect(pem).to.startsWith('-----BEGIN ENCRYPTED PRIVATE KEY-----')
+        crypto.keys.import(pem, 'another secret', (err, clone) => {
+          expect(err).to.not.exist()
+          expect(clone).to.exist()
+          expect(key.equals(clone)).to.eql(true)
+          done()
+        })
+      })
+    })
+
+    it('needs correct password', (done) => {
+      key.export('another secret', (err, pem) => {
+        expect(err).to.not.exist()
+        crypto.keys.import(pem, 'not the secret', (err, clone) => {
+          expect(err).to.exist()
+          done()
+        })
       })
     })
   })

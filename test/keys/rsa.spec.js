@@ -80,6 +80,15 @@ describe('RSA', function () {
     })
   })
 
+  it('key id', (done) => {
+    key.id((err, id) => {
+      expect(err).to.not.exist()
+      expect(id).to.exist()
+      expect(id).to.be.a('string')
+      done()
+    })
+  })
+
   describe('key equals', () => {
     it('equals itself', () => {
       expect(key.equals(key)).to.eql(true)
@@ -245,7 +254,11 @@ gnjREs10u7zyqBIZH7KYVgyh27WxLr859ap8cKAH6Fb+UOPtZo3sUeeume60aebn
       crypto.keys.import(pem, '', (err, key) => {
         expect(err).to.not.exist()
         expect(key).to.exist()
-        done()
+        key.id((err, id) => {
+          expect(err).to.not.exist()
+          expect(id).to.equal('QmfWu2Xp8DZzCkZZzoPB9rcrq4R4RZid6AWE6kmrUAzuHy')
+          done()
+        })
       })
     })
 

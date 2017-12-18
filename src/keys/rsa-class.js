@@ -2,6 +2,7 @@
 
 const multihashing = require('multihashing-async')
 const protobuf = require('protons')
+const bs58 = require('bs58')
 
 const crypto = require('./rsa')
 const pbm = protobuf(require('./keys.proto'))
@@ -90,6 +91,25 @@ class RsaPrivateKey {
   hash (callback) {
     ensure(callback)
     multihashing(this.bytes, 'sha2-256', callback)
+  }
+
+  /**
+   * Gets the ID of the key.
+   *
+   * The key id is the base58 encoding of the SHA-256 multihash of its public key.
+   * The public key is a protobuf encoding containing a type and the DER encoding
+   * of the PKCS SubjectPublicKeyInfo.
+   *
+   * @param {function(Error, id)} callback
+   * @returns {undefined}
+   */
+  id (callback) {
+    this.public.hash((err, hash) => {
+      if (err) {
+        return callback(err)
+      }
+      callback(null, bs58.encode(hash))
+    })
   }
 
   /**

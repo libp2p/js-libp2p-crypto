@@ -198,6 +198,16 @@ Converts a PEM password protected private key into its representative object.
 
 Generates a Buffer with length `number` populated by random bytes.
 
+### `crypto.pbkdf2(password, salt, iterations, keySize, hash)`
+
+- `password: String`
+- `salt: String`
+- `iterations: Number`
+- `keySize: Number` in bytes
+- `hash: String` the hashing algorithm ('sha1', 'sha2-512', ...)
+
+Computes the Password Based Key Derivation Function 2; returning a new password.
+
 ## Contribute
 
 Feel free to join in. All welcome. Open an [issue](https://github.com/libp2p/js-libp2p-crypto/issues)!

@@ -34,7 +34,8 @@ function pbkdf2 (password, salt, iterations, keySize, hash) {
   if (!opts.hasher) {
     throw new Error(`Hash '${hash}' is unknown or not supported`)
   }
-  return crypto.PBKDF2(password, salt, opts).toString()
+  const words = crypto.PBKDF2(password, salt, opts)
+  return crypto.enc.Base64.stringify(words)
 }
 
 module.exports = pbkdf2

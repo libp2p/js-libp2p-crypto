@@ -6,7 +6,7 @@ const bs58 = require('bs58')
 
 const crypto = require('./rsa')
 const pbm = protobuf(require('./keys.proto'))
-const KEYUTIL = require('jsrsasign').KEYUTIL
+const forge = require('node-forge')
 const setImmediate = require('async/setImmediate')
 
 class RsaPublicKey {
@@ -121,21 +121,30 @@ class RsaPrivateKey {
    * @returns {undefined}
    */
   export (format, password, callback) {
+    const self = this
     if (typeof password === 'function') {
       callback = password
       password = format
       format = 'pkcs-8'
     }
 
+    ensure(callback)
     setImmediate(() => {
-      ensure(callback)
-
       let err = null
       let pem = null
       try {
-        const key = KEYUTIL.getKey(this._key) // _key is a JWK (JSON Web Key)
+        const buffer = new forge.util.ByteBuffer(self.marshal())
+        const asn1 = forge.asn1.fromDer(buffer)
+        const privateKey = forge.pki.privateKeyFromAsn1(asn1)
+
         if (format === 'pkcs-8') {
-          pem = KEYUTIL.getPEM(key, 'PKCS8PRV', password)
+          const options = {
+            algorithm: 'aes256',
+            count: 1000,
+            saltSize: 128 / 8,
+            prfAlgorithm: 'sha512'
+          }
+          pem = forge.pki.encryptRsaPrivateKey(privateKey, password, options)
         } else {
           err = new Error(`Unknown export format '${format}'`)
         }

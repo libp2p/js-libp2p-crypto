@@ -12,7 +12,7 @@ const forge = require('node-forge')
 const hashName = {
   sha1: 'sha1',
   'sha2-256': 'sha256',
-  'sha2-512': 'sha512',
+  'sha2-512': 'sha512'
 }
 
 /**

@@ -19,7 +19,7 @@ describe('RSA', function () {
   let key
 
   before((done) => {
-    crypto.keys.generateKeyPair('RSA', 2048, (err, _key) => {
+    crypto.keys.generateKeyPair('RSA', 512, (err, _key) => {
       if (err) {
         return done(err)
       }
@@ -97,7 +97,7 @@ describe('RSA', function () {
     })
 
     it('not equals other key', (done) => {
-      crypto.keys.generateKeyPair('RSA', 2048, (err, key2) => {
+      crypto.keys.generateKeyPair('RSA', 512, (err, key2) => {
         if (err) {
           return done(err)
         }

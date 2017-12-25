@@ -140,7 +140,7 @@ class RsaPrivateKey {
         if (format === 'pkcs-8') {
           const options = {
             algorithm: 'aes256',
-            count: 1000,
+            count: 10000,
             saltSize: 128 / 8,
             prfAlgorithm: 'sha512'
           }

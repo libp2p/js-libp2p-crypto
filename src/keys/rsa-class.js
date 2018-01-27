@@ -121,7 +121,6 @@ class RsaPrivateKey {
    * @returns {undefined}
    */
   export (format, password, callback) {
-    const self = this
     if (typeof password === 'function') {
       callback = password
       password = format
@@ -129,11 +128,12 @@ class RsaPrivateKey {
     }
 
     ensure(callback)
+
     setImmediate(() => {
       let err = null
       let pem = null
       try {
-        const buffer = new forge.util.ByteBuffer(self.marshal())
+        const buffer = new forge.util.ByteBuffer(this.marshal())
         const asn1 = forge.asn1.fromDer(buffer)
         const privateKey = forge.pki.privateKeyFromAsn1(asn1)
 
@@ -148,8 +148,8 @@ class RsaPrivateKey {
         } else {
           err = new Error(`Unknown export format '${format}'`)
         }
-      } catch (e) {
-        err = e
+      } catch (_err) {
+        err = _err
       }
 
       callback(err, pem)
@@ -159,6 +159,7 @@ class RsaPrivateKey {
 
 function unmarshalRsaPrivateKey (bytes, callback) {
   const jwk = crypto.utils.pkcs1ToJwk(bytes)
+
   crypto.unmarshalPrivateKey(jwk, (err, keys) => {
     if (err) {
       return callback(err)
@@ -184,18 +185,18 @@ function fromJwk (jwk, callback) {
   })
 }
 
-function generateKeyPair (bits, cb) {
+function generateKeyPair (bits, callback) {
   crypto.generateKey(bits, (err, keys) => {
     if (err) {
-      return cb(err)
+      return callback(err)
     }
 
-    cb(null, new RsaPrivateKey(keys.privateKey, keys.publicKey))
+    callback(null, new RsaPrivateKey(keys.privateKey, keys.publicKey))
   })
 }
 
-function ensure (cb) {
-  if (typeof cb !== 'function') {
+function ensure (callback) {
+  if (typeof callback !== 'function') {
     throw new Error('callback is required')
   }
 }

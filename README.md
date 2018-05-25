@@ -73,6 +73,8 @@ This uses `CTR` mode.
 ```js
 var crypto = require('libp2p-crypto')
 
+// Setting up Key and IV
+
 // A 16 bytes array, 128 Bits, AES-128 is chosen
 var key128 = Buffer.from([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
 
@@ -103,6 +105,7 @@ async function main () {
         if (!err) {
           console.log(decryptedBuffer)
           // prints: <Buffer 42 f1 67 d9 2e 42 d0 32 9e b1 f8 3c>
+          
           console.log(decryptedBuffer.toString('utf-8'))
           // prints: Hello, world!
         }

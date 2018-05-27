@@ -134,8 +134,20 @@ Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as def
 
 Example:
 
-```
-TODO: Example of using hmac
+```js
+var crypto = require('libp2p-crypto')
+
+let hash = 'SHA1' // 'SHA256' || 'SHA512'
+
+crypto.hmac.create(hash, Buffer.from('secret'), (err, hmac) => {
+  if (!err) {
+    hmac.digest(Buffer.from('hello world'), (err, sig) => {
+      if (!err) {
+        console.log(sig)
+      }
+    })
+  }
+})
 ```
 
 ### `crypto.keys`

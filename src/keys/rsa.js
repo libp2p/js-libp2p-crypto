@@ -8,7 +8,7 @@ try {
   }
 
   const ursa = require('ursa-optional') // throws if not compiled
-  keypair = ({bits}) => {
+  keypair = ({ bits }) => {
     const key = ursa.generatePrivateKey(bits)
     return {
       private: key.toPrivatePem(),

@@ -1,13 +1,12 @@
 'use strict'
 
 const nacl = require('tweetnacl')
-const setImmediate = require('async/setImmediate')
 
 exports.publicKeyLength = nacl.sign.publicKeyLength
 exports.privateKeyLength = nacl.sign.secretKeyLength
 
 exports.generateKey = function (callback) {
-  setImmediate(() => {
+  process.nextTick(() => {
     let result
     try {
       result = nacl.sign.keyPair()
@@ -20,7 +19,7 @@ exports.generateKey = function (callback) {
 
 // seed should be a 32 byte uint8array
 exports.generateKeyFromSeed = function (seed, callback) {
-  setImmediate(() => {
+  process.nextTick(() => {
     let result
     try {
       result = nacl.sign.keyPair.fromSeed(seed)
@@ -32,13 +31,13 @@ exports.generateKeyFromSeed = function (seed, callback) {
 }
 
 exports.hashAndSign = function (key, msg, callback) {
-  setImmediate(() => {
+  process.nextTick(() => {
     callback(null, Buffer.from(nacl.sign.detached(msg, key)))
   })
 }
 
 exports.hashAndVerify = function (key, sig, msg, callback) {
-  setImmediate(() => {
+  process.nextTick(() => {
     let result
     try {
       result = nacl.sign.detached.verify(msg, sig, key)

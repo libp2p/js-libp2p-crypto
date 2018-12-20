@@ -7,7 +7,6 @@ const bs58 = require('bs58')
 const crypto = require('./rsa')
 const pbm = protobuf(require('./keys.proto'))
 const forge = require('node-forge')
-const setImmediate = require('async/setImmediate')
 
 class RsaPublicKey {
   constructor (key) {
@@ -129,7 +128,7 @@ class RsaPrivateKey {
 
     ensure(callback)
 
-    setImmediate(() => {
+    process.nextTick(() => {
       let err = null
       let pem = null
       try {

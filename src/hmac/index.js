@@ -10,7 +10,7 @@ exports.create = function (hash, secret, callback) {
 
       hmac.update(data)
 
-      setImmediate(() => {
+      process.nextTick(() => {
         cb(null, hmac.digest())
       })
     },

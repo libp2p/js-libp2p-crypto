@@ -3,6 +3,7 @@
 const multihashing = require('multihashing-async')
 const protobuf = require('protons')
 const bs58 = require('bs58')
+const nextTick = require('async/nextTick')
 
 const crypto = require('./rsa')
 const pbm = protobuf(require('./keys.proto'))
@@ -128,7 +129,7 @@ class RsaPrivateKey {
 
     ensure(callback)
 
-    process.nextTick(() => {
+    nextTick(() => {
       let err = null
       let pem = null
       try {

@@ -2,6 +2,7 @@
 
 const crypto = require('crypto')
 const lengths = require('./lengths')
+const nextTick = require('async/nextTick')
 
 exports.create = function (hash, secret, callback) {
   const res = {
@@ -10,7 +11,7 @@ exports.create = function (hash, secret, callback) {
 
       hmac.update(data)
 
-      process.nextTick(() => {
+      nextTick(() => {
         cb(null, hmac.digest())
       })
     },

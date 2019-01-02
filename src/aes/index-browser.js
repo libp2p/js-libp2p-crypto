@@ -1,9 +1,10 @@
 'use strict'
 
 const asm = require('asmcrypto.js')
+const nextTick = require('async/nextTick')
 
 exports.create = function (key, iv, callback) {
-  const done = (err, res) => process.nextTick(() => callback(err, res))
+  const done = (err, res) => nextTick(() => callback(err, res))
 
   if (key.length !== 16 && key.length !== 32) {
     return done(new Error('Invalid key length'))
@@ -20,7 +21,7 @@ exports.create = function (key, iv, callback) {
 
   const res = {
     encrypt (data, cb) {
-      const done = (err, res) => process.nextTick(() => cb(err, res))
+      const done = (err, res) => nextTick(() => cb(err, res))
 
       let res
       try {
@@ -35,7 +36,7 @@ exports.create = function (key, iv, callback) {
     },
 
     decrypt (data, cb) {
-      const done = (err, res) => process.nextTick(() => cb(err, res))
+      const done = (err, res) => nextTick(() => cb(err, res))
 
       let res
       try {

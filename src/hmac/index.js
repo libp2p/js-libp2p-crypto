@@ -1,22 +1,5 @@
 'use strict'
 
-const crypto = require('crypto')
-const lengths = require('./lengths')
-const nextTick = require('async/nextTick')
+const webcrypto = require('../webcrypto')
 
-exports.create = function (hash, secret, callback) {
-  const res = {
-    digest (data, cb) {
-      const hmac = crypto.createHmac(hash.toLowerCase(), secret)
-
-      hmac.update(data)
-
-      nextTick(() => {
-        cb(null, hmac.digest())
-      })
-    },
-    length: lengths[hash]
-  }
-
-  callback(null, res)
-}
+module.exports = webcrypto ? require('./index-webcrypto') : require('./index-crypto')

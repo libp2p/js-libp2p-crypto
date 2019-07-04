@@ -2,4 +2,4 @@
 
 'use strict'
 
-module.exports = self.crypto || self.msCrypto
+module.exports = typeof self === 'undefined' ? null : (self.crypto || self.msCrypto)

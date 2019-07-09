@@ -1,3 +1,5 @@
+'use strict'
+
 exports.ERR_MISSING_WEB_CRYPTO = () => Object.assign(
   new Error(
     'Missing Web Crypto API. ' +

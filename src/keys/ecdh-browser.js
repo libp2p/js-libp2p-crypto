@@ -3,6 +3,8 @@
 const webcrypto = require('../webcrypto')
 const nodeify = require('../nodeify')
 const BN = require('asn1.js').bignum
+const nextTick = require('async/nextTick')
+const { ERR_MISSING_WEB_CRYPTO } = require('../errors')
 
 const util = require('../util')
 const toBase64 = util.toBase64
@@ -15,7 +17,11 @@ const bits = {
 }
 
 exports.generateEphmeralKeyPair = function (curve, callback) {
-  nodeify(webcrypto.subtle.generateKey(
+  if (!webcrypto.get()) {
+    return nextTick(() => callback(ERR_MISSING_WEB_CRYPTO()))
+  }
+
+  nodeify(webcrypto.get().subtle.generateKey(
     {
       name: 'ECDH',
       namedCurve: curve
@@ -33,7 +39,7 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
       let privateKey
 
       if (forcePrivate) {
-        privateKey = webcrypto.subtle.importKey(
+        privateKey = webcrypto.get().subtle.importKey(
           'jwk',
           unmarshalPrivateKey(curve, forcePrivate),
           {
@@ -48,7 +54,7 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
       }
 
       const keys = Promise.all([
-        webcrypto.subtle.importKey(
+        webcrypto.get().subtle.importKey(
           'jwk',
           unmarshalPublicKey(curve, theirPub),
           {
@@ -61,7 +67,7 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
         privateKey
       ])
 
-      nodeify(keys.then((keys) => webcrypto.subtle.deriveBits(
+      nodeify(keys.then((keys) => webcrypto.get().subtle.deriveBits(
         {
           name: 'ECDH',
           namedCurve: curve,
@@ -72,7 +78,7 @@ exports.generateEphmeralKeyPair = function (curve, callback) {
       )).then((bits) => Buffer.from(bits)), cb)
     }
 
-    return webcrypto.subtle.exportKey('jwk', pair.publicKey)
+    return webcrypto.get().subtle.exportKey('jwk', pair.publicKey)
       .then((publicKey) => {
         return {
           key: marshalPublicKey(publicKey),

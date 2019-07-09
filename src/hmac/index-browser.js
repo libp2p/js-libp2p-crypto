@@ -4,6 +4,8 @@ const nodeify = require('../nodeify')
 
 const crypto = require('../webcrypto')
 const lengths = require('./lengths')
+const nextTick = require('async/nextTick')
+const { ERR_MISSING_WEB_CRYPTO } = require('../errors')
 
 const hashTypes = {
   SHA1: 'SHA-1',
@@ -12,14 +14,18 @@ const hashTypes = {
 }
 
 const sign = (key, data, cb) => {
-  nodeify(crypto.subtle.sign({ name: 'HMAC' }, key, data)
+  nodeify(crypto.get().subtle.sign({ name: 'HMAC' }, key, data)
     .then((raw) => Buffer.from(raw)), cb)
 }
 
 exports.create = function (hashType, secret, callback) {
+  if (!crypto.get()) {
+    return nextTick(() => callback(ERR_MISSING_WEB_CRYPTO()))
+  }
+
   const hash = hashTypes[hashType]
 
-  nodeify(crypto.subtle.importKey(
+  nodeify(crypto.get().subtle.importKey(
     'raw',
     secret,
     {

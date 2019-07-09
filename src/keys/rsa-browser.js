@@ -3,11 +3,17 @@
 const nodeify = require('../nodeify')
 const webcrypto = require('../webcrypto')
 const randomBytes = require('../random-bytes')
+const nextTick = require('async/nextTick')
+const { ERR_MISSING_WEB_CRYPTO } = require('../errors')
 
 exports.utils = require('./rsa-utils')
 
 exports.generateKey = function (bits, callback) {
-  nodeify(webcrypto.subtle.generateKey(
+  if (!webcrypto.get()) {
+    return nextTick(() => callback(ERR_MISSING_WEB_CRYPTO()))
+  }
+
+  nodeify(webcrypto.get().subtle.generateKey(
     {
       name: 'RSASSA-PKCS1-v1_5',
       modulusLength: bits,
@@ -26,7 +32,11 @@ exports.generateKey = function (bits, callback) {
 
 // Takes a jwk key
 exports.unmarshalPrivateKey = function (key, callback) {
-  const privateKey = webcrypto.subtle.importKey(
+  if (!webcrypto.get()) {
+    return nextTick(() => callback(ERR_MISSING_WEB_CRYPTO()))
+  }
+
+  const privateKey = webcrypto.get().subtle.importKey(
     'jwk',
     key,
     {
@@ -52,7 +62,11 @@ exports.unmarshalPrivateKey = function (key, callback) {
 exports.getRandomValues = randomBytes
 
 exports.hashAndSign = function (key, msg, callback) {
-  nodeify(webcrypto.subtle.importKey(
+  if (!webcrypto.get()) {
+    return nextTick(() => callback(ERR_MISSING_WEB_CRYPTO()))
+  }
+
+  nodeify(webcrypto.get().subtle.importKey(
     'jwk',
     key,
     {
@@ -62,7 +76,7 @@ exports.hashAndSign = function (key, msg, callback) {
     false,
     ['sign']
   ).then((privateKey) => {
-    return webcrypto.subtle.sign(
+    return webcrypto.get().subtle.sign(
       { name: 'RSASSA-PKCS1-v1_5' },
       privateKey,
       Uint8Array.from(msg)
@@ -71,7 +85,11 @@ exports.hashAndSign = function (key, msg, callback) {
 }
 
 exports.hashAndVerify = function (key, sig, msg, callback) {
-  nodeify(webcrypto.subtle.importKey(
+  if (!webcrypto.get()) {
+    return nextTick(() => callback(ERR_MISSING_WEB_CRYPTO()))
+  }
+
+  nodeify(webcrypto.get().subtle.importKey(
     'jwk',
     key,
     {
@@ -81,7 +99,7 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
     false,
     ['verify']
   ).then((publicKey) => {
-    return webcrypto.subtle.verify(
+    return webcrypto.get().subtle.verify(
       { name: 'RSASSA-PKCS1-v1_5' },
       publicKey,
       sig,
@@ -92,13 +110,13 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
 
 function exportKey (pair) {
   return Promise.all([
-    webcrypto.subtle.exportKey('jwk', pair.privateKey),
-    webcrypto.subtle.exportKey('jwk', pair.publicKey)
+    webcrypto.get().subtle.exportKey('jwk', pair.privateKey),
+    webcrypto.get().subtle.exportKey('jwk', pair.publicKey)
   ])
 }
 
 function derivePublicFromPrivate (jwKey) {
-  return webcrypto.subtle.importKey(
+  return webcrypto.get().subtle.importKey(
     'jwk',
     {
       kty: jwKey.kty,

@@ -60,4 +60,13 @@ describe('generateEphemeralKeyPair', () => {
       expect(secrets[0]).to.have.length(32)
     })
   })
+
+  it(`handles bad curve name`, async () => {
+    try {
+      await crypto.keys.generateEphemeralKeyPair('bad name')
+    } catch (err) {
+      return
+    }
+    expect.fail('Did not throw error')
+  })
 })

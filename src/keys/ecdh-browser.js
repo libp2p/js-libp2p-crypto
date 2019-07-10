@@ -1,5 +1,6 @@
 'use strict'
 
+const errcode = require('err-code')
 const webcrypto = require('../webcrypto.js')
 const BN = require('asn1.js').bignum
 const { toBase64, toBn } = require('../util')
@@ -96,7 +97,7 @@ function unmarshalPublicKey (curve, key) {
   const byteLen = curveLengths[curve]
 
   if (!key.slice(0, 1).equals(Buffer.from([4]))) {
-    throw new Error('Invalid key format')
+    throw errcode('Cannot unmarshal public key - invalid key format', 'ERR_INVALID_KEY_FORMAT')
   }
   const x = new BN(key.slice(1, byteLen + 1))
   const y = new BN(key.slice(1 + byteLen))

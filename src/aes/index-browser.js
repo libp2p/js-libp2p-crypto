@@ -1,11 +1,11 @@
 'use strict'
 
 const asm = require('asmcrypto.js')
+const cipherMode = require('./cipher-mode')
 
 exports.create = async function (key, iv) { // eslint-disable-line require-await
-  if (key.length !== 16 && key.length !== 32) {
-    throw new Error('Invalid key length')
-  }
+  // Check cipher mode
+  cipherMode(key)
 
   const enc = new asm.AES_CTR.Encrypt({
     key: key,

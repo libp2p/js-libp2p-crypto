@@ -4,6 +4,7 @@ const errcode = require('err-code')
 const webcrypto = require('../webcrypto.js')
 const BN = require('asn1.js').bignum
 const { toBase64, toBn } = require('../util')
+const validateCurveType = require('./validate-curve-type')
 
 const bits = {
   'P-256': 256,
@@ -12,6 +13,8 @@ const bits = {
 }
 
 exports.generateEphmeralKeyPair = async function (curve) {
+  validateCurveType(Object.keys(bits), curve)
+
   const pair = await webcrypto.subtle.generateKey(
     {
       name: 'ECDH',

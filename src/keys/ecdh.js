@@ -1,7 +1,7 @@
 'use strict'
 
 const crypto = require('crypto')
-const errcode = require('err-code')
+const validateCurveType = require('./validate-curve-type')
 
 const curves = {
   'P-256': 'prime256v1',
@@ -10,10 +10,8 @@ const curves = {
 }
 
 exports.generateEphmeralKeyPair = async function (curve) { // eslint-disable-line require-await
-  if (!curves[curve]) {
-    const names = Object.values(curves).join(' / ')
-    throw errcode(new Error(`Unknown curve: ${curve}. Must be ${names}`), 'ERR_INVALID_CURVE')
-  }
+  validateCurveType(Object.keys(curves), curve)
+
   const ecdh = crypto.createECDH(curves[curve])
   ecdh.generateKeys()
 

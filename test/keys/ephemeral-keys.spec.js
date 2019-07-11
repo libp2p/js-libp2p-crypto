@@ -65,6 +65,7 @@ describe('generateEphemeralKeyPair', () => {
     try {
       await crypto.keys.generateEphemeralKeyPair('bad name')
     } catch (err) {
+      expect(err.code).equals('ERR_INVALID_CURVE')
       return
     }
     expect.fail('Did not throw error')

@@ -97,7 +97,7 @@ function unmarshalPublicKey (curve, key) {
   const byteLen = curveLengths[curve]
 
   if (!key.slice(0, 1).equals(Buffer.from([4]))) {
-    throw errcode('Cannot unmarshal public key - invalid key format', 'ERR_INVALID_KEY_FORMAT')
+    throw errcode(new Error('Cannot unmarshal public key - invalid key format'), 'ERR_INVALID_KEY_FORMAT')
   }
   const x = new BN(key.slice(1, byteLen + 1))
   const y = new BN(key.slice(1 + byteLen))

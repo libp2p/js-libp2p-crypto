@@ -1,11 +1,11 @@
 'use strict'
 
 const asm = require('asmcrypto.js')
-const cipherMode = require('./cipher-mode')
+const validateCipherMode = require('./cipher-mode')
 
 exports.create = async function (key, iv) { // eslint-disable-line require-await
-  // Check cipher mode
-  cipherMode(key)
+  // Throws an error if mode is invalid
+  validateCipherMode(key)
 
   const enc = new asm.AES_CTR.Encrypt({
     key: key,

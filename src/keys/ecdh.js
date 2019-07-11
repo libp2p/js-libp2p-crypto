@@ -12,7 +12,7 @@ const curves = {
 exports.generateEphmeralKeyPair = async function (curve) { // eslint-disable-line require-await
   if (!curves[curve]) {
     const names = Object.values(curves).join(' / ')
-    throw errcode(`Unknown curve: ${curve}. Must be ${names}`, 'ERR_INVALID_CURVE')
+    throw errcode(new Error(`Unknown curve: ${curve}. Must be ${names}`), 'ERR_INVALID_CURVE')
   }
   const ecdh = crypto.createECDH(curves[curve])
   ecdh.generateKeys()

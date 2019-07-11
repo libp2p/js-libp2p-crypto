@@ -19,13 +19,16 @@ const supportedKeys = {
 exports.supportedKeys = supportedKeys
 exports.keysPBM = keysPBM
 
-const errMissingSecp256K1 = errcode('secp256k1 support requires libp2p-crypto-secp256k1 package', 'ERR_MISSING_PACKAGE')
+const ErrMissingSecp256K1 = {
+  message: 'secp256k1 support requires libp2p-crypto-secp256k1 package',
+  code: 'ERR_MISSING_PACKAGE'
+}
 
 function typeToKey (type) {
   let key = supportedKeys[type.toLowerCase()]
   if (!key) {
     const supported = Object.keys(supportedKeys).join(' / ')
-    throw errcode(`invalid or unsupported key type ${type}. Must be ${supported}`, 'ERR_UNSUPPORTED_KEY_TYPE')
+    throw errcode(new Error(`invalid or unsupported key type ${type}. Must be ${supported}`), 'ERR_UNSUPPORTED_KEY_TYPE')
   }
   return key
 }
@@ -43,7 +46,7 @@ exports.generateKeyPair = async (type, bits) => { // eslint-disable-line require
 exports.generateKeyPairFromSeed = async (type, seed, bits) => { // eslint-disable-line require-await
   const key = typeToKey(type)
   if (type.toLowerCase() !== 'ed25519') {
-    throw errcode('Seed key derivation is unimplemented for RSA or secp256k1', 'ERR_UNSUPPORTED_KEY_DERIVATION_TYPE')
+    throw errcode(new Error('Seed key derivation is unimplemented for RSA or secp256k1'), 'ERR_UNSUPPORTED_KEY_DERIVATION_TYPE')
   }
   return key.generateKeyPairFromSeed(seed, bits)
 }
@@ -63,7 +66,7 @@ exports.unmarshalPublicKey = (buf) => {
       if (supportedKeys.secp256k1) {
         return supportedKeys.secp256k1.unmarshalSecp256k1PublicKey(data)
       } else {
-        throw errMissingSecp256K1()
+        throw errcode(new Error(ErrMissingSecp256K1.message), ErrMissingSecp256K1.code)
       }
     default:
       typeToKey(decoded.Type) // throws because type is not supported
@@ -92,7 +95,7 @@ exports.unmarshalPrivateKey = async (buf) => { // eslint-disable-line require-aw
       if (supportedKeys.secp256k1) {
         return supportedKeys.secp256k1.unmarshalSecp256k1PrivateKey(data)
       } else {
-        throw errMissingSecp256K1()
+        throw errcode(new Error(ErrMissingSecp256K1.message), ErrMissingSecp256K1.code)
       }
     default:
       typeToKey(decoded.Type) // throws because type is not supported
@@ -109,7 +112,7 @@ exports.marshalPrivateKey = (key, type) => {
 exports.import = async (pem, password) => { // eslint-disable-line require-await
   const key = forge.pki.decryptRsaPrivateKey(pem, password)
   if (key === null) {
-    throw errcode('Cannot read the key, most likely the password is wrong or not a RSA key', 'ERR_CANNOT_DECRYPT_PEM')
+    throw errcode(new Error('Cannot read the key, most likely the password is wrong or not a RSA key'), 'ERR_CANNOT_DECRYPT_PEM')
   }
   let der = forge.asn1.toDer(forge.pki.privateKeyToAsn1(key))
   der = Buffer.from(der.getBytes(), 'binary')

@@ -41,7 +41,7 @@ exports.generateKey = async function (bits) { // eslint-disable-line require-awa
 // Takes a jwk key
 exports.unmarshalPrivateKey = async function (key) { // eslint-disable-line require-await
   if (!key) {
-    throw errcode('Mising key parameter', 'ERR_MISSING_KEY')
+    throw errcode(new Error('Mising key parameter'), 'ERR_MISSING_KEY')
   }
   return {
     privateKey: key,

@@ -31,7 +31,7 @@ function pbkdf2 (password, salt, iterations, keySize, hash) {
   const hasher = hashName[hash]
   if (!hasher) {
     const types = Object.keys(hashName).join(' / ')
-    throw errcode(`Hash '${hash}' is unknown or not supported. Must be ${types}`, 'ERR_UNSUPPORTED_HASH_TYPE')
+    throw errcode(new Error(`Hash '${hash}' is unknown or not supported. Must be ${types}`), 'ERR_UNSUPPORTED_HASH_TYPE')
   }
   const dek = forgePbkdf2(
     password,

@@ -114,7 +114,7 @@ function ensureKey (key, length) {
     key = new Uint8Array(key)
   }
   if (!(key instanceof Uint8Array) || key.length !== length) {
-    throw errcode('Key must be a Uint8Array or Buffer of length ' + length, 'ERR_INVALID_KEY_TYPE')
+    throw errcode(new Error('Key must be a Uint8Array or Buffer of length ' + length), 'ERR_INVALID_KEY_TYPE')
   }
   return key
 }

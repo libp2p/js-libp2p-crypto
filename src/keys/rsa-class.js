@@ -62,7 +62,7 @@ class RsaPrivateKey {
 
   get public () {
     if (!this._publicKey) {
-      throw errcode('public key not provided', 'ERR_PUBKEY_NOT_PROVIDED')
+      throw errcode(new Error('public key not provided'), 'ERR_PUBKEY_NOT_PROVIDED')
     }
 
     return new RsaPublicKey(this._publicKey)
@@ -124,7 +124,7 @@ class RsaPrivateKey {
       }
       pem = forge.pki.encryptRsaPrivateKey(privateKey, password, options)
     } else {
-      throw errcode(`Unknown export format '${format}'. Must be pkcs-8`, 'ERR_INVALID_EXPORT_FORMAT')
+      throw errcode(new Error(`Unknown export format '${format}'. Must be pkcs-8`), 'ERR_INVALID_EXPORT_FORMAT')
     }
 
     return pem

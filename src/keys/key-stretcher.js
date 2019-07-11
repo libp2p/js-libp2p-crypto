@@ -25,11 +25,11 @@ module.exports = async (cipherType, hash, secret) => {
 
   if (!cipher) {
     const allowed = Object.keys(cipherMap).join(' / ')
-    throw errcode(`unknown cipher type '${cipherType}'. Must be ${allowed}`, 'ERR_INVALID_CIPHER_TYPE')
+    throw errcode(new Error(`unknown cipher type '${cipherType}'. Must be ${allowed}`), 'ERR_INVALID_CIPHER_TYPE')
   }
 
   if (!hash) {
-    throw errcode(`missing hash type`, 'ERR_MISSING_HASH_TYPE')
+    throw errcode(new Error(`missing hash type`), 'ERR_MISSING_HASH_TYPE')
   }
 
   const cipherKeySize = cipher.keySize

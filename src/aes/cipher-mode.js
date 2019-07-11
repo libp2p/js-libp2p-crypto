@@ -11,7 +11,7 @@ module.exports = function (key) {
   const mode = CIPHER_MODES[key.length]
   if (!mode) {
     const modes = Object.entries(CIPHER_MODES).map(([k, v]) => `${k} (${v})`).join(' / ')
-    throw errcode(`Invalid key length ${key.length} bytes. Must be ${modes}`, 'ERR_INVALID_KEY_LENGTH')
+    throw errcode(new Error(`Invalid key length ${key.length} bytes. Must be ${modes}`), 'ERR_INVALID_KEY_LENGTH')
   }
   return mode
 }

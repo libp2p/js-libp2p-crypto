@@ -97,3 +97,11 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
     callback(null, result)
   })
 }
+
+exports.encrypt = async function (key, bytes) {
+  return crypto.publicEncrypt(jwkToPem(key), bytes)
+}
+
+exports.decrypt = async function (key, bytes) {
+  return crypto.privateDecrypt(jwkToPem(key), bytes)
+}

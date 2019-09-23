@@ -28,7 +28,7 @@ exports.generateEphemeralKeyPair = require('./ephemeral-keys')
 
 // Generates a keypair of the given type and bitsize
 exports.generateKeyPair = (type, bits, cb) => {
-  let key = supportedKeys[type.toLowerCase()]
+  const key = supportedKeys[type.toLowerCase()]
 
   if (!key) {
     return cb(new Error('invalid or unsupported key type'))
@@ -40,7 +40,7 @@ exports.generateKeyPair = (type, bits, cb) => {
 // Generates a keypair of the given type and bitsize
 // seed is a 32 byte uint8array
 exports.generateKeyPairFromSeed = (type, seed, bits, cb) => {
-  let key = supportedKeys[type.toLowerCase()]
+  const key = supportedKeys[type.toLowerCase()]
   if (!key) {
     return cb(new Error('invalid or unsupported key type'))
   }

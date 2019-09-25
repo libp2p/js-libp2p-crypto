@@ -47,7 +47,7 @@ module.exports = (cipherType, hash, secret, callback) => {
         return callback(err)
       }
 
-      let result = []
+      const result = []
       let j = 0
 
       whilst(

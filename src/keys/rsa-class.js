@@ -32,7 +32,7 @@ class RsaPublicKey {
     })
   }
 
-  async encrypt (bytes) {
+  encrypt (bytes) {
     return crypto.encrypt(this._key, bytes)
   }
 

@@ -32,8 +32,8 @@ class RsaPublicKey {
     })
   }
 
-  encrypt (bytes) {
-    return crypto.encrypt(this._key, bytes)
+  encrypt (bytes, cb) {
+    return cbWrap(() => crypto.encrypt(this._key, bytes), cb)
   }
 
   equals (key) {

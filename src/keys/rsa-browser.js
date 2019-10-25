@@ -113,3 +113,32 @@ function derivePublicFromPrivate (jwKey) {
     ['verify']
   )
 }
+
+/*
+
+RSA encryption/decryption for the browser with webcrypto workarround
+"bloody dark magic. webcrypto's why."
+
+Explanation:
+  - Convert JWK to nodeForge
+  - Convert msg buffer to nodeForge buffer: ByteBuffer is a "binary-string backed buffer", so let's make our buffer a binary string
+  - Convert resulting nodeForge buffer to buffer: it returns a binary string, turn that into a uint8array(buffer)
+
+*/
+
+const { jwk2pub, jwk2priv } = require('./jwk2pem')
+
+function convertKey (key, pub, msg, handle) {
+  const fkey = pub ? jwk2pub(key) : jwk2priv(key)
+  const fmsg = Buffer.from(msg).toString('binary')
+  const fomsg = handle(fmsg, fkey)
+  return Buffer.from(fomsg, 'binary')
+}
+
+exports.encrypt = function (key, msg) {
+  return convertKey(key, true, msg, (msg, key) => key.encrypt(msg))
+}
+
+exports.decrypt = function (key, msg) {
+  return convertKey(key, false, msg, (msg, key) => key.decrypt(msg))
+}

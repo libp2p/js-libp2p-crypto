@@ -97,3 +97,13 @@ exports.hashAndVerify = function (key, sig, msg, callback) {
     callback(null, result)
   })
 }
+
+const padding = crypto.constants.RSA_PKCS1_PADDING
+
+exports.encrypt = function (key, bytes) {
+  return crypto.publicEncrypt({ key: jwkToPem(key), padding }, bytes)
+}
+
+exports.decrypt = function (key, bytes) {
+  return crypto.privateDecrypt({ key: jwkToPem(key), padding }, bytes)
+}

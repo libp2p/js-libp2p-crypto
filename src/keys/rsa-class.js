@@ -32,8 +32,8 @@ class RsaPublicKey {
     })
   }
 
-  encrypt (bytes) {
-    return this._key.encrypt(bytes, 'RSAES-PKCS1-V1_5')
+  encrypt (bytes, cb) {
+    return cbWrap(() => crypto.encrypt(this._key, bytes), cb)
   }
 
   equals (key) {
@@ -44,6 +44,17 @@ class RsaPublicKey {
     ensure(callback)
     multihashing(this.bytes, 'sha2-256', callback)
   }
+}
+
+function cbWrap (f, cb) {
+  let res
+  try {
+    res = f()
+  } catch (err) {
+    cb(err)
+  }
+
+  return cb(null, res)
 }
 
 class RsaPrivateKey {
@@ -71,8 +82,8 @@ class RsaPrivateKey {
     return new RsaPublicKey(this._publicKey)
   }
 
-  decrypt (msg, callback) {
-    crypto.decrypt(this._key, msg, callback)
+  decrypt (bytes, cb) {
+    cbWrap(() => crypto.decrypt(this._key, bytes), cb)
   }
 
   marshal () {

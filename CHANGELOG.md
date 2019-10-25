@@ -1,3 +1,13 @@
+<a name="0.16.3"></a>
+## [0.16.3](https://github.com/libp2p/js-libp2p-crypto/compare/v0.16.2...v0.16.3) (2019-10-25)
+
+
+### Features
+
+* backport enc/dec ([#160](https://github.com/libp2p/js-libp2p-crypto/issues/160)) ([e71fc15](https://github.com/libp2p/js-libp2p-crypto/commit/e71fc15))
+
+
+
 <a name="0.16.2"></a>
 ## [0.16.2](https://github.com/libp2p/js-libp2p-crypto/compare/v0.16.1...v0.16.2) (2019-09-25)
 

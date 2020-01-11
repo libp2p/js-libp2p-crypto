@@ -3,6 +3,7 @@
   "version": "0.17.1",
   "description": "Crypto primitives for libp2p",
   "main": "src/index.js",
+  "types": "types",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "browser": {
     "./src/hmac/index.js": "./src/hmac/index-browser.js",
@@ -25,7 +26,8 @@
     "release-minor": "aegir release --type minor",
     "release-major": "aegir release --type major",
     "coverage": "aegir coverage --ignore src/keys/keys.proto.js",
-    "size": "aegir build --bundlesize"
+    "size": "aegir build --bundlesize",
+    "lint:types": "dtslint types"
   },
   "keywords": [
     "IPFS",
@@ -58,6 +60,7 @@
     "chai": "^4.2.0",
     "chai-string": "^1.5.0",
     "dirty-chai": "^2.0.1",
+    "dtslint": "^2.0.5",
     "sinon": "^7.5.0"
   },
   "engines": {

@@ -3,7 +3,7 @@
   "version": "0.17.1",
   "description": "Crypto primitives for libp2p",
   "main": "src/index.js",
-  "types": "types",
+  "types": "src/index.d.ts",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "browser": {
     "./src/hmac/index.js": "./src/hmac/index-browser.js",

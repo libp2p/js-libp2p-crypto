@@ -97,18 +97,15 @@ export interface PrivateKey {
 }
 
 export interface Keystretcher {
+  (res: Buffer): Keystretcher;
   iv: Buffer;
   cipherKey: Buffer;
   macKey: Buffer;
 }
 
-export interface CreateKey {
-  (res: Buffer): Keystretcher;
-}
-
 export interface StretchPair {
-  k1: CreateKey;
-  k2: CreateKey;
+  k1: Keystretcher;
+  k2: Keystretcher;
 }
 
 /**
@@ -135,6 +132,9 @@ export namespace keys {
         hash(): Promise<Buffer>;
       }
 
+      // Type alias for export method
+      export type KeyInfo = any;
+
       class RsaPrivateKey implements PrivateKey {
         constructor(key: any, publicKey: Buffer);
         readonly public: RsaPublicKey;
@@ -152,7 +152,7 @@ export namespace keys {
          * @param password The password to read the encrypted PEM
          * @param format Defaults to 'pkcs-8'.
          */
-        export(password: string, format?: "pkcs-8"): any;
+        export(password: string, format?: "pkcs-8" | string): KeyInfo;
       }
       function unmarshalRsaPublicKey(buf: Buffer): RsaPublicKey;
       function unmarshalRsaPrivateKey(buf: Buffer): Promise<RsaPrivateKey>;
@@ -182,7 +182,9 @@ export namespace keys {
         id(): Promise<string>;
       }
 
-      function unmarshalEd25519PrivateKey(buf: Buffer): Promise<Ed25519PrivateKey>;
+      function unmarshalEd25519PrivateKey(
+        buf: Buffer
+      ): Promise<Ed25519PrivateKey>;
       function unmarshalEd25519PublicKey(buf: Buffer): Ed25519PublicKey;
       function generateKeyPair(): Promise<Ed25519PrivateKey>;
       function generateKeyPairFromSeed(
@@ -212,7 +214,9 @@ export namespace keys {
         id(): Promise<string>;
       }
 
-      function unmarshalSecp256k1PrivateKey(bytes: Buffer): Promise<Secp256k1PrivateKey>;
+      function unmarshalSecp256k1PrivateKey(
+        bytes: Buffer
+      ): Promise<Secp256k1PrivateKey>;
       function unmarshalSecp256k1PublicKey(bytes: Buffer): Secp256k1PublicKey;
       function generateKeyPair(): Promise<Secp256k1PrivateKey>;
     }
@@ -226,7 +230,7 @@ export namespace keys {
    * @param bits Number of bits. Minimum of 1024.
    */
   export function generateKeyPair(
-    type: KeyType,
+    type: KeyType | string,
     bits: number
   ): Promise<PrivateKey>;
 
@@ -237,7 +241,7 @@ export namespace keys {
    * @param bits Number of bits. Minimum of 1024.
    */
   export function generateKeyPairFromSeed(
-    type: KeyType,
+    type: KeyType | string,
     seed: Uint8Array,
     bits: number
   ): Promise<PrivateKey>;
@@ -248,10 +252,10 @@ export namespace keys {
    * @param curve The curve to use. One of 'P-256', 'P-384', 'P-521' is currently supported.
    */
   export function generateEphemeralKeyPair(
-    curve: CurveType
+    curve: CurveType | string
   ): Promise<{
     key: Buffer;
-    genSharedKey: (theirPub: Buffer, forcePrivate?: boolean) => Promise<Buffer>;
+    genSharedKey: (theirPub: Buffer, forcePrivate?: any) => Promise<Buffer>;
   }>;
 
   /**
@@ -261,9 +265,9 @@ export namespace keys {
    * @param secret The shared key secret.
    */
   export function keyStretcher(
-    cipherType: CipherType,
-    hashType: HashType,
-    secret: Buffer
+    cipherType: CipherType | string,
+    hashType: HashType | string,
+    secret: Buffer | string
   ): Promise<StretchPair>;
 
   /**
@@ -277,7 +281,7 @@ export namespace keys {
    * @param key An RSA, Ed25519, or Secp256k1 public key object.
    * @param type One of the supported key types.
    */
-  export function marshalPublicKey(key: PublicKey, type?: KeyType): Buffer;
+  export function marshalPublicKey(key: PublicKey, type?: KeyType | string): Buffer;
 
   /**
    * Converts a protobuf serialized private key into its representative object.
@@ -290,7 +294,7 @@ export namespace keys {
    * @param key An RSA, Ed25519, or Secp256k1 private key object.
    * @param type One of the supported key types.
    */
-  export function marshalPrivateKey(key: PrivateKey, type?: KeyType): Buffer;
+  export function marshalPrivateKey(key: PrivateKey, type?: KeyType | string): Buffer;
 
   /**
    * Converts a PEM password protected private key into its representative object.

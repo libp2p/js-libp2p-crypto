@@ -26,10 +26,5 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": ["./src/index.d.ts",],
-    "include": [
-        "./test/**/*.spec.js"
-    ],
-    "exclude": [
-        "./test/helpers/**"
-    ]
+    "include": ["./test/**/*.spec.js"]
 }

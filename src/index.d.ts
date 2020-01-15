@@ -233,10 +233,22 @@ export namespace keys {
     type: KeyType | string,
     bits: number
   ): Promise<PrivateKey>;
+  export function generateKeyPair(
+    type: "Ed25519",
+    bits: number
+  ): Promise<keys.supportedKeys.ed25519.Ed25519PrivateKey>;
+    export function generateKeyPair(
+    type: "RSA",
+    bits: number
+  ): Promise<keys.supportedKeys.rsa.RsaPrivateKey>;
+    export function generateKeyPair(
+    type: "secp256k1",
+    bits: number
+  ): Promise<keys.supportedKeys.secp256k1.Secp256k1PrivateKey>;
 
   /**
    * Generates a keypair of the given type and bitsize.
-   * @param type One of the supported key types.
+   * @param type One of the supported key types. Currently only 'Ed25519' is supported.
    * @param seed A 32 byte uint8array.
    * @param bits Number of bits. Minimum of 1024.
    */
@@ -245,6 +257,11 @@ export namespace keys {
     seed: Uint8Array,
     bits: number
   ): Promise<PrivateKey>;
+  export function generateKeyPairFromSeed(
+    type: "Ed25519",
+    seed: Uint8Array,
+    bits: number
+  ): Promise<keys.supportedKeys.ed25519.Ed25519PrivateKey>;
 
   /**
    * Generates an ephemeral public key and returns a function that will compute the shared secret key.

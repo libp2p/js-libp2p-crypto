@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>libp2p-crypto 0.16.3 | Documentation</title>
+  <title>libp2p-crypto 0.17.2 | Documentation</title>
   <meta name='description' content='Crypto primitives for libp2p'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>libp2p-crypto</h3>
-          <div class='mb1'><code>0.16.3</code></div>
+          <div class='mb1'><code>0.17.2</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -49,6 +49,16 @@
                   href='#export'
                   class="">
                   export
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#keypair'
+                  class="">
+                  keypair
                   
                 </a>
                 
@@ -122,7 +132,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/2d647cd98b375b428c57c3e99fada8891b672d56/src/keys/rsa-class.js#L119-L126'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/ad4bf3b35779cb22e5df1b11a0504fb8a885a072/src/keys/rsa-class.js#L103-L106'>
       <span>src/keys/rsa-class.js</span>
       </a>
     
@@ -134,7 +144,7 @@
 The public key is a protobuf encoding containing a type and the DER encoding
 of the PKCS SubjectPublicKeyInfo.</p>
 
-    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+    <div class='pre p1 fill-light mt0'>id(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></div>
   
   
 
@@ -145,19 +155,6 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
   
 
   
@@ -165,7 +162,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>:
         
 
       
@@ -198,7 +195,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/2d647cd98b375b428c57c3e99fada8891b672d56/src/keys/rsa-class.js#L136-L169'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/ad4bf3b35779cb22e5df1b11a0504fb8a885a072/src/keys/rsa-class.js#L114-L134'>
       <span>src/keys/rsa-class.js</span>
       </a>
     
@@ -207,7 +204,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
 
   <p>Exports the key into a password protected PEM format</p>
 
-    <div class='pre p1 fill-light mt0'>export(format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?, password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, KeyInfo)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+    <div class='pre p1 fill-light mt0'>export(password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</div>
   
   
 
@@ -224,15 +221,6 @@ of the PKCS SubjectPublicKeyInfo.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
-	    Defaults to 'pkcs-8'.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
             <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    The password to read the encrypted PEM
 
@@ -242,8 +230,10 @@ of the PKCS SubjectPublicKeyInfo.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, KeyInfo))</code>
-	    
+            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?
+            = <code>&#39;pkcs-8&#39;</code>)</code>
+	    Defaults to 'pkcs-8'.
+
           </div>
           
         </div>
@@ -254,13 +244,61 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
 
   
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        
 
-      
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
     
+    <h3 class='fl m0' id='keypair'>
+      keypair
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/ad4bf3b35779cb22e5df1b11a0504fb8a885a072/src/keys/rsa.js#L10-L10'>
+      <span>src/keys/rsa.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>keypair</div>
+  
+    <p>
+      Type:
+      PrivateKey
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
   
 
   
@@ -289,7 +327,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/2d647cd98b375b428c57c3e99fada8891b672d56/src/keys/ed25519-class.js#L92-L99'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/ad4bf3b35779cb22e5df1b11a0504fb8a885a072/src/keys/ed25519-class.js#L84-L87'>
       <span>src/keys/ed25519-class.js</span>
       </a>
     
@@ -301,7 +339,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
 The public key is a protobuf encoding containing a type and the DER encoding
 of the PKCS SubjectPublicKeyInfo.</p>
 
-    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+    <div class='pre p1 fill-light mt0'>id(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></div>
   
   
 
@@ -312,19 +350,6 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
   
 
   
@@ -332,7 +357,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>:
         
 
       
@@ -365,7 +390,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/2d647cd98b375b428c57c3e99fada8891b672d56/src/pbkdf2.js#L13-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/ad4bf3b35779cb22e5df1b11a0504fb8a885a072/src/pbkdf2.js#L14-L18'>
       <span>src/pbkdf2.js</span>
       </a>
     

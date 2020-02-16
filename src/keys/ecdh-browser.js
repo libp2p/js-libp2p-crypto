@@ -1,9 +1,9 @@
 'use strict'
 
 const errcode = require('err-code')
+const { Buffer } = require('buffer')
 const webcrypto = require('../webcrypto')
-const BN = require('asn1.js').bignum
-const { toBase64, toBn } = require('../util')
+const { bufferToBase64url } = require('../util')
 const validateCurveType = require('./validate-curve-type')
 
 const bits = {
@@ -81,6 +81,13 @@ const curveLengths = {
   'P-521': 66
 }
 
+const base64urlToBuffer = str => {
+  str = (str + '==='.slice((str.length + 3) % 4))
+    .replace(/-/g, '+')
+    .replace(/_/g, '/')
+  return Buffer.from(str, 'base64')
+}
+
 // Marshal converts a jwk encodec ECDH public key into the
 // form specified in section 4.3.6 of ANSI X9.62. (This is the format
 // go-ipfs uses)
@@ -89,8 +96,11 @@ function marshalPublicKey (jwk) {
 
   return Buffer.concat([
     Buffer.from([4]), // uncompressed point
-    toBn(jwk.x).toArrayLike(Buffer, 'be', byteLen),
-    toBn(jwk.y).toArrayLike(Buffer, 'be', byteLen)
+    // TODO: BN.toArrayLike(Buffer, 'be', byteLen) restricts size to passed byteLen
+    // toBn(jwk.x).toArrayLike(Buffer, 'be', byteLen),
+    // toBn(jwk.y).toArrayLike(Buffer, 'be', byteLen)
+    base64urlToBuffer(jwk.x),
+    base64urlToBuffer(jwk.y)
   ], 1 + byteLen * 2)
 }
 
@@ -101,20 +111,17 @@ function unmarshalPublicKey (curve, key) {
   if (!key.slice(0, 1).equals(Buffer.from([4]))) {
     throw errcode(new Error('Cannot unmarshal public key - invalid key format'), 'ERR_INVALID_KEY_FORMAT')
   }
-  const x = new BN(key.slice(1, byteLen + 1))
-  const y = new BN(key.slice(1 + byteLen))
 
   return {
     kty: 'EC',
     crv: curve,
-    x: toBase64(x, byteLen),
-    y: toBase64(y, byteLen),
+    x: bufferToBase64url(key.slice(1, byteLen + 1)),
+    y: bufferToBase64url(key.slice(1 + byteLen)),
     ext: true
   }
 }
 
-function unmarshalPrivateKey (curve, key) {
-  const result = unmarshalPublicKey(curve, key.public)
-  result.d = toBase64(new BN(key.private))
-  return result
-}
+const unmarshalPrivateKey = (curve, key) => ({
+  ...unmarshalPublicKey(curve, key.public),
+  d: bufferToBase64url(key.private)
+})

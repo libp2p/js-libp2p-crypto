@@ -5,8 +5,11 @@ require('node-forge/lib/util')
 require('node-forge/lib/jsbn')
 const forge = require('node-forge/lib/forge')
 
-exports.bigIntegerToBase64url = buf => {
-  return exports.bufferToBase64url(Buffer.from(buf.toByteArray()))
+exports.bigIntegerToBase64url = num => {
+  let byteArray = num.toByteArray()
+  // jsbn adds a 0 prefix for positive numbers, webcrypto does not like this
+  byteArray = byteArray[0] === 0 ? byteArray.slice(1) : byteArray
+  return exports.bufferToBase64url(Buffer.from(byteArray))
 }
 
 // Convert a Buffer to a base64 encoded string without padding

@@ -3,7 +3,7 @@
 const errcode = require('err-code')
 const { Buffer } = require('buffer')
 const webcrypto = require('../webcrypto')
-const { bufferToBase64url } = require('../util')
+const { bufferToBase64url, base64urlToBuffer } = require('../util')
 const validateCurveType = require('./validate-curve-type')
 
 const bits = {
@@ -81,13 +81,6 @@ const curveLengths = {
   'P-521': 66
 }
 
-const base64urlToBuffer = str => {
-  str = (str + '==='.slice((str.length + 3) % 4))
-    .replace(/-/g, '+')
-    .replace(/_/g, '/')
-  return Buffer.from(str, 'base64')
-}
-
 // Marshal converts a jwk encodec ECDH public key into the
 // form specified in section 4.3.6 of ANSI X9.62. (This is the format
 // go-ipfs uses)
@@ -96,11 +89,8 @@ function marshalPublicKey (jwk) {
 
   return Buffer.concat([
     Buffer.from([4]), // uncompressed point
-    // TODO: BN.toArrayLike(Buffer, 'be', byteLen) restricts size to passed byteLen
-    // toBn(jwk.x).toArrayLike(Buffer, 'be', byteLen),
-    // toBn(jwk.y).toArrayLike(Buffer, 'be', byteLen)
-    base64urlToBuffer(jwk.x),
-    base64urlToBuffer(jwk.y)
+    base64urlToBuffer(jwk.x, byteLen),
+    base64urlToBuffer(jwk.y, byteLen)
   ], 1 + byteLen * 2)
 }
 

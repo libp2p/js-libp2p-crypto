@@ -35,9 +35,21 @@ exports.bufferToBase64url = buf => {
 
 // Convert a base64url encoded string to a BigInteger
 exports.base64urlToBigInteger = str => {
+  const buf = exports.base64urlToBuffer(str)
+  return new forge.jsbn.BigInteger(buf.toString('hex'), 16)
+}
+
+exports.base64urlToBuffer = (str, len) => {
   str = (str + '==='.slice((str.length + 3) % 4))
     .replace(/-/g, '+')
     .replace(/_/g, '/')
-  const bytes = forge.util.decode64(str)
-  return new forge.jsbn.BigInteger(forge.util.bytesToHex(bytes), 16)
+
+  let buf = Buffer.from(str, 'base64')
+
+  if (len != null) {
+    if (buf.length > len) throw new Error('byte array longer than desired length')
+    buf = Buffer.concat([Buffer.alloc(len - buf.length), buf])
+  }
+
+  return buf
 }

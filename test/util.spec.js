@@ -6,26 +6,23 @@ const chai = require('chai')
 const dirtyChai = require('dirty-chai')
 const expect = chai.expect
 chai.use(dirtyChai)
-
+require('node-forge/lib/jsbn')
+const forge = require('node-forge/lib/forge')
 const util = require('../src/util')
-const BN = require('bn.js')
 
-describe.skip('Util', () => {
+describe('Util', () => {
   let bn
 
-  before((done) => {
-    bn = new BN('dead', 16)
-    done()
+  before(() => {
+    bn = new forge.jsbn.BigInteger('dead', 16)
   })
 
-  it('toBase64', (done) => {
-    expect(util.toBase64(bn)).to.eql('3q0')
-    done()
+  it('bigIntegerToUintBase64url', () => {
+    expect(util.bigIntegerToUintBase64url(bn)).to.eql('3q0')
   })
 
-  it('toBase64 zero padding', (done) => {
-    const bnpad = new BN('ff', 16)
-    expect(util.toBase64(bnpad, 2)).to.eql('AP8')
-    done()
+  it('bigIntegerToUintBase64url zero padding', () => {
+    const bnpad = new forge.jsbn.BigInteger('ff', 16)
+    expect(util.bigIntegerToUintBase64url(bnpad, 2)).to.eql('AP8')
   })
 })

@@ -30,4 +30,9 @@ describe('Util', () => {
     const num = util.base64urlToBigInteger('3q0')
     expect(num.equals(bn)).to.be.true()
   })
+
+  it('should convert base64url encoded string to Buffer with padding', () => {
+    const buf = util.base64urlToBuffer('AP8', 2)
+    expect(Buffer.from([0, 255])).to.eql(buf)
+  })
 })

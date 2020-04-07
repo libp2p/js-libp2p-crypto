@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>libp2p-crypto 0.17.5 | Documentation</title>
+  <title>libp2p-crypto 0.17.6 | Documentation</title>
   <meta name='description' content='Crypto primitives for libp2p'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,11 +15,14 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>libp2p-crypto</h3>
-          <div class='mb1'><code>0.17.5</code></div>
+          <div class='mb1'><code>0.17.6</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
             class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
@@ -59,6 +62,16 @@
                   href='#keypair'
                   class="">
                   keypair
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#id'
+                  class="">
+                  id
                   
                 </a>
                 
@@ -132,7 +145,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/1b0fac84a8f78415527b0b7361cde5c5a15af5cf/src/keys/rsa-class.js#L103-L106'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/e76142715390f59550df5fd26020bc505543d1e9/src/keys/rsa-class.js#L103-L106'>
       <span>src/keys/rsa-class.js</span>
       </a>
     
@@ -180,6 +193,8 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
 
   
+
+  
 </section>
 
           
@@ -195,7 +210,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/1b0fac84a8f78415527b0b7361cde5c5a15af5cf/src/keys/rsa-class.js#L114-L134'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/e76142715390f59550df5fd26020bc505543d1e9/src/keys/rsa-class.js#L114-L134'>
       <span>src/keys/rsa-class.js</span>
       </a>
     
@@ -256,6 +271,8 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
 
   
+
+  
 </section>
 
           
@@ -271,7 +288,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/1b0fac84a8f78415527b0b7361cde5c5a15af5cf/src/keys/rsa.js#L10-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/e76142715390f59550df5fd26020bc505543d1e9/src/keys/rsa.js#L10-L10'>
       <span>src/keys/rsa.js</span>
       </a>
     
@@ -312,6 +329,8 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
 
   
+
+  
 </section>
 
           
@@ -327,7 +346,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/1b0fac84a8f78415527b0b7361cde5c5a15af5cf/src/keys/ed25519-class.js#L85-L88'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/e76142715390f59550df5fd26020bc505543d1e9/src/keys/ed25519-class.js#L85-L88'>
       <span>src/keys/ed25519-class.js</span>
       </a>
     
@@ -375,6 +394,86 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
 
   
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='id'>
+      id
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/e76142715390f59550df5fd26020bc505543d1e9/src/keys/secp256k1-class.js#L84-L87'>
+      <span>src/keys/secp256k1-class.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Gets the ID of the key.</p>
+<p>The key id is the base58 encoding of the SHA-256 multihash of its public key.
+The public key is a protobuf encoding containing a type and the DER encoding
+of the PKCS SubjectPublicKeyInfo.</p>
+
+    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 </section>
 
           
@@ -390,7 +489,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/1b0fac84a8f78415527b0b7361cde5c5a15af5cf/src/pbkdf2.js#L14-L18'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/e76142715390f59550df5fd26020bc505543d1e9/src/pbkdf2.js#L14-L18'>
       <span>src/pbkdf2.js</span>
       </a>
     
@@ -469,6 +568,8 @@ of the PKCS SubjectPublicKeyInfo.</p>
 
       
     
+  
+
   
 
   

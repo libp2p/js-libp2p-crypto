@@ -55,7 +55,7 @@ class Ed25519PrivateKey {
   }
 
   marshal () {
-    return Buffer.concat([Buffer.from(this._key), Buffer.from(this._publicKey)])
+    return Buffer.from(this._key)
   }
 
   get bytes () {

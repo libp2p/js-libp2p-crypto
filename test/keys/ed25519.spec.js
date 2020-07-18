@@ -9,6 +9,7 @@ chai.use(dirtyChai)
 
 const crypto = require('../../src')
 const ed25519 = crypto.keys.supportedKeys.ed25519
+const { privateKeyLength } = require('../../src/keys/ed25519')
 const fixtures = require('../fixtures/go-key-ed25519')
 
 const testGarbage = require('../helpers/test-garbage-error-handling')
@@ -153,6 +154,11 @@ describe('ed25519', function () {
       const key = await crypto.keys.unmarshalPrivateKey(fixtures.redundantPubKey.privateKey)
       const sig = await key.sign(fixtures.redundantPubKey.data)
       expect(sig).to.eql(fixtures.redundantPubKey.signature)
+    })
+
+    it('doesnt include the redundant public key when marshalling', async () => {
+      const key = await crypto.keys.unmarshalPrivateKey(fixtures.redundantPubKey.privateKey)
+      expect(key.marshal()).to.have.length(privateKeyLength)
     })
   })
 })

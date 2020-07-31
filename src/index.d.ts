@@ -76,6 +76,9 @@ export interface PublicKey {
   hash(): Promise<Buffer>;
 }
 
+// Type alias for export method
+export type KeyInfo = any;
+
 /**
  * Generic private key interface.
  */
@@ -94,6 +97,13 @@ export interface PrivateKey {
    * of the PKCS SubjectPublicKeyInfo.
    */
   id(): Promise<string>;
+  /**
+   * Exports the key into a password protected PEM format
+   *
+   * @param password The password to read the encrypted PEM
+   * @param format Defaults to 'pkcs-8'.
+   */
+  export(password: string, format?: "pkcs-8" | string): Promise<KeyInfo>;
 }
 
 export interface Keystretcher {
@@ -132,9 +142,6 @@ export namespace keys {
         hash(): Promise<Buffer>;
       }
 
-      // Type alias for export method
-      export type KeyInfo = any;
-
       class RsaPrivateKey implements PrivateKey {
         constructor(key: any, publicKey: Buffer);
         readonly public: RsaPublicKey;
@@ -146,13 +153,7 @@ export namespace keys {
         equals(key: PrivateKey): boolean;
         hash(): Promise<Buffer>;
         id(): Promise<string>;
-        /**
-         * Exports the key into a password protected PEM format
-         *
-         * @param password The password to read the encrypted PEM
-         * @param format Defaults to 'pkcs-8'.
-         */
-        export(password: string, format?: "pkcs-8" | string): KeyInfo;
+        export(password: string, format?: string): Promise<KeyInfo>;
       }
       function unmarshalRsaPublicKey(buf: Buffer): RsaPublicKey;
       function unmarshalRsaPrivateKey(buf: Buffer): Promise<RsaPrivateKey>;
@@ -180,6 +181,7 @@ export namespace keys {
         equals(key: PrivateKey): boolean;
         hash(): Promise<Buffer>;
         id(): Promise<string>;
+        export(password: string, format?: string): Promise<KeyInfo>;
       }
 
       function unmarshalEd25519PrivateKey(
@@ -212,6 +214,7 @@ export namespace keys {
         equals(key: PrivateKey): boolean;
         hash(): Promise<Buffer>;
         id(): Promise<string>;
+        export(password: string, format?: string): Promise<KeyInfo>;
       }
 
       function unmarshalSecp256k1PrivateKey(
@@ -234,16 +237,14 @@ export namespace keys {
     bits: number
   ): Promise<PrivateKey>;
   export function generateKeyPair(
-    type: "Ed25519",
-    bits: number
+    type: "Ed25519"
   ): Promise<keys.supportedKeys.ed25519.Ed25519PrivateKey>;
-    export function generateKeyPair(
+  export function generateKeyPair(
     type: "RSA",
     bits: number
   ): Promise<keys.supportedKeys.rsa.RsaPrivateKey>;
-    export function generateKeyPair(
-    type: "secp256k1",
-    bits: number
+  export function generateKeyPair(
+    type: "secp256k1"
   ): Promise<keys.supportedKeys.secp256k1.Secp256k1PrivateKey>;
 
   /**
@@ -318,7 +319,7 @@ export namespace keys {
    * @param pem Password protected private key in PEM format.
    * @param password The password used to protect the key.
    */
-  function _import(pem: string, password: string): Promise<supportedKeys.rsa.RsaPrivateKey>;
+  function _import(pem: string, password: string, format?: string): Promise<supportedKeys.rsa.RsaPrivateKey>;
   export { _import as import };
 }
 

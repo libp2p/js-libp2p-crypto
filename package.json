@@ -6,9 +6,10 @@
   "types": "src/index.d.ts",
   "leadMaintainer": "Jacob Heun <jacobheun@gmail.com>",
   "browser": {
+    "./src/aes/ciphers.js": "./src/aes/ciphers-browser.js",
+    "./src/ciphers/aes-gcm.js": "./src/ciphers/aes-gcm.browser.js",
     "./src/hmac/index.js": "./src/hmac/index-browser.js",
     "./src/keys/ecdh.js": "./src/keys/ecdh-browser.js",
-    "./src/aes/ciphers.js": "./src/aes/ciphers-browser.js",
     "./src/keys/rsa.js": "./src/keys/rsa-browser.js"
   },
   "files": [
@@ -55,7 +56,7 @@
     "@types/chai": "^4.2.11",
     "@types/chai-string": "^1.4.2",
     "@types/dirty-chai": "^2.0.2",
-    "@types/mocha": "^7.0.1",
+    "@types/mocha": "^8.0.0",
     "@types/sinon": "^9.0.0",
     "aegir": "^22.0.0",
     "benchmark": "^2.1.4",

@@ -8,7 +8,7 @@ const errcode = require('err-code')
 
 const crypto = require('./ed25519')
 const pbm = protobuf(require('./keys.proto'))
-const cipher = require('../ciphers/aes-gcm').create()
+const ciphers = require('../ciphers/aes-gcm')
 
 class Ed25519PublicKey {
   constructor (key) {
@@ -97,6 +97,7 @@ class Ed25519PrivateKey {
    */
   async export (password, format = 'libp2p-key') { // eslint-disable-line require-await
     if (format === 'libp2p-key') {
+      const cipher = ciphers.create()
       return cipher.encrypt(this.bytes, password)
     } else {
       throw errcode(new Error(`export format '${format}' is not supported`), 'ERR_INVALID_EXPORT_FORMAT')

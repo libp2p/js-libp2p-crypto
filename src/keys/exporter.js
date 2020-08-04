@@ -16,7 +16,7 @@ module.exports = {
   export: async function (privateKey, password) {
     const cipher = ciphers.create()
     const encryptedKey = await cipher.encrypt(privateKey, password)
-    const base64 = multibase.names['base64']
+    const base64 = multibase.names.base64
     return base64.encode(encryptedKey)
   }
 }

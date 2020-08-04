@@ -88,7 +88,6 @@ describe('ed25519', function () {
   it('should export a password encrypted libp2p-key', async () => {
     const key = await crypto.keys.generateKeyPair('Ed25519')
     const encryptedKey = await key.export('my secret')
-    console.log(encryptedKey)
     // Import the key
     const importedKey = await crypto.keys.import(encryptedKey, 'my secret')
     expect(key.equals(importedKey)).to.equal(true)

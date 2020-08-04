@@ -119,7 +119,6 @@ exports.marshalPrivateKey = (key, type) => {
 exports.import = async (encryptedKey, password) => { // eslint-disable-line require-await
   try {
     const key = await importer.import(encryptedKey, password)
-    console.log(key)
     return exports.unmarshalPrivateKey(key)
   } catch (_) {
     // Ignore and try the old pem decrypt

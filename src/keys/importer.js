@@ -14,7 +14,7 @@ module.exports = {
    * @returns {Promise<Buffer>} The private key protobuf buffer
    */
   import: async function (privateKey, password) {
-    const base64 = multibase.names['base64']
+    const base64 = multibase.names.base64
     const encryptedKey = base64.decode(privateKey)
     const cipher = ciphers.create()
     return await cipher.decrypt(encryptedKey, password)

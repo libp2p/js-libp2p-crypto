@@ -104,9 +104,7 @@ function create ({
 
   return {
     encrypt,
-    encryptWithKey,
-    decrypt,
-    decryptWithKey
+    decrypt
   }
 }
 

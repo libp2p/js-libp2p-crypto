@@ -28,23 +28,6 @@ function create ({
 
   /**
    *
-   * @param {Uint8Array} data
-   * @param {*} key
-   */
-  async function encryptWithKey (data, key) { // eslint-disable-line require-await
-    const nonce = crypto.getRandomValues(new Uint8Array(nonceLength))
-    const aesGcm = { name: algorithm, iv: nonce }
-
-    // Create a 'CryptoKey'.
-    const cryptoKey = await crypto.subtle.importKey('raw', key, aesGcm, false, ['encrypt'])
-
-    // Encrypt.
-    const ciphertext = await crypto.subtle.encrypt(aesGcm, cryptoKey, data)
-    return joinBuffers(aesGcm.iv, new Uint8Array(ciphertext))
-  }
-
-  /**
-   *
    * @param {Uint8Array} data The data to decrypt
    * @param {string} password A plain password
    */
@@ -79,25 +62,9 @@ function create ({
     return new Uint8Array(plaintext)
   }
 
-  async function decryptWithKey (data, key) {
-    const nonce = data.slice(0, nonceLength)
-    const ciphertext = data.slice(nonceLength)
-
-    const aesGcm = { name: algorithm, iv: nonce }
-
-    // Create the 'CryptoKey'.
-    const cryptoKey = await crypto.subtle.importKey('raw', key, aesGcm, false, ['decrypt'])
-
-    // Decrypt the string.
-    const plaintext = await crypto.subtle.decrypt(aesGcm, cryptoKey, ciphertext)
-    return new Uint8Array(plaintext)
-  }
-
   return {
     encrypt,
-    encryptWithKey,
-    decrypt,
-    decryptWithKey
+    decrypt
   }
 }
 

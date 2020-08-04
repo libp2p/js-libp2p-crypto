@@ -4,7 +4,7 @@ const multibase = require('multibase')
 const sha = require('multihashing-async/src/sha')
 const errcode = require('err-code')
 
-const ciphers = require('../ciphers/aes-gcm')
+const exporter = require('./exporter')
 
 module.exports = (keysProtobuf, randomBytes, crypto) => {
   crypto = crypto || require('./secp256k1')(randomBytes)
@@ -93,12 +93,11 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
      *
      * @param {string} password - The password to encrypt the key
      * @param {string} [format] - Defaults to 'libp2p-key'.
-     * @returns {Promise<Buffer>} The encrypted private key
+     * @returns {Promise<string>} The encrypted private key
      */
     async export (password, format = 'libp2p-key') { // eslint-disable-line require-await
       if (format === 'libp2p-key') {
-        const cipher = ciphers.create()
-        return cipher.encrypt(this.bytes, password)
+        return exporter.export(this.bytes, password)
       } else {
         throw errcode(new Error(`export format '${format}' is not supported`), 'ERR_INVALID_EXPORT_FORMAT')
       }

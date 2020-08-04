@@ -7,7 +7,6 @@ const crypto = require('crypto')
 /**
  *
  * @param {object} param0
- * @param {string} [param0.algorithm] Defaults to 'aes-128-gcm'
  * @param {Number} [param0.algorithmTagLength] Defaults to 16
  * @param {Number} [param0.nonceLength] Defaults to 12 (96-bit)
  * @param {Number} [param0.keyLength] Defaults to 16
@@ -17,7 +16,6 @@ const crypto = require('crypto')
  * @returns {*}
  */
 function create ({
-  algorithm = 'aes-128-gcm',
   algorithmTagLength = 16,
   nonceLength = 12,
   keyLength = 16,
@@ -25,6 +23,7 @@ function create ({
   saltLength = 16,
   iterations = 32767
 } = {}) {
+  const algorithm = 'aes-128-gcm'
   /**
    *
    * @param {Buffer} data

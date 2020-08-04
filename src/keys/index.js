@@ -8,7 +8,7 @@ require('node-forge/lib/pbe')
 const forge = require('node-forge/lib/forge')
 const errcode = require('err-code')
 
-const cipher = require('../ciphers/aes-gcm')
+const importer = require('./importer')
 
 exports = module.exports
 
@@ -113,26 +113,24 @@ exports.marshalPrivateKey = (key, type) => {
 
 /**
  *
- * @param {string|Buffer} encryptedKey
- * @param {string|Buffer} password
- * @param {string} format
+ * @param {string} encryptedKey
+ * @param {string} password
  */
-exports.import = async (encryptedKey, password, format = 'pem') => { // eslint-disable-line require-await
+exports.import = async (encryptedKey, password) => { // eslint-disable-line require-await
+  try {
+    const key = await importer.import(encryptedKey, password)
+    console.log(key)
+    return exports.unmarshalPrivateKey(key)
+  } catch (_) {
+    // Ignore and try the old pem decrypt
+  }
+
   // Only rsa supports pem right now
-  if (format === 'pem') {
-    const key = forge.pki.decryptRsaPrivateKey(encryptedKey, password)
-    if (key === null) {
-      throw errcode(new Error('Cannot read the key, most likely the password is wrong or not a RSA key'), 'ERR_CANNOT_DECRYPT_PEM')
-    }
-    let der = forge.asn1.toDer(forge.pki.privateKeyToAsn1(key))
-    der = Buffer.from(der.getBytes(), 'binary')
-    return supportedKeys.rsa.unmarshalRsaPrivateKey(der)
+  const key = forge.pki.decryptRsaPrivateKey(encryptedKey, password)
+  if (key === null) {
+    throw errcode(new Error('Cannot read the key, most likely the password is wrong or not a RSA key'), 'ERR_CANNOT_DECRYPT_PEM')
   }
-
-  if (format === 'libp2p-key') {
-    const encodedKey = await cipher.create().decrypt(encryptedKey, password)
-    return exports.unmarshalPrivateKey(encodedKey)
-  }
-
-  throw errcode(new Error(`cannot import keys of format ${format}`), 'ERR_FORMAT_NOT_SUPPORTED')
+  let der = forge.asn1.toDer(forge.pki.privateKeyToAsn1(key))
+  der = Buffer.from(der.getBytes(), 'binary')
+  return supportedKeys.rsa.unmarshalRsaPrivateKey(der)
 }

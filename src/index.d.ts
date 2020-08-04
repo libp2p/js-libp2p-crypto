@@ -76,9 +76,6 @@ export interface PublicKey {
   hash(): Promise<Buffer>;
 }
 
-// Type alias for export method
-export type KeyInfo = any;
-
 /**
  * Generic private key interface.
  */
@@ -98,12 +95,9 @@ export interface PrivateKey {
    */
   id(): Promise<string>;
   /**
-   * Exports the key into a password protected PEM format
-   *
-   * @param password The password to read the encrypted PEM
-   * @param format Defaults to 'pkcs-8'.
+   * Exports the password protected key in the format specified.
    */
-  export(password: string, format?: "pkcs-8" | string): Promise<KeyInfo>;
+  export(password: string, format?: "pkcs-8" | string): Promise<string>;
 }
 
 export interface Keystretcher {
@@ -153,7 +147,7 @@ export namespace keys {
         equals(key: PrivateKey): boolean;
         hash(): Promise<Buffer>;
         id(): Promise<string>;
-        export(password: string, format?: string): Promise<KeyInfo>;
+        export(password: string, format?: string): Promise<string>;
       }
       function unmarshalRsaPublicKey(buf: Buffer): RsaPublicKey;
       function unmarshalRsaPrivateKey(buf: Buffer): Promise<RsaPrivateKey>;
@@ -181,7 +175,7 @@ export namespace keys {
         equals(key: PrivateKey): boolean;
         hash(): Promise<Buffer>;
         id(): Promise<string>;
-        export(password: string, format?: string): Promise<KeyInfo>;
+        export(password: string, format?: string): Promise<string>;
       }
 
       function unmarshalEd25519PrivateKey(
@@ -214,7 +208,7 @@ export namespace keys {
         equals(key: PrivateKey): boolean;
         hash(): Promise<Buffer>;
         id(): Promise<string>;
-        export(password: string, format?: string): Promise<KeyInfo>;
+        export(password: string, format?: string): Promise<string>;
       }
 
       function unmarshalSecp256k1PrivateKey(

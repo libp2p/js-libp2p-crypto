@@ -11,7 +11,7 @@ const forge = require('node-forge/lib/forge')
 
 const crypto = require('./rsa')
 const pbm = protobuf(require('./keys.proto'))
-const ciphers = require('../ciphers/aes-gcm')
+const exporter = require('./exporter')
 
 class RsaPublicKey {
   constructor (key) {
@@ -129,8 +129,7 @@ class RsaPrivateKey {
       }
       key = forge.pki.encryptRsaPrivateKey(privateKey, password, options)
     } else if (format === 'libp2p-key') {
-      const cipher = ciphers.create()
-      return cipher.encrypt(this.bytes, password)
+      return exporter.export(this.bytes, password)
     } else {
       throw errcode(new Error(`export format '${format}' is not supported`), 'ERR_INVALID_EXPORT_FORMAT')
     }

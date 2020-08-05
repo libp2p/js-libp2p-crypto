@@ -26,8 +26,10 @@ function create ({
   const algorithm = 'aes-128-gcm'
   /**
    *
+   * @private
    * @param {Buffer} data
-   * @param {*} key
+   * @param {Buffer} key
+   * @returns {Promise<Buffer>}
    */
   async function encryptWithKey (data, key) { // eslint-disable-line require-await
     const nonce = crypto.randomBytes(nonceLength)
@@ -42,9 +44,12 @@ function create ({
   }
 
   /**
+   * Uses the provided password to derive a pbkdf2 key. The key
+   * will then be used to encrypt the data.
    *
    * @param {Buffer} data The data to decrypt
    * @param {string|Buffer} password A plain password
+   * @returns {Promise<Buffer>}
    */
   async function encrypt (data, password) { // eslint-disable-line require-await
     // Generate a 128-bit salt using a CSPRNG.
@@ -64,8 +69,10 @@ function create ({
    * this decryption cipher must be the same as those used to create
    * the encryption cipher.
    *
+   * @private
    * @param {Buffer} ciphertextAndNonce The data to decrypt
    * @param {Buffer} key
+   * @returns {Promise<Buffer>}
    */
   async function decryptWithKey (ciphertextAndNonce, key) { // eslint-disable-line require-await
     // Create buffers of nonce, ciphertext and tag.

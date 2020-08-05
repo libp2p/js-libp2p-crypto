@@ -51,6 +51,7 @@
     "pem-jwk": "^2.0.0",
     "protons": "^1.2.1",
     "secp256k1": "^4.0.0",
+    "uint8arrays": "^1.0.0",
     "ursa-optional": "^0.10.1"
   },
   "devDependencies": {

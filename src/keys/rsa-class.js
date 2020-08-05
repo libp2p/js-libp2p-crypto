@@ -111,11 +111,9 @@ class RsaPrivateKey {
    * Exports the key into a password protected PEM format
    *
    * @param {string} password - The password to read the encrypted PEM
-   * @param {string} [format] - Defaults to 'pkcs-8'.
+   * @param {string} [format=pkcs-8] - The format in which to export as
    */
   async export (password, format = 'pkcs-8') { // eslint-disable-line require-await
-    let key = null
-
     if (format === 'pkcs-8') {
       const buffer = new forge.util.ByteBuffer(this.marshal())
       const asn1 = forge.asn1.fromDer(buffer)
@@ -127,14 +125,12 @@ class RsaPrivateKey {
         saltSize: 128 / 8,
         prfAlgorithm: 'sha512'
       }
-      key = forge.pki.encryptRsaPrivateKey(privateKey, password, options)
+      return forge.pki.encryptRsaPrivateKey(privateKey, password, options)
     } else if (format === 'libp2p-key') {
       return exporter.export(this.bytes, password)
     } else {
       throw errcode(new Error(`export format '${format}' is not supported`), 'ERR_INVALID_EXPORT_FORMAT')
     }
-
-    return key
   }
 }
 

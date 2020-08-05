@@ -92,7 +92,7 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
      * Exports the key into a password protected `format`
      *
      * @param {string} password - The password to encrypt the key
-     * @param {string} [format] - Defaults to 'libp2p-key'.
+     * @param {string} [format=libp2p-key] - The format in which to export as
      * @returns {Promise<string>} The encrypted private key
      */
     async export (password, format = 'libp2p-key') { // eslint-disable-line require-await

@@ -6,13 +6,13 @@ const crypto = require('crypto')
 
 /**
  *
- * @param {object} param0
- * @param {Number} [param0.algorithmTagLength] Defaults to 16
- * @param {Number} [param0.nonceLength] Defaults to 12 (96-bit)
- * @param {Number} [param0.keyLength] Defaults to 16
- * @param {string} [param0.digest] Defaults to 'sha256'
- * @param {Number} [param0.saltLength] Defaults to 16
- * @param {Number} [param0.iterations] Defaults to 32767
+ * @param {object} [options]
+ * @param {Number} [options.algorithmTagLength=16]
+ * @param {Number} [options.nonceLength=12]
+ * @param {Number} [options.keyLength=16]
+ * @param {string} [options.digest=sha256]
+ * @param {Number} [options.saltLength=16]
+ * @param {Number} [options.iterations=32767]
  * @returns {*}
  */
 function create ({

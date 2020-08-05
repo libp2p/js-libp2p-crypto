@@ -97,7 +97,7 @@ describe('ed25519', function () {
     const key = await crypto.keys.generateKeyPair('Ed25519')
     const encryptedKey = await key.export('my secret', 'libp2p-key')
     try {
-      await crypto.keys.import(encryptedKey, 'not my secret', 'libp2p-key')
+      await crypto.keys.import(encryptedKey, 'not my secret')
     } catch (err) {
       expect(err).to.exist()
       return

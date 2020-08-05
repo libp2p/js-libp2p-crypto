@@ -67,7 +67,7 @@ describe('secp256k1 keys', () => {
     const key = await crypto.keys.generateKeyPair('secp256k1')
     const encryptedKey = await key.export('my secret')
     // Import the key
-    const importedKey = await crypto.keys.import(encryptedKey, 'my secret', 'libp2p-key')
+    const importedKey = await crypto.keys.import(encryptedKey, 'my secret')
     expect(key.equals(importedKey)).to.equal(true)
   })
 
@@ -75,7 +75,7 @@ describe('secp256k1 keys', () => {
     const key = await crypto.keys.generateKeyPair('secp256k1')
     const encryptedKey = await key.export('my secret', 'libp2p-key')
     try {
-      await crypto.keys.import(encryptedKey, 'not my secret', 'libp2p-key')
+      await crypto.keys.import(encryptedKey, 'not my secret')
     } catch (err) {
       expect(err).to.exist()
       return

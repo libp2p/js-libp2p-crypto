@@ -57,7 +57,7 @@ class Ed25519PrivateKey {
   }
 
   marshal () {
-    return uint8ArrayConcat([this._key, this._publicKey])
+    return this._key
   }
 
   get bytes () {

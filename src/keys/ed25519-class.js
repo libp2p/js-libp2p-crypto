@@ -2,7 +2,6 @@
 
 const sha = require('multihashing-async/src/sha')
 const protobuf = require('protons')
-const multibase = require('multibase')
 const errcode = require('err-code')
 const uint8ArrayEquals = require('uint8arrays/equals')
 const uint8ArrayToString = require('uint8arrays/to-string')

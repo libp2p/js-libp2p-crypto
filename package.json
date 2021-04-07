@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "lint": "aegir lint",
-    "build": "npm run build:proto && aegir build",
+    "build": "npm run build:proto && aegir build --no-types",
     "build:proto": "pbjs -t static-module -w commonjs --force-number --no-verify --no-delimited --no-create --no-beautify --no-defaults --lint eslint-disable -o src/keys/keys.js ./src/keys/keys.proto",
     "test": "aegir test",
     "test:node": "aegir test -t node",
@@ -66,6 +66,11 @@
     "dirty-chai": "^2.0.1",
     "sinon": "^10.0.0",
     "util": "^0.12.3"
+  },
+  "aegir": {
+    "build": {
+      "bundlesizeMax": "118kB"
+    }
   },
   "engines": {
     "node": ">=12.0.0"

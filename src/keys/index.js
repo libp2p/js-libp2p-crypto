@@ -20,7 +20,7 @@ const ErrMissingSecp256K1 = {
   code: 'ERR_MISSING_PACKAGE'
 }
 
-function typeToKey(type) {
+function typeToKey (type) {
   const key = supportedKeys[type.toLowerCase()]
   if (!key) {
     const supported = Object.keys(supportedKeys).join(' / ')

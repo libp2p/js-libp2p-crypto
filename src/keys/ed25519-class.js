@@ -80,7 +80,7 @@ class Ed25519PrivateKey {
    * The public key is a protobuf encoding containing a type and the DER encoding
    * of the PKCS SubjectPublicKeyInfo.
    *
-   * @returns {Promise<String>}
+   * @returns {Promise<string>}
    */
   async id () {
     const encoding = mh.encode(this.public.bytes, 'identity')

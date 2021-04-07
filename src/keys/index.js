@@ -1,7 +1,6 @@
 'use strict'
 
-const protobuf = require('protons')
-const keysPBM = protobuf(require('./keys.proto'))
+const keysPBM = require('./keys')
 require('node-forge/lib/asn1')
 require('node-forge/lib/pbe')
 const forge = require('node-forge/lib/forge')

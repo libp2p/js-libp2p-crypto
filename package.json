@@ -18,8 +18,8 @@
   ],
   "scripts": {
     "lint": "aegir lint",
-    "build": "aegir build",
-    "build-proto": "pbjs --wrap commonjs --target static-module src/keys/keys.proto > src/keys/keys.proto.js",
+    "build": "npm run build:proto && aegir build",
+    "build:proto": "pbjs -t static-module -w commonjs --force-number --no-verify --no-delimited --no-create --no-beautify --no-defaults --lint eslint-disable -o src/keys/keys.js ./src/keys/keys.proto",
     "test": "aegir test",
     "test:node": "aegir test -t node",
     "test:browser": "aegir test -t browser -t webworker",
@@ -49,7 +49,7 @@
     "multihashing-async": "^2.1.2",
     "node-forge": "^0.10.0",
     "pem-jwk": "^2.0.0",
-    "protons": "^2.0.0",
+    "protobufjs": "^6.10.2",
     "secp256k1": "^4.0.0",
     "uint8arrays": "^2.1.4",
     "ursa-optional": "^0.10.1"
@@ -64,11 +64,11 @@
     "chai": "^4.2.0",
     "chai-string": "^1.5.0",
     "dirty-chai": "^2.0.1",
-    "sinon": "^10.0.0"
+    "sinon": "^10.0.0",
+    "util": "^0.12.3"
   },
   "engines": {
-    "node": ">=12.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=12.0.0"
   },
   "repository": {
     "type": "git",

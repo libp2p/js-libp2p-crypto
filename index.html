@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>libp2p-crypto 0.19.2 | Documentation</title>
+  <title>libp2p-crypto 0.16.4 | Documentation</title>
   <meta name='description' content='Crypto primitives for libp2p'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>libp2p-crypto</h3>
-          <div class='mb1'><code>0.19.2</code></div>
+          <div class='mb1'><code>0.16.4</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -29,89 +29,9 @@
               
                 
                 <li><a
-                  href='#import'
-                  class="">
-                  import
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#import'
-                  class="">
-                  import
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#create'
-                  class="">
-                  create
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#encrypt'
-                  class="">
-                  encrypt
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#decrypt'
-                  class="">
-                  decrypt
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#id'
-                  class="">
-                  id
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#export'
-                  class="">
-                  export
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#keypair'
-                  class="">
-                  keypair
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#export'
-                  class="">
-                  export
+                  href='#intro'
+                  class="h5 bold black caps">
+                  Intro
                   
                 </a>
                 
@@ -142,16 +62,6 @@
                   href='#id'
                   class="">
                   id
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#export'
-                  class="">
-                  export
                   
                 </a>
                 
@@ -177,480 +87,31 @@
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
         
           
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='import'>
-      import
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/index.js#L119-L135'>
-      <span>src/keys/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>import(encryptedKey: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>encryptedKey</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='import'>
-      import
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/importer.js#L16-L21'>
-      <span>src/keys/importer.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Attempts to decrypt a base64 encoded PrivateKey string
-with the given password. The privateKey must have been exported
-using the same password and underlying cipher (aes-gcm)</p>
-
-    <div class='pre p1 fill-light mt0'>import(privateKey: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>privateKey</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    A base64 encoded encrypted key
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>></code>:
-        The private key protobuf
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='create'>
-      create
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/ciphers/aes-gcm.js#L20-L126'>
-      <span>src/ciphers/aes-gcm.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>create(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): any</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?
-            = <code>{}</code>)</code>
-	    
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.algorithmTagLength</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>16</code>)
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.nonceLength</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>12</code>)
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.keyLength</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>16</code>)
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.digest</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-  
-    (default <code>sha256</code>)
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.saltLength</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>16</code>)
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.iterations</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>32767</code>)
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='encrypt'>
-      encrypt
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/ciphers/aes-gcm.js#L56-L69'>
-      <span>src/ciphers/aes-gcm.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Uses the provided password to derive a pbkdf2 key. The key
-will then be used to encrypt the data.</p>
-
-    <div class='pre p1 fill-light mt0'>encrypt(data: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>, password: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>)</code>
-	    The data to decrypt
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>))</code>
-	    A plain password
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='decrypt'>
-      decrypt
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/ciphers/aes-gcm.js#L106-L120'>
-      <span>src/ciphers/aes-gcm.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Uses the provided password to derive a pbkdf2 key. The key
-will then be used to decrypt the data. The options used to create
-this decryption cipher must be the same as those used to create
-the encryption cipher.</p>
-
-    <div class='pre p1 fill-light mt0'>decrypt(data: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>, password: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>))</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>)</code>
-	    The data to decrypt
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>))</code>
-	    A plain password
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
+            <div class='keyline-top-not py2'><section class='py2 clearfix'>
+
+  <h2 id='intro' class='mt0'>
+    Intro
+  </h2>
+
+  
+    <p>Installable via  <code>npm install --save libp2p-crypto</code>, it can also be used directly in the browser.</p>
+<h2>Download</h2>
+<p>The source is available for download from <a href="https://github.com/libp2p/js-libp2p-crypto.git">GitHub</a>. Alternatively, you can install using npm:</p>
+<pre class='hljs'>$ npm install --save libp2p-crypto</pre>
+<p>You can then <code>require()</code> libp2p-crypto as normal:</p>
+<pre class='hljs'><span class="hljs-keyword">const</span> libp2PCrypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'libp2p-crypto'</span>)</pre>
+<h2>In the Browser</h2>
+<p>Libp2p-crypto should work in any ES2015 environment out of the box.</p>
+<p>Usage:</p>
+<pre class='hljs'><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"index.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></pre>
+<p>The portable versions of libp2p-crypto, including <code>index.js</code> and <code>index.min.js</code>, are included in the <code>/dist</code> folder. Libp2p-crypto can also be found on <a href="https://unpkg.com">unpkg.com</a> under</p>
+<ul>
+<li><a href="https://unpkg.com/libp2p-crypto/dist/index.min.js">https://unpkg.com/libp2p-crypto/dist/index.min.js</a></li>
+<li><a href="https://unpkg.com/libp2p-crypto/dist/index.js">https://unpkg.com/libp2p-crypto/dist/index.js</a></li>
+</ul>
+
+  
+</section></div>
           
         
           
@@ -664,7 +125,7 @@ the encryption cipher.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/rsa-class.js#L106-L109'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/keys/rsa-class.js#L119-L126'>
       <span>src/keys/rsa-class.js</span>
       </a>
     
@@ -676,7 +137,7 @@ the encryption cipher.</p>
 The public key is a protobuf encoding containing a type and the DER encoding
 of the PKCS SubjectPublicKeyInfo.</p>
 
-    <div class='pre p1 fill-light mt0'>id(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></div>
+    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -687,6 +148,19 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -694,7 +168,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>:
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
         
 
       
@@ -729,7 +203,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/rsa-class.js#L117-L135'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/keys/rsa-class.js#L136-L169'>
       <span>src/keys/rsa-class.js</span>
       </a>
     
@@ -738,7 +212,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
 
   <p>Exports the key into a password protected PEM format</p>
 
-    <div class='pre p1 fill-light mt0'>export(password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
+    <div class='pre p1 fill-light mt0'>export(format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?, password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, KeyInfo)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -752,6 +226,15 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
     <div class='py1 quiet mt1 prose-big'>Parameters</div>
     <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
+	    Defaults to 'pkcs-8'.
+
+          </div>
+          
+        </div>
       
         <div class='space-bottom0'>
           <div>
@@ -764,145 +247,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>pkcs-8</code>)</code>
-	    The format in which to export as
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='keypair'>
-      keypair
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/rsa.js#L10-L10'>
-      <span>src/keys/rsa.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>keypair</div>
-  
-    <p>
-      Type:
-      PrivateKey
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='export'>
-      export
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/exporter.js#L16-L21'>
-      <span>src/keys/exporter.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Exports the given PrivateKey as a base64 encoded string.
-The PrivateKey is encrypted via a password derived PBKDF2 key
-leveraging the aes-gcm cipher algorithm.</p>
-
-    <div class='pre p1 fill-light mt0'>export(privateKey: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>, password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>privateKey</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>)</code>
-	    The PrivateKey protobuf
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, KeyInfo))</code>
 	    
           </div>
           
@@ -916,8 +261,8 @@ leveraging the aes-gcm cipher algorithm.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>:
-        A base64 encoded string
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        
 
       
     
@@ -951,7 +296,7 @@ leveraging the aes-gcm cipher algorithm.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/ed25519-class.js#L85-L88'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/keys/ed25519-class.js#L92-L99'>
       <span>src/keys/ed25519-class.js</span>
       </a>
     
@@ -963,69 +308,7 @@ leveraging the aes-gcm cipher algorithm.</p>
 The public key is a protobuf encoding containing a type and the DER encoding
 of the PKCS SubjectPublicKeyInfo.</p>
 
-    <div class='pre p1 fill-light mt0'>id(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='export'>
-      export
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/ed25519-class.js#L97-L103'>
-      <span>src/keys/ed25519-class.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Exports the key into a password protected <code>format</code></p>
-
-    <div class='pre p1 fill-light mt0'>export(password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>></div>
+    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -1042,19 +325,8 @@ of the PKCS SubjectPublicKeyInfo.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The password to encrypt the key
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>libp2p-key</code>)</code>
-	    The format in which to export as
-
+            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
+	    
           </div>
           
         </div>
@@ -1067,159 +339,8 @@ of the PKCS SubjectPublicKeyInfo.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>></code>:
-        The encrypted private key
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
         
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='id'>
-      id
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/secp256k1-class.js#L87-L90'>
-      <span>src/keys/secp256k1-class.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Gets the ID of the key.</p>
-<p>The key id is the base58 encoding of the SHA-256 multihash of its public key.
-The public key is a protobuf encoding containing a type and the DER encoding
-of the PKCS SubjectPublicKeyInfo.</p>
-
-    <div class='pre p1 fill-light mt0'>id(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='export'>
-      export
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/keys/secp256k1-class.js#L99-L105'>
-      <span>src/keys/secp256k1-class.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Exports the key into a password protected <code>format</code></p>
-
-    <div class='pre p1 fill-light mt0'>export(password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The password to encrypt the key
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>libp2p-key</code>)</code>
-	    The format in which to export as
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>:
-        The encrypted private key
 
       
     
@@ -1253,7 +374,7 @@ of the PKCS SubjectPublicKeyInfo.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/a05e870c45df7352e1b1952c25ac8da3c08c9cd2/src/pbkdf2.js#L30-L43'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/pbkdf2.js#L29-L41'>
       <span>src/pbkdf2.js</span>
       </a>
     

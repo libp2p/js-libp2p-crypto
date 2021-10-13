@@ -11,9 +11,10 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
   crypto = crypto || require('./secp256k1')(randomBytes)
 
   class Secp256k1PublicKey {
-    constructor (key) {
+    constructor (key, pkey) {
       crypto.validatePublicKey(key)
       this._key = key
+      this._pkey = pkey
     }
 
     verify (data, sig) {
@@ -21,7 +22,7 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
     }
 
     marshal () {
-      return crypto.compressPublicKey(this._key)
+      return crypto.compressPublicKey(this._key, this._pkey)
     }
 
     get bytes () {
@@ -55,7 +56,7 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
     }
 
     get public () {
-      return new Secp256k1PublicKey(this._publicKey)
+      return new Secp256k1PublicKey(this._publicKey, this._key)
     }
 
     marshal () {

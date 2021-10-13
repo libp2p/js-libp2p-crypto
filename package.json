@@ -43,6 +43,7 @@
     "iso-random-stream": "^2.0.0",
     "keypair": "^1.0.1",
     "multiformats": "^9.4.5",
+    "noble-secp256k1": "^1.2.10",
     "node-forge": "^0.10.0",
     "pem-jwk": "^2.0.0",
     "protobufjs": "^6.11.2",

@@ -1,35 +1,59 @@
 'use strict'
 
-// require('node-forge/lib/ed25519')
-// const forge = require('node-forge/lib/forge')
 const ed = require('noble-ed25519')
 
-exports.publicKeyLength = 32 //forge.pki.ed25519.constants.PUBLIC_KEY_BYTE_LENGTH
-exports.privateKeyLength = 64 // forge.pki.ed25519.constants.PRIVATE_KEY_BYTE_LENGTH
+exports.publicKeyLength = 32 
+exports.privateKeyLength = 64 // private key is 32 bytes actual private key and 32 bytes public key, for historical reasons
 
 exports.generateKey = async function () {
-  // const pair= forge.pki.ed25519.generateKeyPair()
-  const privateKey = ed.utils.randomPrivateKey()
+  // the actual private key (32 bytes)
+  const privateKeyRaw = ed.utils.randomPrivateKey()
+  const publicKey = await ed.getPublicKey(privateKeyRaw)
+
+  // concatenated the public key to the private key
+  const privateKey = concatKeys(privateKeyRaw, publicKey)
+
   return {
     privateKey,
-    publicKey: await ed.getPublicKey(privateKey)
+    publicKey
   }
 }
 
 // seed should be a 32 byte uint8array
 exports.generateKeyFromSeed = async function (seed) { // eslint-disable-line require-await
-  return forge.pki.ed25519.generateKeyPair({ seed })
+  if (seed.length !== 32) {
+    throw new TypeError('"seed" must be 32 bytes in length.')
+  } else if (!(seed instanceof Uint8Array)) {
+    throw new TypeError('"seed" must be a node.js Buffer, or Uint8Array.')
+  }
+
+  // based on node.forges algorithm, the seed is used directly as private key
+  const privateKeyRaw = seed;
+  const publicKey = await ed.getPublicKey(privateKeyRaw)
+  
+  const privateKey = concatKeys(privateKeyRaw, publicKey)
+
+  return {
+    privateKey,
+    publicKey
+  }
 }
 
-exports.hashAndSign = function (key, msg) { // eslint-disable-line require-await
-  // return forge.pki.ed25519.sign({ message: msg, privateKey: key })
-  // return Uint8Array.from(nacl.sign.detached(msg, key))
+exports.hashAndSign = function (privateKey, msg) { // eslint-disable-line require-await
+  const privateKeyRaw = privateKey.slice(0, 32)
 
-  return ed.sign(msg, key)
+  return ed.sign(msg, privateKeyRaw)
 }
 
-exports.hashAndVerify = async function (key, sig, msg) { // eslint-disable-line require-await
-  // return forge.pki.ed25519.verify({ signature: sig, message: msg, publicKey: key })
+exports.hashAndVerify = async function (publicKey, sig, msg) { // eslint-disable-line require-await
+  return ed.verify(sig, msg, publicKey)
+}
 
-  return ed.verify(sig, msg, key)
+function concatKeys(privateKeyRaw, publicKey) {
+  const privateKey = new Uint8Array(exports.privateKeyLength)
+  for (let i = 0; i < 32; i++) {
+    privateKey[i] = privateKeyRaw[i]
+    privateKey[32 + i] = publicKey[i]
+  }
+  return privateKey
 }

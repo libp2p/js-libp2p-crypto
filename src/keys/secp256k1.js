@@ -12,8 +12,8 @@ module.exports = () => {
   }
 
   /**
-   * Hash and sign message with private key 
-   * 
+   * Hash and sign message with private key
+   *
    * @param {number | bigint | (string | Uint8Array)} key
    * @param {Uint8Array} msg
    */
@@ -28,7 +28,7 @@ module.exports = () => {
 
   /**
    * Hash message and verify signature with public key
-   * 
+   *
    * @param {secp.Point | (string | Uint8Array)} key
    * @param {(string | Uint8Array) | secp.Signature} sig
    * @param {Uint8Array} msg
@@ -38,7 +38,7 @@ module.exports = () => {
     try {
       return secp.verify(sig, digest, key)
     } catch (err) {
-      throw errcode(err, 'ERR_INVALID_INPUT')      
+      throw errcode(err, 'ERR_INVALID_INPUT')
     }
   }
 

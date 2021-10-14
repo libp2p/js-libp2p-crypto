@@ -8,13 +8,12 @@ const { toString: uint8ArrayToString } = require('uint8arrays/to-string')
 const exporter = require('./exporter')
 
 module.exports = (keysProtobuf, randomBytes, crypto) => {
-  crypto = crypto || require('./secp256k1')(randomBytes)
+  crypto = crypto || require('./secp256k1')()
 
   class Secp256k1PublicKey {
-    constructor (key, pkey) {
+    constructor (key) {
       crypto.validatePublicKey(key)
       this._key = key
-      this._pkey = pkey
     }
 
     verify (data, sig) {
@@ -22,7 +21,7 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
     }
 
     marshal () {
-      return crypto.compressPublicKey(this._key, this._pkey)
+      return crypto.compressPublicKey(this._key)
     }
 
     get bytes () {
@@ -56,7 +55,7 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
     }
 
     get public () {
-      return new Secp256k1PublicKey(this._publicKey, this._key)
+      return new Secp256k1PublicKey(this._publicKey)
     }
 
     marshal () {

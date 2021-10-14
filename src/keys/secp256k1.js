@@ -1,29 +1,48 @@
 'use strict'
 
+const errcode = require('err-code')
 const secp = require('noble-secp256k1')
-// const secp256k1 = require('secp256k1')
 const { sha256 } = require('multiformats/hashes/sha2')
 
-module.exports = (randomBytes) => {
+module.exports = () => {
   const privateKeyLength = 32
 
   function generateKey () {
     return secp.utils.randomPrivateKey()
   }
 
+  /**
+   * Hash and sign message with private key 
+   * 
+   * @param {number | bigint | (string | Uint8Array)} key
+   * @param {Uint8Array} msg
+   */
   async function hashAndSign (key, msg) {
     const { digest } = await sha256.digest(msg)
-
-    return await secp.sign(digest, key)
+    try {
+      return await secp.sign(digest, key)
+    } catch (err) {
+      throw errcode(err, 'ERR_INVALID_INPUT')
+    }
   }
 
+  /**
+   * Hash message and verify signature with public key
+   * 
+   * @param {secp.Point | (string | Uint8Array)} key
+   * @param {(string | Uint8Array) | secp.Signature} sig
+   * @param {Uint8Array} msg
+   */
   async function hashAndVerify (key, sig, msg) {
     const { digest } = await sha256.digest(msg)
-
-    return secp.verify(sig, digest, key)
+    try {
+      return secp.verify(sig, digest, key)
+    } catch (err) {
+      throw errcode(err, 'ERR_INVALID_INPUT')      
+    }
   }
 
-  function compressPublicKey (key, pkey) {
+  function compressPublicKey (key) {
     const point = secp.Point.fromHex(key).toRawBytes(true)
     return point
   }
@@ -34,15 +53,27 @@ module.exports = (randomBytes) => {
   }
 
   function validatePrivateKey (key) {
-    secp.getPublicKey(key, true)
+    try {
+      secp.getPublicKey(key, true)
+    } catch (err) {
+      throw errcode(err, 'ERR_INVALID_PRIVATE_KEY')
+    }
   }
 
   function validatePublicKey (key) {
-    secp.Point.fromHex(key)
+    try {
+      secp.Point.fromHex(key)
+    } catch (err) {
+      throw errcode(err, 'ERR_INVALID_PUBLIC_KEY')
+    }
   }
 
   function computePublicKey (privateKey) {
-    return secp.getPublicKey(privateKey, true)
+    try {
+      return secp.getPublicKey(privateKey, true)
+    } catch (err) {
+      throw errcode(err, 'ERR_INVALID_PRIVATE_KEY')
+    }
   }
 
   return {

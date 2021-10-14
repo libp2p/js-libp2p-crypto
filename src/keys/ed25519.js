@@ -2,7 +2,7 @@
 
 const ed = require('noble-ed25519')
 
-exports.publicKeyLength = 32 
+exports.publicKeyLength = 32
 exports.privateKeyLength = 64 // private key is 32 bytes actual private key and 32 bytes public key, for historical reasons
 
 exports.generateKey = async function () {
@@ -28,9 +28,9 @@ exports.generateKeyFromSeed = async function (seed) { // eslint-disable-line req
   }
 
   // based on node.forges algorithm, the seed is used directly as private key
-  const privateKeyRaw = seed;
+  const privateKeyRaw = seed
   const publicKey = await ed.getPublicKey(privateKeyRaw)
-  
+
   const privateKey = concatKeys(privateKeyRaw, publicKey)
 
   return {
@@ -49,7 +49,7 @@ exports.hashAndVerify = async function (publicKey, sig, msg) { // eslint-disable
   return ed.verify(sig, msg, publicKey)
 }
 
-function concatKeys(privateKeyRaw, publicKey) {
+function concatKeys (privateKeyRaw, publicKey) {
   const privateKey = new Uint8Array(exports.privateKeyLength)
   for (let i = 0; i < 32; i++) {
     privateKey[i] = privateKeyRaw[i]

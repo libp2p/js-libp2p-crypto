@@ -60,7 +60,7 @@
   },
   "aegir": {
     "build": {
-      "bundlesizeMax": "72kB"
+      "bundlesizeMax": "71kB"
     }
   },
   "engines": {

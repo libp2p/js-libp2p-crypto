@@ -4,8 +4,8 @@
 
 // Check native crypto exists and is enabled (In insecure context `self.crypto`
 // exists but `self.crypto.subtle` does not).
-exports.get = (win = self) => {
-  const nativeCrypto = globalThis.crypto
+exports.get = (win = globalThis) => {
+  const nativeCrypto = win.crypto
 
   if (!nativeCrypto || !nativeCrypto.subtle) {
     throw Object.assign(

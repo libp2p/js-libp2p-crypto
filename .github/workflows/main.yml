@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: npm install
-    - run: npx aegir lint
-    - run: npx aegir build
-    - run: npx aegir dep-check
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run dep-check
     - uses: ipfs/aegir/actions/bundle-size@master
       name: size
       with:
@@ -42,21 +42,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: npx aegir test -t browser -t webworker --bail
+      - run: npm run test -- -t browser -t webworker --bail
   test-firefox:
     needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: npx aegir test -t browser -t webworker --bail -- --browsers FirefoxHeadless
+      - run: npm run test -- -t browser -t webworker --bail -- --browsers FirefoxHeadless
   test-electron-main:
     needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: npx xvfb-maybe aegir test -t electron-main --bail
+      - run: npx xvfb-maybe npm run test -- -t electron-main --bail
   test-electron-renderer:
     needs: check
     runs-on: ubuntu-latest
@@ -64,4 +64,4 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm install
       - run: npm run pretest
-      - run: npx xvfb-maybe aegir test -t electron-renderer --bail
+      - run: npx xvfb-maybe npm run test -- -t electron-renderer --bail

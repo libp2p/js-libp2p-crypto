@@ -188,6 +188,12 @@ describe('crypto functions', () => {
     expect(valid).to.equal(true)
   })
 
+  it('does not validate when validating a message with an invalid signature', async () => {
+    const result = await secp256k1Crypto.hashAndVerify(pubKey, uint8ArrayFromString('invalid-sig'), uint8ArrayFromString('hello'))
+
+    expect(result).to.be.false()
+  })
+
   it('errors if given a null Uint8Array to sign', async () => {
     try {
       // @ts-ignore
@@ -215,15 +221,6 @@ describe('crypto functions', () => {
       await secp256k1Crypto.hashAndVerify(privKey, sig, null)
     } catch (err) {
       return // expected
-    }
-    throw new Error('Expected error to be thrown')
-  })
-
-  it('errors when validating a message with an invalid signature', async () => {
-    try {
-      await secp256k1Crypto.hashAndVerify(pubKey, uint8ArrayFromString('invalid-sig'), uint8ArrayFromString('hello'))
-    } catch (err) {
-      return expect(err.code).to.equal('ERR_INVALID_INPUT')
     }
     throw new Error('Expected error to be thrown')
   })

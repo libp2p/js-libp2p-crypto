@@ -34,8 +34,8 @@ module.exports = () => {
    * @param {Uint8Array} msg
    */
   async function hashAndVerify (key, sig, msg) {
-    const { digest } = await sha256.digest(msg)
     try {
+      const { digest } = await sha256.digest(msg)
       return secp.verify(sig, digest, key)
     } catch (err) {
       throw errcode(err, 'ERR_INVALID_INPUT')

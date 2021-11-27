@@ -1,7 +1,14 @@
 'use strict'
 
 const browser = require('./ed25519-browser')
-const { subtle } = require('crypto').webcrypto
+const webcrypto = require('crypto').webcrypto
+
+if (!webcrypto || !webcrypto.subtle) {
+  module.exports = browser
+  return
+}
+
+const subtle = webcrypto.subtle
 const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
 const { concat: uint8ArrayConcat } = require('uint8arrays/concat')
 

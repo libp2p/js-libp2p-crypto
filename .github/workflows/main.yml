@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - run: npm install -g @mapbox/node-pre-gyp
     - run: npm install
     - run: npm run lint
     - run: npm run build
@@ -33,6 +37,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      - run: npm install -g @mapbox/node-pre-gyp
       - run: npm install
       - run: npx nyc --reporter=lcov aegir test -t node -- --bail
       - uses: codecov/codecov-action@v1
@@ -41,6 +46,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm install -g @mapbox/node-pre-gyp
       - run: npm install
       - run: npm run test -- -t browser -t webworker --bail
   test-firefox:
@@ -48,6 +57,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm install -g @mapbox/node-pre-gyp
       - run: npm install
       - run: npm run test -- -t browser -t webworker --bail -- --browsers FirefoxHeadless
   test-electron-main:
@@ -55,6 +68,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm install -g @mapbox/node-pre-gyp
       - run: npm install
       - run: npx xvfb-maybe aegir test -t electron-main --bail
   test-electron-renderer:
@@ -62,5 +79,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm install -g @mapbox/node-pre-gyp
       - run: npm install
       - run: npx xvfb-maybe aegir test -t electron-renderer --bail

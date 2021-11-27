@@ -1,25 +1,32 @@
 'use strict'
 
+const browser = require('./ed25519-browser')
 const { subtle } = require('crypto').webcrypto
 const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
 const { concat: uint8ArrayConcat } = require('uint8arrays/concat')
 
-const PUBLIC_KEY_BYTE_LENGTH = 32
-const PRIVATE_KEY_BYTE_LENGTH = 64 // private key is actually 32 bytes but for historical reasons we concat private and public keys
+const ALGORITHM = 'NODE-ED25519'
 const KEYS_BYTE_LENGTH = 32
-
+const SIGNATURE_BYTE_LENGTH = 64
 const ED25519_PKCS8_PREFIX = uint8ArrayFromString('302e020100300506032b657004220420', 'hex')
 
-exports.publicKeyLength = PUBLIC_KEY_BYTE_LENGTH
-exports.privateKeyLength = PRIVATE_KEY_BYTE_LENGTH
-
-const ALGORITHM = 'NODE-ED25519'
+exports.publicKeyLength = browser.publicKeyLength
+exports.privateKeyLength = browser.privateKeyLength
 
 exports.generateKey = async function () {
-  const key = await subtle.generateKey({
-    name: ALGORITHM,
-    namedCurve: ALGORITHM
-  }, true, ['sign', 'verify'])
+  let key
+  try {
+    key = await subtle.generateKey({
+      name: ALGORITHM,
+      namedCurve: ALGORITHM
+    }, true, ['sign', 'verify'])
+  } catch (err) {
+    if (err.message === 'Invalid key type') {
+      return browser.generateKey()
+    }
+
+    throw err
+  }
 
   const privateKeyPKCS8 = await subtle.exportKey('pkcs8', key.privateKey)
   // get the raw key out of the PCKS#8 format buffer
@@ -55,10 +62,19 @@ exports.generateKeyFromSeed = async function (seed) {
   ], ED25519_PKCS8_PREFIX.length + seed.length)
 
   // read private key
-  const privateKey = await subtle.importKey('pkcs8', pkcs8, {
-    name: ALGORITHM,
-    namedCurve: ALGORITHM
-  }, true, ['sign'])
+  let privateKey
+  try {
+    privateKey = await subtle.importKey('pkcs8', pkcs8, {
+      name: ALGORITHM,
+      namedCurve: ALGORITHM
+    }, true, ['sign'])
+  } catch (err) {
+    if (err.message === 'Invalid key type') {
+      return browser.generateKeyFromSeed(seed)
+    }
+
+    throw err
+  }
 
   // export the private key as jwk
   const privateKeyJWK = await subtle.exportKey('jwk', privateKey)
@@ -80,10 +96,20 @@ exports.hashAndSign = async function (privateKey, msg) {
     ED25519_PKCS8_PREFIX,
     privateKey
   ], ED25519_PKCS8_PREFIX.length + privateKey.length)
-  const key = await subtle.importKey('pkcs8', pkcs8, {
-    name: ALGORITHM,
-    namedCurve: ALGORITHM
-  }, true, ['sign'])
+
+  let key
+  try {
+    key = await subtle.importKey('pkcs8', pkcs8, {
+      name: ALGORITHM,
+      namedCurve: ALGORITHM
+    }, true, ['sign'])
+  } catch (err) {
+    if (err.message === 'Invalid key type') {
+      return browser.hashAndSign(privateKey, msg)
+    }
+
+    throw err
+  }
 
   const signature = await subtle.sign(ALGORITHM, key, msg)
 
@@ -103,7 +129,7 @@ exports.hashAndVerify = async function (publicKey, sig, msg) {
     throw new TypeError('"sig" must be a node.js Buffer, or Uint8Array.')
   }
 
-  if (sig.length !== 64) {
+  if (sig.length !== SIGNATURE_BYTE_LENGTH) {
     throw new TypeError('"sig" must be 64 bytes in length.')
   }
 
@@ -115,11 +141,20 @@ exports.hashAndVerify = async function (publicKey, sig, msg) {
     throw new TypeError('"msg" must have a length.')
   }
 
-  const key = await subtle.importKey('raw', publicKey, {
-    name: ALGORITHM,
-    namedCurve: ALGORITHM,
-    public: true
-  }, true, ['verify'])
+  let key
+  try {
+    key = await subtle.importKey('raw', publicKey, {
+      name: ALGORITHM,
+      namedCurve: ALGORITHM,
+      public: true
+    }, true, ['verify'])
+  } catch (err) {
+    if (err.message === 'Invalid key type') {
+      return browser.hashAndVerify(publicKey, sig, msg)
+    }
+
+    throw err
+  }
 
   return subtle.verify(ALGORITHM, key, sig, msg)
 }

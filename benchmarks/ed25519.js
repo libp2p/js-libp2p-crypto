@@ -86,7 +86,7 @@ suite.add('node.js web-crypto', async (d) => {
 
   const key = await subtle.generateKey({
     name: 'NODE-ED25519',
-    namedCurve: 'NODE-ED25519',
+    namedCurve: 'NODE-ED25519'
   }, true, ['sign', 'verify'])
   const signature = await subtle.sign('NODE-ED25519', key.privateKey, message)
   const res = await subtle.verify('NODE-ED25519', key.publicKey, signature, message)

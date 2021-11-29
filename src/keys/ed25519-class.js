@@ -2,6 +2,7 @@
 
 const errcode = require('err-code')
 const { equals: uint8ArrayEquals } = require('uint8arrays/equals')
+const { concat: uint8ArrayConcat } = require('uint8arrays/concat')
 const { sha256 } = require('multiformats/hashes/sha2')
 const { base58btc } = require('multiformats/bases/base58')
 const { identity } = require('multiformats/hashes/identity')
@@ -41,7 +42,7 @@ class Ed25519PublicKey {
 }
 
 class Ed25519PrivateKey {
-  // key       - 64 byte Uint8Array containing private key
+  // key       - 32 byte Uint8Array containing private key
   // publicKey - 32 byte Uint8Array containing public key
   constructor (key, publicKey) {
     this._key = ensureKey(key, crypto.privateKeyLength)
@@ -57,7 +58,7 @@ class Ed25519PrivateKey {
   }
 
   marshal () {
-    return this._key
+    return uint8ArrayConcat([this._key, this._publicKey], crypto.privateKeyLength + crypto.publicKeyLength)
   }
 
   get bytes () {
@@ -139,10 +140,10 @@ async function generateKeyPairFromSeed (seed) {
 
 function ensureKey (key, length) {
   key = Uint8Array.from(key || [])
-  if (key.length !== length) {
+  if (key.length < length) {
     throw errcode(new Error(`Key must be a Uint8Array of length ${length}, got ${key.length}`), 'ERR_INVALID_KEY_TYPE')
   }
-  return key
+  return key.subarray(0, length)
 }
 
 module.exports = {

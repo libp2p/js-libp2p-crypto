@@ -26,6 +26,7 @@ require('node-forge/lib/ed25519')
 const forge = require('node-forge/lib/forge')
 const stable = require('@stablelib/ed25519')
 const supercopWasm = require('supercop.wasm')
+const ed25519WasmPro = require('ed25519-wasm-pro')
 
 const ALGORITHM = 'NODE-ED25519'
 const ED25519_PKCS8_PREFIX = fromString('302e020100300506032b657004220420', 'hex')
@@ -96,6 +97,32 @@ const implementations = [{
   },
   verify: (message, signature, keyPair) => {
     return supercopWasm.verify(signature, message, keyPair.publicKey)
+  }
+}, {
+  name: 'ed25519-wasm-pro',
+  before: () => {
+    return new Promise(resolve => {
+      ed25519WasmPro.ready(() => {
+        resolve()
+      })
+    })
+  },
+  generateKeyPair: async () => {
+    const seed = ed25519WasmPro.createSeed()
+    const key = ed25519WasmPro.createKeyPair(seed)
+
+    return {
+      privateKey: seed,
+      publicKey: key.publicKey
+    }
+  },
+  sign: (message, keyPair) => {
+    const key = ed25519WasmPro.createKeyPair(keyPair.privateKey)
+
+    return ed25519WasmPro.sign(message, key.publicKey, key.secretKey)
+  },
+  verify: (message, signature, keyPair) => {
+    return ed25519WasmPro.verify(signature, message, keyPair.publicKey)
   }
 }, {
   name: 'native Ed25519',

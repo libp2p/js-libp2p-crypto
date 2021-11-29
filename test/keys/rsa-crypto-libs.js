@@ -4,8 +4,15 @@
 /* eslint max-nested-callbacks: ["error", 8] */
 
 const { expect } = require('aegir/utils/chai')
+const os = require('os')
 
 const LIBS = ['ursa', 'keypair']
+
+if (os.platform() === 'win32') {
+  // usra is broken on windows
+  // TODO: only use webcrypto for RSA
+  LIBS.shift()
+}
 
 describe('RSA crypto libs', function () {
   this.timeout(20 * 1000)

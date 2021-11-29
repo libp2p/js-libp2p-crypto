@@ -13,7 +13,8 @@
     "./src/keys/rsa.js": "./src/keys/rsa-browser.js",
     "./src/keys/ed25519/ed25519-native.js": "./src/keys/ed25519/ed25519-wasm.js",
     "crypto": false,
-    "fs": false
+    "fs": false,
+    "path": false
   },
   "files": [
     "src",

@@ -54,7 +54,7 @@
     "pem-jwk": "^2.0.0",
     "protobufjs": "^6.11.2",
     "uint8arrays": "^3.0.0",
-    "ursa": "^0.9.4"
+    "ursa-optional": "^0.10.1"
   },
   "optionalDependencies": {
     "ed25519": "^0.0.5"

@@ -1,0 +1,14 @@
+{
+  "name": "libp2p-crypto-rsa-benchmarks",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ."
+  },
+  "license": "MIT",
+  "dependencies": {
+    "iso-random-stream": "^2.0.0",
+    "keypair": "^1.0.4",
+    "ursa-optional": "^0.10.2"
+  }
+}

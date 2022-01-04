@@ -1,5 +1,5 @@
 {
-  "name": "libp2p-crypto",
+  "name": "@libp2p/crypto",
   "version": "0.21.0",
   "description": "Crypto primitives for libp2p",
   "type": "module",

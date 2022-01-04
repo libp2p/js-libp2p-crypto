@@ -1,481 +1,406 @@
 <!doctype html>
-<html lang="en">
+<html class="default no-js">
 <head>
-  <meta charset='utf-8'>
-  <title>libp2p-crypto 0.16.4 | Documentation</title>
-  <meta name='description' content='Crypto primitives for libp2p'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' rel='stylesheet'>
-  <link href='assets/style.css' rel='stylesheet'>
-  <link href='assets/github.css' rel='stylesheet'>
-  <link href='assets/split.css' rel='stylesheet'>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@libp2p/crypto - v0.22.0</title>
+	<meta name="description" content="Documentation for @libp2p/crypto - v0.22.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
-<body class='documentation m0'>
-    <div class='flex'>
-      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-        <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>libp2p-crypto</h3>
-          <div class='mb1'><code>0.16.4</code></div>
-          <input
-            placeholder='Filter'
-            id='filter-input'
-            class='col12 block input'
-            spellcheck='false'
-            autocapitalize='off'
-            autocorrect='off'
-            type='text' />
-          <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#intro'
-                  class="h5 bold black caps">
-                  Intro
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#id'
-                  class="">
-                  id
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#export'
-                  class="">
-                  export
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#id'
-                  class="">
-                  id
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#pbkdf2'
-                  class="">
-                  pbkdf2
-                  
-                </a>
-                
-                </li>
-              
-            </ul>
-          </div>
-          <div class='mt1 h6 quiet'>
-            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
-          </div>
-        </div>
-      </div>
-      <div id='split-right' class='relative overflow-auto height-viewport-100'>
-        
-          
-            <div class='keyline-top-not py2'><section class='py2 clearfix'>
-
-  <h2 id='intro' class='mt0'>
-    Intro
-  </h2>
-
-  
-    <p>Installable via  <code>npm install --save libp2p-crypto</code>, it can also be used directly in the browser.</p>
-<h2>Download</h2>
-<p>The source is available for download from <a href="https://github.com/libp2p/js-libp2p-crypto.git">GitHub</a>. Alternatively, you can install using npm:</p>
-<pre class='hljs'>$ npm install --save libp2p-crypto</pre>
-<p>You can then <code>require()</code> libp2p-crypto as normal:</p>
-<pre class='hljs'><span class="hljs-keyword">const</span> libp2PCrypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'libp2p-crypto'</span>)</pre>
-<h2>In the Browser</h2>
-<p>Libp2p-crypto should work in any ES2015 environment out of the box.</p>
-<p>Usage:</p>
-<pre class='hljs'><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"index.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></pre>
-<p>The portable versions of libp2p-crypto, including <code>index.js</code> and <code>index.min.js</code>, are included in the <code>/dist</code> folder. Libp2p-crypto can also be found on <a href="https://unpkg.com">unpkg.com</a> under</p>
-<ul>
-<li><a href="https://unpkg.com/libp2p-crypto/dist/index.min.js">https://unpkg.com/libp2p-crypto/dist/index.min.js</a></li>
-<li><a href="https://unpkg.com/libp2p-crypto/dist/index.js">https://unpkg.com/libp2p-crypto/dist/index.js</a></li>
-</ul>
-
-  
-</section></div>
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='id'>
-      id
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/keys/rsa-class.js#L119-L126'>
-      <span>src/keys/rsa-class.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Gets the ID of the key.</p>
-<p>The key id is the base58 encoding of the SHA-256 multihash of its public key.
-The public key is a protobuf encoding containing a type and the DER encoding
-of the PKCS SubjectPublicKeyInfo.</p>
-
-    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='export'>
-      export
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/keys/rsa-class.js#L136-L169'>
-      <span>src/keys/rsa-class.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Exports the key into a password protected PEM format</p>
-
-    <div class='pre p1 fill-light mt0'>export(format: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?, password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, KeyInfo)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
-	    Defaults to 'pkcs-8'.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The password to read the encrypted PEM
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, KeyInfo))</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='id'>
-      id
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/keys/ed25519-class.js#L92-L99'>
-      <span>src/keys/ed25519-class.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Gets the ID of the key.</p>
-<p>The key id is the base58 encoding of the SHA-256 multihash of its public key.
-The public key is a protobuf encoding containing a type and the DER encoding
-of the PKCS SubjectPublicKeyInfo.</p>
-
-    <div class='pre p1 fill-light mt0'>id(callback: function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>, id))</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='pbkdf2'>
-      pbkdf2
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/libp2p/js-libp2p-crypto/blob/3bb241640cc34096c9f0292bacb33ffc690a3159/src/pbkdf2.js#L29-L41'>
-      <span>src/pbkdf2.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Computes the Password-Based Key Derivation Function 2.</p>
-
-    <div class='pre p1 fill-light mt0'>pbkdf2(password: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, salt: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, iterations: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, keySize: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, hash: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>password</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>salt</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>iterations</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>keySize</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    (in bytes)
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>hash</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The hash name ('sha1', 'sha2-512, ...)
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        A new password
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-      </div>
-    </div>
-  <script src='assets/anchor.js'></script>
-  <script src='assets/split.js'></script>
-  <script src='assets/site.js'></script>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@libp2p/crypto - v0.22.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>@libp2p/crypto - v0.22.0</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#js-libp2p-crypto" id="js-libp2p-crypto" style="color: inherit; text-decoration: none;">
+					<h1>js-libp2p-crypto</h1>
+				</a>
+				<p><a href="http://protocol.ai"><img src="https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square" alt=""></a>
+					<a href="http://libp2p.io/"><img src="https://img.shields.io/badge/project-libp2p-yellow.svg?style=flat-square" alt=""></a>
+					<a href="http://webchat.freenode.net/?channels=%23libp2p"><img src="https://img.shields.io/badge/freenode-%23libp2p-yellow.svg?style=flat-square" alt=""></a>
+					<a href="https://discuss.libp2p.io"><img src="https://img.shields.io/discourse/https/discuss.libp2p.io/posts.svg" alt="Discourse posts"></a>
+					<a href="https://codecov.io/gh/libp2p/js-libp2p-crypto"><img src="https://img.shields.io/codecov/c/github/libp2p/js-libp2p-crypto.svg?style=flat-square" alt=""></a>
+					<a href="https://travis-ci.com/libp2p/js-libp2p-crypto"><img src="https://img.shields.io/travis/libp2p/js-libp2p-crypto.svg?style=flat-square" alt=""></a>
+					<a href="https://david-dm.org/libp2p/js-libp2p-crypto"><img src="https://david-dm.org/libp2p/js-libp2p-crypto.svg?style=flat-square" alt="Dependency Status"></a>
+				<a href="https://github.com/feross/standard"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square" alt="js-standard-style"></a></p>
+				<blockquote>
+					<p>Crypto primitives for libp2p in JavaScript</p>
+				</blockquote>
+				<p>This repo contains the JavaScript implementation of the crypto primitives needed for libp2p. This is based on this <a href="https://github.com/libp2p/go-libp2p-crypto">go implementation</a>.</p>
+				<a href="#lead-maintainer" id="lead-maintainer" style="color: inherit; text-decoration: none;">
+					<h2>Lead Maintainer</h2>
+				</a>
+				<p><a href="https://github.com/jacobheun/">Jacob Heun</a></p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
+				</a>
+				<ul>
+					<li><a href="#js-libp2p-crypto">js-libp2p-crypto</a><ul>
+							<li><a href="#lead-maintainer">Lead Maintainer</a></li>
+							<li><a href="#table-of-contents">Table of Contents</a></li>
+							<li><a href="#install">Install</a></li>
+							<li><a href="#usage">Usage</a><ul>
+									<li><a href="#web-crypto-api">Web Crypto API</a></li>
+								</ul>
+							</li>
+							<li><a href="#api">API</a><ul>
+									<li><a href="#cryptoaes"><code>crypto.aes</code></a><ul>
+											<li><a href="#cryptoaescreatekey-iv"><code>crypto.aes.create(key, iv)</code></a><ul>
+													<li><a href="#decryptdata"><code>decrypt(data)</code></a></li>
+													<li><a href="#encryptdata"><code>encrypt(data)</code></a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li><a href="#cryptohmac"><code>crypto.hmac</code></a><ul>
+											<li><a href="#cryptohmaccreatehash-secret"><code>crypto.hmac.create(hash, secret)</code></a><ul>
+													<li><a href="#digestdata"><code>digest(data)</code></a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li><a href="#cryptokeys"><code>crypto.keys</code></a></li>
+									<li><a href="#cryptokeysgeneratekeypairtype-bits"><code>crypto.keys.generateKeyPair(type, bits)</code></a></li>
+									<li><a href="#cryptokeysgenerateephemeralkeypaircurve"><code>crypto.keys.generateEphemeralKeyPair(curve)</code></a></li>
+									<li><a href="#cryptokeyskeystretcherciphertype-hashtype-secret"><code>crypto.keys.keyStretcher(cipherType, hashType, secret)</code></a></li>
+									<li><a href="#cryptokeysmarshalpublickeykey-type"><code>crypto.keys.marshalPublicKey(key, [type])</code></a></li>
+									<li><a href="#cryptokeysunmarshalpublickeybuf"><code>crypto.keys.unmarshalPublicKey(buf)</code></a></li>
+									<li><a href="#cryptokeysmarshalprivatekeykey-type"><code>crypto.keys.marshalPrivateKey(key, [type])</code></a></li>
+									<li><a href="#cryptokeysunmarshalprivatekeybuf"><code>crypto.keys.unmarshalPrivateKey(buf)</code></a></li>
+									<li><a href="#cryptokeysimportencryptedkey-password"><code>crypto.keys.import(encryptedKey, password)</code></a></li>
+									<li><a href="#privatekeyexportpassword-format"><code>privateKey.export(password, format)</code></a></li>
+									<li><a href="#cryptorandombytesnumber"><code>crypto.randomBytes(number)</code></a></li>
+									<li><a href="#cryptopbkdf2password-salt-iterations-keysize-hash"><code>crypto.pbkdf2(password, salt, iterations, keySize, hash)</code></a></li>
+								</ul>
+							</li>
+							<li><a href="#contribute">Contribute</a></li>
+							<li><a href="#license">License</a></li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<pre><code class="language-sh"><span style="color: #000000">npm install --save libp2p-crypto</span>
+</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">crypto</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;libp2p-crypto&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #008000">// Now available to you:</span>
+<span style="color: #008000">//</span>
+<span style="color: #008000">// crypto.aes</span>
+<span style="color: #008000">// crypto.hmac</span>
+<span style="color: #008000">// crypto.keys</span>
+<span style="color: #008000">// etc.</span>
+<span style="color: #008000">//</span>
+<span style="color: #008000">// See full API details below...</span>
+</code></pre>
+				<a href="#web-crypto-api" id="web-crypto-api" style="color: inherit; text-decoration: none;">
+					<h3>Web Crypto API</h3>
+				</a>
+				<p>The <code>libp2p-crypto</code> library depends on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a> in the browser. Web Crypto is available in all modern browsers, however browsers restrict its usage to <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts">Secure Contexts</a>.</p>
+				<p><strong>This means you will not be able to use some <code>libp2p-crypto</code> functions in the browser when the page is served over HTTP.</strong> To enable the Web Crypto API and allow <code>libp2p-crypto</code> to work fully, please serve your page over HTTPS.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<a href="#cryptoaes" id="cryptoaes" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.aes</code></h3>
+				</a>
+				<p>Exposes an interface to AES encryption (formerly Rijndael), as defined in U.S. Federal Information Processing Standards Publication 197.</p>
+				<p>This uses <code>CTR</code> mode.</p>
+				<a href="#cryptoaescreatekey-iv" id="cryptoaescreatekey-iv" style="color: inherit; text-decoration: none;">
+					<h4><code>crypto.aes.create(key, iv)</code></h4>
+				</a>
+				<ul>
+					<li><code>key: Uint8Array</code> The key, if length <code>16</code> then <code>AES 128</code> is used. For length <code>32</code>, <code>AES 256</code> is used.</li>
+					<li><code>iv: Uint8Array</code> Must have length <code>16</code>.</li>
+				</ul>
+				<p>Returns <code>Promise&lt;{decrypt&lt;Function&gt;, encrypt&lt;Function&gt;}&gt;</code></p>
+				<a href="#decryptdata" id="decryptdata" style="color: inherit; text-decoration: none;">
+					<h5><code>decrypt(data)</code></h5>
+				</a>
+				<ul>
+					<li><code>data: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>Promise&lt;Uint8Array&gt;</code></p>
+				<a href="#encryptdata" id="encryptdata" style="color: inherit; text-decoration: none;">
+					<h5><code>encrypt(data)</code></h5>
+				</a>
+				<ul>
+					<li><code>data: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>Promise&lt;Uint8Array&gt;</code></p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">crypto</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;libp2p-crypto&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #008000">// Setting up Key and IV</span>
+
+<span style="color: #008000">// A 16 bytes array, 128 Bits, AES-128 is chosen</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">key128</span><span style="color: #000000"> = </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">, </span><span style="color: #098658">7</span><span style="color: #000000">, </span><span style="color: #098658">8</span><span style="color: #000000">, </span><span style="color: #098658">9</span><span style="color: #000000">, </span><span style="color: #098658">10</span><span style="color: #000000">, </span><span style="color: #098658">11</span><span style="color: #000000">, </span><span style="color: #098658">12</span><span style="color: #000000">, </span><span style="color: #098658">13</span><span style="color: #000000">, </span><span style="color: #098658">14</span><span style="color: #000000">, </span><span style="color: #098658">15</span><span style="color: #000000">])</span>
+
+<span style="color: #008000">// A 16 bytes array, 128 Bits,</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">IV</span><span style="color: #000000"> = </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">, </span><span style="color: #098658">7</span><span style="color: #000000">, </span><span style="color: #098658">8</span><span style="color: #000000">, </span><span style="color: #098658">9</span><span style="color: #000000">, </span><span style="color: #098658">10</span><span style="color: #000000">, </span><span style="color: #098658">11</span><span style="color: #000000">, </span><span style="color: #098658">12</span><span style="color: #000000">, </span><span style="color: #098658">13</span><span style="color: #000000">, </span><span style="color: #098658">14</span><span style="color: #000000">, </span><span style="color: #098658">15</span><span style="color: #000000">])</span>
+
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000"> () {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">decryptedMessage</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Hello, world!&#039;</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// Encrypting</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">cipher</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">crypto</span><span style="color: #000000">.</span><span style="color: #001080">aes</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">(</span><span style="color: #001080">key128</span><span style="color: #000000">, </span><span style="color: #0070C1">IV</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">encryptedBuffer</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cipher</span><span style="color: #000000">.</span><span style="color: #795E26">encrypt</span><span style="color: #000000">(</span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">decryptedMessage</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">encryptedBuffer</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// prints: &lt;Uint8Array 42 f1 67 d9 2e 42 d0 32 9e b1 f8 3c&gt;</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// Decrypting</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">decipher</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">crypto</span><span style="color: #000000">.</span><span style="color: #001080">aes</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">(</span><span style="color: #001080">key128</span><span style="color: #000000">, </span><span style="color: #0070C1">IV</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">decryptedBuffer</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">cipher</span><span style="color: #000000">.</span><span style="color: #795E26">decrypt</span><span style="color: #000000">(</span><span style="color: #001080">encryptedBuffer</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">decryptedBuffer</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// prints: &lt;Uint8Array 42 f1 67 d9 2e 42 d0 32 9e b1 f8 3c&gt;</span>
+
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">decryptedBuffer</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;utf-8&#039;</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #008000">// prints: Hello, world!</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #795E26">main</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#cryptohmac" id="cryptohmac" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.hmac</code></h3>
+				</a>
+				<p>Exposes an interface to the Keyed-Hash Message Authentication Code (HMAC) as defined in U.S. Federal Information Processing Standards Publication 198. An HMAC is a cryptographic hash that uses a key to sign a message. The receiver verifies the hash by recomputing it using the same key.</p>
+				<a href="#cryptohmaccreatehash-secret" id="cryptohmaccreatehash-secret" style="color: inherit; text-decoration: none;">
+					<h4><code>crypto.hmac.create(hash, secret)</code></h4>
+				</a>
+				<ul>
+					<li><code>hash: String</code></li>
+					<li><code>secret: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>Promise&lt;{digest&lt;Function&gt;}&gt;</code></p>
+				<a href="#digestdata" id="digestdata" style="color: inherit; text-decoration: none;">
+					<h5><code>digest(data)</code></h5>
+				</a>
+				<ul>
+					<li><code>data: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>Promise&lt;Uint8Array&gt;</code></p>
+				<p>Example:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">crypto</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;libp2p-crypto&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000"> () {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">hash</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;SHA1&#039;</span><span style="color: #000000"> </span><span style="color: #008000">// &#039;SHA256&#039; || &#039;SHA512&#039;</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">hmac</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">crypto</span><span style="color: #000000">.</span><span style="color: #001080">hmac</span><span style="color: #000000">.</span><span style="color: #795E26">create</span><span style="color: #000000">(</span><span style="color: #001080">hash</span><span style="color: #000000">, </span><span style="color: #795E26">uint8ArrayFromString</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;secret&#039;</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">sig</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">hmac</span><span style="color: #000000">.</span><span style="color: #795E26">digest</span><span style="color: #000000">(</span><span style="color: #795E26">uint8ArrayFromString</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hello world&#039;</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sig</span><span style="color: #000000">)</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #795E26">main</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#cryptokeys" id="cryptokeys" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys</code></h3>
+				</a>
+				<p><strong>Supported Key Types</strong></p>
+				<p>The <a href="#generatekeypairtype-bits"><code>generateKeyPair</code></a>, <a href="#marshalpublickeykey-type"><code>marshalPublicKey</code></a>, and <a href="#marshalprivatekeykey-type"><code>marshalPrivateKey</code></a> functions accept a string <code>type</code> argument.</p>
+				<p>Currently the <code>&#39;RSA&#39;</code>, <code>&#39;ed25519&#39;</code>, and <code>secp256k1</code> types are supported, although ed25519 and secp256k1 keys support only signing and verification of messages.  For encryption / decryption support, RSA keys should be used.</p>
+				<a href="#cryptokeysgeneratekeypairtype-bits" id="cryptokeysgeneratekeypairtype-bits" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.generateKeyPair(type, bits)</code></h3>
+				</a>
+				<ul>
+					<li><code>type: String</code>, see <a href="#supported-key-types">Supported Key Types</a> above.</li>
+					<li><code>bits: Number</code> Minimum of 1024</li>
+				</ul>
+				<p>Returns <code>Promise&lt;{privateKey&lt;Uint8Array&gt;, publicKey&lt;Uint8Array&gt;}&gt;</code></p>
+				<p>Generates a keypair of the given type and bitsize.</p>
+				<a href="#cryptokeysgenerateephemeralkeypaircurve" id="cryptokeysgenerateephemeralkeypaircurve" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.generateEphemeralKeyPair(curve)</code></h3>
+				</a>
+				<ul>
+					<li><code>curve: String</code>, one of <code>&#39;P-256&#39;</code>, <code>&#39;P-384&#39;</code>, <code>&#39;P-521&#39;</code> is currently supported</li>
+				</ul>
+				<p>Returns <code>Promise</code></p>
+				<p>Generates an ephemeral public key and returns a function that will compute the shared secret key.</p>
+				<p>Focuses only on ECDH now, but can be made more general in the future.</p>
+				<p>Resolves to an object of the form:</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  key: </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">,</span>
+<span style="color: #000000">  genSharedKey: </span><span style="color: #267F99">Function</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#cryptokeyskeystretcherciphertype-hashtype-secret" id="cryptokeyskeystretcherciphertype-hashtype-secret" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.keyStretcher(cipherType, hashType, secret)</code></h3>
+				</a>
+				<ul>
+					<li><code>cipherType: String</code>, one of <code>&#39;AES-128&#39;</code>, <code>&#39;AES-256&#39;</code>, <code>&#39;Blowfish&#39;</code></li>
+					<li><code>hashType: String</code>, one of <code>&#39;SHA1&#39;</code>, <code>SHA256</code>, <code>SHA512</code></li>
+					<li><code>secret: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>Promise</code></p>
+				<p>Generates a set of keys for each party by stretching the shared key.</p>
+				<p>Resolves to an object of the form:</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  k1: {</span>
+<span style="color: #000000">    iv: </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">,</span>
+<span style="color: #000000">    cipherKey: </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">,</span>
+<span style="color: #000000">    macKey: </span><span style="color: #267F99">Uint8Array</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  k2: {</span>
+<span style="color: #000000">    iv: </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">,</span>
+<span style="color: #000000">    cipherKey: </span><span style="color: #267F99">Uint8Array</span><span style="color: #000000">,</span>
+<span style="color: #000000">    macKey: </span><span style="color: #267F99">Uint8Array</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#cryptokeysmarshalpublickeykey-type" id="cryptokeysmarshalpublickeykey-type" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.marshalPublicKey(key, [type])</code></h3>
+				</a>
+				<ul>
+					<li><code>key: keys.rsa.RsaPublicKey | keys.ed25519.Ed25519PublicKey | keys.secp256k1.Secp256k1PublicKey</code></li>
+					<li><code>type: String</code>, see <a href="#supported-key-types">Supported Key Types</a> above.  Defaults to &#39;rsa&#39;.</li>
+				</ul>
+				<p>Returns <code>Uint8Array</code></p>
+				<p>Converts a public key object into a protobuf serialized public key.</p>
+				<a href="#cryptokeysunmarshalpublickeybuf" id="cryptokeysunmarshalpublickeybuf" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.unmarshalPublicKey(buf)</code></h3>
+				</a>
+				<ul>
+					<li><code>buf: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>RsaPublicKey|Ed25519PublicKey|Secp256k1PublicKey</code></p>
+				<p>Converts a protobuf serialized public key into its representative object.</p>
+				<a href="#cryptokeysmarshalprivatekeykey-type" id="cryptokeysmarshalprivatekeykey-type" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.marshalPrivateKey(key, [type])</code></h3>
+				</a>
+				<ul>
+					<li><code>key: keys.rsa.RsaPrivateKey | keys.ed25519.Ed25519PrivateKey | keys.secp256k1.Secp256k1PrivateKey</code></li>
+					<li><code>type: String</code>, see <a href="#supported-key-types">Supported Key Types</a> above.</li>
+				</ul>
+				<p>Returns <code>Uint8Array</code></p>
+				<p>Converts a private key object into a protobuf serialized private key.</p>
+				<a href="#cryptokeysunmarshalprivatekeybuf" id="cryptokeysunmarshalprivatekeybuf" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.unmarshalPrivateKey(buf)</code></h3>
+				</a>
+				<ul>
+					<li><code>buf: Uint8Array</code></li>
+				</ul>
+				<p>Returns <code>Promise&lt;RsaPrivateKey|Ed25519PrivateKey|Secp256k1PrivateKey&gt;</code></p>
+				<p>Converts a protobuf serialized private key into its representative object.</p>
+				<a href="#cryptokeysimportencryptedkey-password" id="cryptokeysimportencryptedkey-password" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.keys.import(encryptedKey, password)</code></h3>
+				</a>
+				<ul>
+					<li><code>encryptedKey: string</code></li>
+					<li><code>password: string</code></li>
+				</ul>
+				<p>Returns <code>Promise&lt;PrivateKey&gt;</code></p>
+				<p>Converts an exported private key into its representative object. Supported formats are &#39;pem&#39; (RSA only) and &#39;libp2p-key&#39;.</p>
+				<a href="#privatekeyexportpassword-format" id="privatekeyexportpassword-format" style="color: inherit; text-decoration: none;">
+					<h3><code>privateKey.export(password, format)</code></h3>
+				</a>
+				<ul>
+					<li><code>password: string</code></li>
+					<li><code>format: string</code> the format to export to: &#39;pem&#39; (rsa only), &#39;libp2p-key&#39;</li>
+				</ul>
+				<p>Returns <code>string</code></p>
+				<p>Exports the password protected <code>PrivateKey</code>. RSA keys will be exported as password protected PEM by default. Ed25519 and Secp256k1 keys will be exported as password protected AES-GCM base64 encoded strings (&#39;libp2p-key&#39; format).</p>
+				<a href="#cryptorandombytesnumber" id="cryptorandombytesnumber" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.randomBytes(number)</code></h3>
+				</a>
+				<ul>
+					<li><code>number: Number</code></li>
+				</ul>
+				<p>Returns <code>Uint8Array</code></p>
+				<p>Generates a Uint8Array with length <code>number</code> populated by random bytes.</p>
+				<a href="#cryptopbkdf2password-salt-iterations-keysize-hash" id="cryptopbkdf2password-salt-iterations-keysize-hash" style="color: inherit; text-decoration: none;">
+					<h3><code>crypto.pbkdf2(password, salt, iterations, keySize, hash)</code></h3>
+				</a>
+				<ul>
+					<li><code>password: String</code></li>
+					<li><code>salt: String</code></li>
+					<li><code>iterations: Number</code></li>
+					<li><code>keySize: Number</code> in bytes</li>
+					<li><code>hash: String</code> the hashing algorithm (&#39;sha1&#39;, &#39;sha2-512&#39;, ...)</li>
+				</ul>
+				<p>Computes the Password Based Key Derivation Function 2; returning a new password.</p>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h2>Contribute</h2>
+				</a>
+				<p>Feel free to join in. All welcome. Open an <a href="https://github.com/libp2p/js-libp2p-crypto/issues">issue</a>!</p>
+				<p>This repository falls under the IPFS <a href="https://github.com/ipfs/community/blob/master/code-of-conduct.md">Code of Conduct</a>.</p>
+				<p><a href="https://github.com/ipfs/community/blob/master/contributing.md"><img src="https://cdn.rawgit.com/jbenet/contribute-ipfs-gif/master/img/contribute.gif" alt=""></a></p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="./LICENSE">MIT</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+		</div>
+	</div>
+</footer>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

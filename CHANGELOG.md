@@ -1,3 +1,12 @@
+## [0.21.1](https://github.com/libp2p/js-libp2p-crypto/compare/v0.21.0...v0.21.1) (2022-01-18)
+
+
+### Bug Fixes
+
+* pin @noble/ed25519 version ([#239](https://github.com/libp2p/js-libp2p-crypto/issues/239)) ([6053517](https://github.com/libp2p/js-libp2p-crypto/commit/6053517b510533893525c6f016e3af37720db198))
+
+
+
 # [0.21.0](https://github.com/libp2p/js-libp2p-crypto/compare/v0.20.0...v0.21.0) (2021-12-01)
 
 

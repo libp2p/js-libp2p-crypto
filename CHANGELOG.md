@@ -1,3 +1,12 @@
+## [0.21.2](https://github.com/libp2p/js-libp2p-crypto/compare/v0.21.1...v0.21.2) (2022-01-20)
+
+
+### Bug Fixes
+
+* upgrade ed25519 ([#241](https://github.com/libp2p/js-libp2p-crypto/issues/241)) ([2817322](https://github.com/libp2p/js-libp2p-crypto/commit/2817322ea557d109c5113ad16cbc0b10812fb39d)), closes [#239](https://github.com/libp2p/js-libp2p-crypto/issues/239)
+
+
+
 ## [0.21.1](https://github.com/libp2p/js-libp2p-crypto/compare/v0.21.0...v0.21.1) (2022-01-18)
 
 

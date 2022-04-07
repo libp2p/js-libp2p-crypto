@@ -182,7 +182,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^9.0.0",
-    "aegir": "^36.1.2",
+    "aegir": "^37.0.0",
     "benchmark": "^2.1.4",
     "sinon": "^13.0.1",
     "util": "^0.12.3",

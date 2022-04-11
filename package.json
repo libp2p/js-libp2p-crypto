@@ -180,7 +180,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^9.0.0",
-    "aegir": "^37.0.11",
+    "aegir": "^37.0.12",
     "benchmark": "^2.1.4",
     "protons": "^3.0.2",
     "sinon": "^13.0.1",
@@ -188,10 +188,10 @@
     "wherearewe": "^1.0.0"
   },
   "browser": {
-    "./src/aes/ciphers.js": "./src/aes/ciphers-browser.js",
-    "./src/ciphers/aes-gcm.js": "./src/ciphers/aes-gcm.browser.js",
-    "./src/hmac/index.js": "./src/hmac/index-browser.js",
-    "./src/keys/ecdh.js": "./src/keys/ecdh-browser.js",
-    "./src/keys/rsa.js": "./src/keys/rsa-browser.js"
+    "./dist/src/aes/ciphers.js": "./dist/src/aes/ciphers-browser.js",
+    "./dist/src/ciphers/aes-gcm.js": "./dist/src/ciphers/aes-gcm.browser.js",
+    "./dist/src/hmac/index.js": "./dist/src/hmac/index-browser.js",
+    "./dist/src/keys/ecdh.js": "./dist/src/keys/ecdh-browser.js",
+    "./dist/src/keys/rsa.js": "./dist/src/keys/rsa-browser.js"
   }
 }

@@ -181,7 +181,7 @@
     "iso-random-stream": "^2.0.0",
     "multiformats": "^9.4.5",
     "node-forge": "^1.1.0",
-    "protons-runtime": "^1.0.4",
+    "protons-runtime": "^2.0.1",
     "uint8arrays": "^3.0.0"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import * as crypto from '../../src/index.js'
 import fixtures from '../fixtures/go-key-ed25519.js'
 import { testGarbage } from '../helpers/test-garbage-error-handling.js'
 import { Ed25519PrivateKey } from '../../src/keys/ed25519-class.js'
+import { generateKey } from '../../src/keys/ed25519.js'
 
 const ed25519 = crypto.keys.supportedKeys.ed25519
 
@@ -24,6 +25,23 @@ describe('ed25519', function () {
   })
 
   it('generates a valid key', async () => {
+    expect(key).to.be.an.instanceof(ed25519.Ed25519PrivateKey)
+    const digest = await key.hash()
+    expect(digest).to.have.length(34)
+  })
+
+  it('initializes with private + public key', async () => {
+    const key = new Ed25519PrivateKey((await generateKey()).privateKey)
+    expect(key).to.be.an.instanceof(ed25519.Ed25519PrivateKey)
+    const digest = await key.hash()
+    expect(digest).to.have.length(34)
+  })
+
+  it('initializes with private and separate public key', async () => {
+    const keyRaw = (await generateKey()).privateKey
+    const privateKey = keyRaw.slice(0, 32)
+    const publicKey = keyRaw.slice(32)
+    const key = new Ed25519PrivateKey(privateKey, publicKey)
     expect(key).to.be.an.instanceof(ed25519.Ed25519PrivateKey)
     const digest = await key.hash()
     expect(digest).to.have.length(34)

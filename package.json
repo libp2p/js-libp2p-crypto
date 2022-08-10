@@ -191,7 +191,7 @@
     "@types/mocha": "^9.0.0",
     "aegir": "^37.0.12",
     "benchmark": "^2.1.4",
-    "protons": "^4.0.1",
+    "protons": "^5.0.0",
     "sinon": "^14.0.0",
     "util": "^0.12.3",
     "wherearewe": "^1.0.0"

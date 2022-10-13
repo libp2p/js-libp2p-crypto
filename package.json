@@ -184,7 +184,7 @@
     "err-code": "^3.0.1",
     "multiformats": "^10.0.0",
     "node-forge": "^1.1.0",
-    "protons-runtime": "^3.1.0",
+    "protons-runtime": "^4.0.1",
     "uint8arrays": "^4.0.2"
   },
   "devDependencies": {

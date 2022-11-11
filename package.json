@@ -181,7 +181,7 @@
     "@libp2p/interface-keys": "^1.0.2",
     "@noble/ed25519": "^1.6.0",
     "@noble/secp256k1": "^1.5.4",
-    "err-code": "^3.0.1",
+    "code-err": "^1.0.0",
     "multiformats": "^10.0.0",
     "node-forge": "^1.1.0",
     "protons-runtime": "^4.0.1",

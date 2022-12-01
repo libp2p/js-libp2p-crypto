@@ -1,5 +1,7 @@
 import crypto from 'crypto'
 import { promisify } from 'util'
+import { toString as uint8arrayToString } from 'uint8arrays/to-string'
+import { fromString as uint8arrayFromString } from 'uint8arrays/from-string'
 
 const keypair = promisify(crypto.generateKeyPair)
 
@@ -24,9 +26,9 @@ export async function generateKey () {
   })
 
   // @ts-expect-error node types are missing jwk as a format
-  const privateKeyRaw = Buffer.from(key.privateKey.d, 'base64')
+  const privateKeyRaw = uint8arrayFromString(key.privateKey.d, 'base64url')
   // @ts-expect-error node types are missing jwk as a format
-  const publicKeyRaw = Buffer.from(key.privateKey.x, 'base64')
+  const publicKeyRaw = uint8arrayFromString(key.privateKey.x, 'base64url')
 
   return {
     privateKey: concatKeys(privateKeyRaw, publicKeyRaw),
@@ -75,8 +77,8 @@ export async function hashAndSign (key: Uint8Array, msg: Uint8Array) {
     format: 'jwk',
     key: {
       crv: 'Ed25519',
-      d: Buffer.from(privateKey).toString('base64'),
-      x: Buffer.from(publicKey).toString('base64'),
+      d: uint8arrayToString(privateKey, 'base64url'),
+      x: uint8arrayToString(publicKey, 'base64url'),
       kty: 'OKP'
     }
   })
@@ -101,7 +103,7 @@ export async function hashAndVerify (key: Uint8Array, sig: Uint8Array, msg: Uint
     format: 'jwk',
     key: {
       crv: 'Ed25519',
-      x: Buffer.from(key).toString('base64'),
+      x: uint8arrayToString(key, 'base64url'),
       kty: 'OKP'
     }
   })

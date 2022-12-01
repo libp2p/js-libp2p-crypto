@@ -14,7 +14,7 @@ export { PRIVATE_KEY_BYTE_LENGTH as privateKeyLength }
 function derivePublicKey (privateKey: Uint8Array) {
   const hash = crypto.createHash('sha512')
   hash.update(privateKey)
-  return hash.digest().slice(32)
+  return hash.digest().subarray(32)
 }
 
 export async function generateKey () {
@@ -62,7 +62,7 @@ export async function hashAndSign (key: Uint8Array, msg: Uint8Array) {
   let publicKey: Uint8Array
 
   if (key.byteLength === PRIVATE_KEY_BYTE_LENGTH) {
-    privateKey = key.slice(0, 32)
+    privateKey = key.subarray(0, 32)
     publicKey = key.slice(32)
   } else if (key.byteLength === KEYS_BYTE_LENGTH) {
     privateKey = key.slice(0, 32)

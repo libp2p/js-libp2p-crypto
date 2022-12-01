@@ -65,9 +65,9 @@ export async function hashAndSign (key: Uint8Array, msg: Uint8Array) {
 
   if (key.byteLength === PRIVATE_KEY_BYTE_LENGTH) {
     privateKey = key.subarray(0, 32)
-    publicKey = key.slice(32)
+    publicKey = key.subarray(32)
   } else if (key.byteLength === KEYS_BYTE_LENGTH) {
-    privateKey = key.slice(0, 32)
+    privateKey = key.subarray(0, 32)
     publicKey = derivePublicKey(privateKey)
   } else {
     throw new TypeError('"key" must be 64 or 32 bytes in length.')

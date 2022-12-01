@@ -44,7 +44,7 @@ export async function generateKeyFromSeed (seed: Uint8Array) {
 }
 
 export async function hashAndSign (privateKey: Uint8Array, msg: Uint8Array) {
-  const privateKeyRaw = privateKey.slice(0, KEYS_BYTE_LENGTH)
+  const privateKeyRaw = privateKey.subarray(0, KEYS_BYTE_LENGTH)
 
   return await ed.sign(msg, privateKeyRaw)
 }

@@ -1,12 +1,16 @@
 import * as ed from '@noble/ed25519'
 
 const PUBLIC_KEY_BYTE_LENGTH = 32
-const PRIVATE_KEY_BYTE_LENGTH = 64 // private key is actually 32 bytes but for historical reasons we concat private and public keys
+const PRIVATE_KEY_BYTE_LENGTH = 32
 const KEYS_BYTE_LENGTH = 32
 
 export { PUBLIC_KEY_BYTE_LENGTH as publicKeyLength }
 export { PRIVATE_KEY_BYTE_LENGTH as privateKeyLength }
 
+/**
+ *
+ * Private key in returned object is actually private and public key concatenated
+ */
 export async function generateKey () {
   // the actual private key (32 bytes)
   const privateKeyRaw = ed.utils.randomPrivateKey()
@@ -22,7 +26,8 @@ export async function generateKey () {
 }
 
 /**
- * Generate keypair from a 32 byte uint8array
+ * Generate keypair from a 32 byte uint8array.
+ * Private key in returned object is actually private and public key concatenated
  */
 export async function generateKeyFromSeed (seed: Uint8Array) {
   if (seed.length !== KEYS_BYTE_LENGTH) {
@@ -53,11 +58,11 @@ export async function hashAndVerify (publicKey: Uint8Array, sig: Uint8Array, msg
   return await ed.verify(sig, msg, publicKey)
 }
 
-function concatKeys (privateKeyRaw: Uint8Array, publicKey: Uint8Array) {
-  const privateKey = new Uint8Array(PRIVATE_KEY_BYTE_LENGTH)
-  for (let i = 0; i < KEYS_BYTE_LENGTH; i++) {
+export function concatKeys (privateKeyRaw: Uint8Array, publicKey: Uint8Array) {
+  const privateKey = new Uint8Array(PRIVATE_KEY_BYTE_LENGTH + PUBLIC_KEY_BYTE_LENGTH)
+  for (let i = 0; i < PRIVATE_KEY_BYTE_LENGTH; i++) {
     privateKey[i] = privateKeyRaw[i]
-    privateKey[KEYS_BYTE_LENGTH + i] = publicKey[i]
+    privateKey[PRIVATE_KEY_BYTE_LENGTH + i] = publicKey[i]
   }
   return privateKey
 }

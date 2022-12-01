@@ -1,11 +1,11 @@
 import errcode from 'err-code'
-import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
-import { sha256 } from 'multiformats/hashes/sha2'
 import { base58btc } from 'multiformats/bases/base58'
 import { identity } from 'multiformats/hashes/identity'
+import { sha256 } from 'multiformats/hashes/sha2'
+import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 import * as crypto from './ed25519.js'
-import * as pbm from './keys.js'
 import { exporter } from './exporter.js'
+import * as pbm from './keys.js'
 
 export class Ed25519PublicKey {
   private readonly _key: Uint8Array
@@ -41,18 +41,24 @@ export class Ed25519PublicKey {
 }
 
 export class Ed25519PrivateKey {
-  private readonly _key: Uint8Array
+  private readonly _privateKey: Uint8Array
   private readonly _publicKey: Uint8Array
 
-  // key       - 64 byte Uint8Array containing private key
+  // key       - 64 byte Uint8Array containing private key and public key concatenated or 32 byte Uint8Array containing private key
   // publicKey - 32 byte Uint8Array containing public key
-  constructor (key: Uint8Array, publicKey: Uint8Array) {
-    this._key = ensureKey(key, crypto.privateKeyLength)
-    this._publicKey = ensureKey(publicKey, crypto.publicKeyLength)
+  constructor (key: Uint8Array, publicKey?: Uint8Array) {
+    if (key.length === crypto.privateKeyLength + crypto.publicKeyLength) {
+      const privateAndPublicKey = ensureKey(key, crypto.privateKeyLength + crypto.publicKeyLength)
+      this._privateKey = privateAndPublicKey.slice(0, crypto.privateKeyLength)
+      this._publicKey = privateAndPublicKey.slice(crypto.privateKeyLength)
+    } else {
+      this._privateKey = ensureKey(key, crypto.privateKeyLength)
+      this._publicKey = ensureKey(publicKey, crypto.publicKeyLength)
+    }
   }
 
-  async sign (message: Uint8Array) { // eslint-disable-line require-await
-    return await crypto.hashAndSign(this._key, message)
+  async sign (message: Uint8Array) {
+    return await crypto.hashAndSign(this._privateKey, message)
   }
 
   get public () {
@@ -60,7 +66,7 @@ export class Ed25519PrivateKey {
   }
 
   marshal () {
-    return this._key
+    return crypto.concatKeys(this._privateKey, this._publicKey)
   }
 
   get bytes () {
@@ -109,15 +115,14 @@ export class Ed25519PrivateKey {
 export function unmarshalEd25519PrivateKey (bytes: Uint8Array) {
   // Try the old, redundant public key version
   if (bytes.length > crypto.privateKeyLength) {
-    bytes = ensureKey(bytes, crypto.privateKeyLength + crypto.publicKeyLength)
     const privateKeyBytes = bytes.slice(0, crypto.privateKeyLength)
-    const publicKeyBytes = bytes.slice(crypto.privateKeyLength, bytes.length)
+    const publicKeyBytes = bytes.slice(crypto.privateKeyLength, crypto.privateKeyLength + crypto.publicKeyLength)
     return new Ed25519PrivateKey(privateKeyBytes, publicKeyBytes)
   }
 
   bytes = ensureKey(bytes, crypto.privateKeyLength)
   const privateKeyBytes = bytes.slice(0, crypto.privateKeyLength)
-  const publicKeyBytes = bytes.slice(crypto.publicKeyLength)
+  const publicKeyBytes = bytes.slice(crypto.privateKeyLength)
   return new Ed25519PrivateKey(privateKeyBytes, publicKeyBytes)
 }
 
@@ -127,16 +132,16 @@ export function unmarshalEd25519PublicKey (bytes: Uint8Array) {
 }
 
 export async function generateKeyPair () {
-  const { privateKey, publicKey } = await crypto.generateKey()
-  return new Ed25519PrivateKey(privateKey, publicKey)
+  const { privateKey } = await crypto.generateKey()
+  return new Ed25519PrivateKey(privateKey)
 }
 
 export async function generateKeyPairFromSeed (seed: Uint8Array) {
-  const { privateKey, publicKey } = await crypto.generateKeyFromSeed(seed)
-  return new Ed25519PrivateKey(privateKey, publicKey)
+  const { privateKey } = await crypto.generateKeyFromSeed(seed)
+  return new Ed25519PrivateKey(privateKey)
 }
 
-function ensureKey (key: Uint8Array, length: number) {
+function ensureKey (key: Uint8Array|undefined, length: number) {
   key = Uint8Array.from(key ?? [])
   if (key.length !== length) {
     throw errcode(new Error(`Key must be a Uint8Array of length ${length}, got ${key.length}`), 'ERR_INVALID_KEY_TYPE')

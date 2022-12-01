@@ -41,13 +41,13 @@ function typeToKey (type: string) {
 }
 
 // Generates a keypair of the given type and bitsize
-export async function generateKeyPair (type: KeyTypes, bits?: number): Promise<PrivateKey> { // eslint-disable-line require-await
+export async function generateKeyPair (type: KeyTypes, bits?: number): Promise<PrivateKey> {
   return await typeToKey(type).generateKeyPair(bits ?? 2048)
 }
 
 // Generates a keypair of the given type and bitsize
 // seed is a 32 byte uint8array
-export async function generateKeyPairFromSeed (type: KeyTypes, seed: Uint8Array, bits?: number): Promise<PrivateKey> { // eslint-disable-line require-await
+export async function generateKeyPairFromSeed (type: KeyTypes, seed: Uint8Array, bits?: number): Promise<PrivateKey> {
   if (type.toLowerCase() !== 'ed25519') {
     throw errcode(new Error('Seed key derivation is unimplemented for RSA or secp256k1'), 'ERR_UNSUPPORTED_KEY_DERIVATION_TYPE')
   }

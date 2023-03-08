@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import { promisify } from 'util'
 import { toString as uint8arrayToString } from 'uint8arrays/to-string'
 import { fromString as uint8arrayFromString } from 'uint8arrays/from-string'
-import type { Uint8ArrayKeyPair } from './interface'
+import type { Uint8ArrayKeyPair } from './interface.js'
 
 const keypair = promisify(crypto.generateKeyPair)
 

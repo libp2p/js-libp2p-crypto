@@ -42,7 +42,7 @@ export async function unmarshalPrivateKey (key: JsonWebKey): Promise<JWKKeyPair>
 
 export { randomBytes as getRandomValues }
 
-export async function hashAndSign (key: JsonWebKey, msg: Uint8Array): Promise<Buffer> { // eslint-disable-line require-await
+export async function hashAndSign (key: JsonWebKey, msg: Uint8Array): Promise<Uint8Array> {
   return crypto.createSign('RSA-SHA256')
     .update(msg)
     // @ts-expect-error node types are missing jwk as a format
@@ -58,12 +58,12 @@ export async function hashAndVerify (key: JsonWebKey, sig: Uint8Array, msg: Uint
 
 const padding = crypto.constants.RSA_PKCS1_PADDING
 
-export function encrypt (key: JsonWebKey, bytes: Uint8Array): Buffer {
+export function encrypt (key: JsonWebKey, bytes: Uint8Array): Uint8Array {
   // @ts-expect-error node types are missing jwk as a format
   return crypto.publicEncrypt({ format: 'jwk', key, padding }, bytes)
 }
 
-export function decrypt (key: JsonWebKey, bytes: Uint8Array): Buffer {
+export function decrypt (key: JsonWebKey, bytes: Uint8Array): Uint8Array {
   // @ts-expect-error node types are missing jwk as a format
   return crypto.privateDecrypt({ format: 'jwk', key, padding }, bytes)
 }

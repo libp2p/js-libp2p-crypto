@@ -33,7 +33,7 @@ export class RsaPublicKey {
     }).subarray()
   }
 
-  encrypt (bytes: Uint8Array): Buffer {
+  encrypt (bytes: Uint8Array): Uint8Array {
     return crypto.encrypt(this._key, bytes)
   }
 
@@ -61,7 +61,7 @@ export class RsaPrivateKey {
     return crypto.getRandomValues(16)
   }
 
-  async sign (message: Uint8Array): Promise<Buffer> { // eslint-disable-line require-await
+  async sign (message: Uint8Array): Promise<Uint8Array> { // eslint-disable-line require-await
     return await crypto.hashAndSign(this._key, message)
   }
 
@@ -73,7 +73,7 @@ export class RsaPrivateKey {
     return new RsaPublicKey(this._publicKey)
   }
 
-  decrypt (bytes: Uint8Array): Buffer {
+  decrypt (bytes: Uint8Array): Uint8Array {
     return crypto.decrypt(this._key, bytes)
   }
 

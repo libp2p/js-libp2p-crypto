@@ -193,6 +193,7 @@
     "@types/mocha": "^10.0.0",
     "aegir": "^38.1.2",
     "benchmark": "^2.1.4",
+    "protons": "^7.0.2",
     "util": "^0.12.5"
   },
   "browser": {

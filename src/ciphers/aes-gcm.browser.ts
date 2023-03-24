@@ -3,8 +3,14 @@ import { fromString } from 'uint8arrays/from-string'
 import webcrypto from '../webcrypto.js'
 import type { CreateOptions, AESCipher } from './interface.js'
 
-function isSafariLinux (): boolean {
-  return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Linux') !== -1 && navigator.userAgent.indexOf('Chrome') === -1
+function isWebkitLinux (): boolean {
+  return typeof navigator !== 'undefined' && navigator.userAgent.includes('Safari') && navigator.userAgent.includes('Linux') && !navigator.userAgent.includes('Chrome')
+}
+
+// WebKit on Linux does not support empty passwords to derive a key from. This
+// is a workaround to use an empty 1 byte instead.
+function webkitLinuxEmptyPasswordWorkaround (): Uint8Array {
+  return new Uint8Array(1)
 }
 
 // Based off of code from https://github.com/luke-park/SecureCompatibleEncryptionExamples
@@ -33,9 +39,8 @@ export function create (opts?: CreateOptions): AESCipher {
       password = fromString(password)
     }
 
-    if (password.length === 0 && isSafariLinux()) {
-      // Workaround for Safari on Linux not supporting empty keys to derive from
-      password = new Uint8Array(1)
+    if (password.length === 0 && isWebkitLinux()) {
+      password = webkitLinuxEmptyPasswordWorkaround()
     }
 
     // Derive a key using PBKDF2.
@@ -62,6 +67,11 @@ export function create (opts?: CreateOptions): AESCipher {
 
     if (typeof password === 'string') {
       password = fromString(password)
+    }
+
+    if (password.length === 0 && isWebkitLinux()) {
+      // Workaround for Safari on Linux not supporting empty keys to derive from
+      password = webkitLinuxEmptyPasswordWorkaround()
     }
 
     // Derive the key using PBKDF2.

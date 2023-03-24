@@ -3,6 +3,10 @@ import { fromString } from 'uint8arrays/from-string'
 import webcrypto from '../webcrypto.js'
 import type { CreateOptions, AESCipher } from './interface.js'
 
+function isSafariLinux (): boolean {
+  return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Linux') !== -1 && navigator.userAgent.indexOf('Chrome') === -1
+}
+
 // Based off of code from https://github.com/luke-park/SecureCompatibleEncryptionExamples
 
 export function create (opts?: CreateOptions): AESCipher {
@@ -27,6 +31,11 @@ export function create (opts?: CreateOptions): AESCipher {
 
     if (typeof password === 'string') {
       password = fromString(password)
+    }
+
+    if (password.length === 0 && isSafariLinux()) {
+      // Workaround for Safari on Linux not supporting empty keys to derive from
+      password = new Uint8Array(1)
     }
 
     // Derive a key using PBKDF2.

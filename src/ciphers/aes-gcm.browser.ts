@@ -8,8 +8,8 @@ export function isWebkitLinux (): boolean {
 }
 
 // WebKit on Linux does not support deriving a key from an empty PBKDF2 key.
-// So, as a workaround, we provide the generated key as a constant. All other
-// platforms will generate this given an empty PBKDF2 key
+// So, as a workaround, we provide the generated key as a constant. We test that
+// this generated key is accurate in test/workaround.spec.ts
 // Generated via:
 // await crypto.subtle.exportKey('jwk',
 //   await crypto.subtle.deriveKey(

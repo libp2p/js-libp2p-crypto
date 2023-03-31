@@ -17,6 +17,10 @@ describe('Constant derived key is generated correctly', () => {
         { name: 'AES-GCM', length: 128 }, true, ['encrypt', 'decrypt'])
     )
 
+    // Webkit macos flips these. Sort them so they match.
+    derivedEmptyPasswordKey.key_ops.sort()
+    generatedKey?.key_ops?.sort()
+
     expect(generatedKey).to.eql(derivedEmptyPasswordKey)
   })
 })

@@ -5,6 +5,7 @@ import * as crypto from '../src/index.js'
 import fixtures from './fixtures/go-key-rsa.js'
 import { equals as uint8ArrayEquals } from 'uint8arrays/equals'
 import { RsaPrivateKey, RsaPublicKey } from '../src/keys/rsa-class.js'
+import { isWebkitLinux, derivedEmptyPasswordKey } from '../src/ciphers/aes-gcm.browser.js'
 
 describe('libp2p-crypto', function () {
   this.timeout(20 * 1000)
@@ -150,6 +151,24 @@ describe('libp2p-crypto', function () {
       expect(buf1.length).to.equal(10)
       const buf2 = crypto.randomBytes(10)
       expect(buf1).to.not.eql(buf2)
+    })
+  })
+
+  describe('Constant derived key is generated correctly', () => {
+    it('Generates correctly', async () => {
+      if (isWebkitLinux()) {
+        // WebKit Linux can't generate this. Hence the workaround.
+        return
+      }
+
+      const generatedKey = await global.crypto.subtle.exportKey('jwk',
+        await global.crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: new Uint8Array(16), iterations: 32767, hash: { name: 'SHA-256' } },
+          await global.crypto.subtle.importKey('raw', new Uint8Array(0), { name: 'PBKDF2' }, false, ['deriveKey']),
+          { name: 'AES-GCM', length: 128 }, true, ['encrypt', 'decrypt'])
+      )
+
+      expect(generatedKey).to.eql(derivedEmptyPasswordKey)
     })
   })
 })

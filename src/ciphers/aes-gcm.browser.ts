@@ -45,7 +45,7 @@ export function create (opts?: CreateOptions): AESCipher {
       password = fromString(password)
     }
 
-    let cryptoKey
+    let cryptoKey: CryptoKey
     if (password.length === 0 && isWebkitLinux()) {
       cryptoKey = await crypto.subtle.importKey('jwk', derivedEmptyPasswordKey, { name: 'AES-GCM' }, true, ['encrypt'])
     } else {
@@ -76,7 +76,7 @@ export function create (opts?: CreateOptions): AESCipher {
       password = fromString(password)
     }
 
-    let cryptoKey
+    let cryptoKey: CryptoKey
     if (password.length === 0 && isWebkitLinux()) {
       cryptoKey = await crypto.subtle.importKey('jwk', derivedEmptyPasswordKey, { name: 'AES-GCM' }, true, ['decrypt'])
     } else {

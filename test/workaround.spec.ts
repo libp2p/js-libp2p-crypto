@@ -5,7 +5,7 @@ import { expect } from 'aegir/chai'
 
 describe('Constant derived key is generated correctly', () => {
   it('Generates correctly', async () => {
-    if (navigator.userAgent.includes('Safari') || typeof crypto === 'undefined') {
+    if ((typeof navigator !== 'undefined' && navigator.userAgent.includes('Safari')) || typeof crypto === 'undefined') {
       // WebKit Linux can't generate this. Hence the workaround.
       return
     }

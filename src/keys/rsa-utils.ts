@@ -1,7 +1,7 @@
 import 'node-forge/lib/asn1.js'
 import 'node-forge/lib/rsa.js'
-// @ts-expect-error types are missing
 import { CodeError } from '@libp2p/interfaces/errors'
+// @ts-expect-error types are missing
 import forge from 'node-forge/lib/forge.js'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import { toString as uint8ArrayToString } from 'uint8arrays/to-string'
